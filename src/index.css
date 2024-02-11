@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Shabnam";
+  src: url("./assets/fonts/shabnam-font-v5.0.1/Shabnam.ttf");
+}
+
+html,
+body,
+:root,
+#root {
+  height: 100%;
+  direction: rtl;
+  font-family: "Shabnam";
+}
+
+.range-slider__thumb {
+  background-color: #505050 !important;
+  box-shadow: 2px 1px 2px 2px rgba(0, 0, 0, 0.1);
+}
+.range-slider__range {
+  background-color: #3730a3 !important;
+}
+
+.leaflet-container {
+  height: 100%;
+}
+
+.dark .leaflet-layer {
+  filter: brightness(0.644) invert(1) contrast(3.4) hue-rotate(10deg)
+    saturate(0.7);
+}
+
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+  border: none;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  gap: 7px;
+  transform: scale(1.4);
+  margin: 25px 17px;
+}
+
+.leaflet-bar a {
+  background: #5c55c9;
+  border-radius: 7px;
+  border: none;
+  color: white;
+}
+.leaflet-bar a:hover {
+  background: #837ce9;
+}
+
+.leaflet-control-attribution {
+  display: none;
+}
