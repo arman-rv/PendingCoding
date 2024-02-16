@@ -13,7 +13,7 @@ import { Loading } from "../../components/loading";
 import Image from "../../assets/REACTjs.webp";
 import CSharp from "../../assets/cSharp.jpg";
 import CPlus from "../../assets/c++.jpg";
-import SQL from "../../assets/SQL.jpg";
+import SQL from "../../assets/sql.jpg";
 import Physics from "../../assets/physics.jpg";
 
 import "swiper/css";
