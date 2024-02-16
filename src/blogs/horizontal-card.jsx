@@ -12,7 +12,7 @@ import { getPersianNumbers } from "../../libs/get-persian-numbers";
 import { ToolTip } from "../components/tool-tip";
 
 export const HorizontalCard = ({ blog }) => {
-  const insertDate = new Date(blog?.insertDate)
+  const insertDate = new Date(blog?.updateDate)
     .toLocaleDateString("fa-IR-u-nu-latn")
     .split("/");
   const months = [

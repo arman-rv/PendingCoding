@@ -7,7 +7,7 @@ export const VerticalCard = ({ id, name, image }) => {
         loading="lazy"
         src={image}
         alt="CourseImage"
-        className="w-32 h-32 rounded-full border-2 border-gray-400"
+        className="w-32 h-32 rounded-full border-2 border-gray-400 object-cover"
       />
       <h1 className="text-gray-600 dark:text-gray-200 text-center">{name}</h1>
       <Link

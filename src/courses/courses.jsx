@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { BookX, Grid2x2, Menu, Rows } from "lucide-react";
-import { useQuery } from "react-query";
+// import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
 
-import { getAllCourses, getCategories } from "../core/services/api/get-courses";
+// import { getAllCourses, getCategories } from "../core/services/api/get-courses";
 
 import NavigatorTracer from "../components/navigator-tracer";
 import { Seperator } from "../components/seperator";
@@ -14,10 +14,341 @@ import { Filter } from "./filter";
 import { Banner } from "../components/banner";
 import { CourseCards } from "./course-cards";
 import { Loading } from "../components/loading";
-import { Error } from "../components/error";
+// import { Error } from "../components/error";
 
 import { useModal } from "../hooks/use-modal-store";
-import { cn } from "../../libs/utils";
+
+import Image from "../assets/REACTjs.webp";
+import CSharp from "../assets/cSharp.jpg";
+import CPlus from "../assets/c++.jpg";
+import Physics from "../assets/physics.jpg";
+import SQL from "../assets/sql.jpg";
+
+const courses = [
+  {
+    courseId: 0,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 1,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 2,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 3,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 4,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 5,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 6,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 7,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 8,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 9,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 10,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 11,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 24,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 12,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 24,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 13,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: CPlus,
+    likeCount: 24,
+    title: "C++",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "C++",
+  },
+  {
+    courseId: 14,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: CPlus,
+    likeCount: 24,
+    title: "C++",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "C++",
+  },
+  {
+    courseId: 15,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: CSharp,
+    likeCount: 24,
+    title: "C#",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "C#",
+  },
+  {
+    courseId: 16,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: CSharp,
+    likeCount: 24,
+    title: "C#",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "C#",
+  },
+  {
+    courseId: 17,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: SQL,
+    likeCount: 24,
+    title: "SQL",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "SQL",
+  },
+  {
+    courseId: 18,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: SQL,
+    likeCount: 24,
+    title: "SQL",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "SQL",
+  },
+  {
+    courseId: 19,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Physics,
+    likeCount: 24,
+    title: "فیزیک",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "Physics",
+  },
+  {
+    courseId: 20,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Physics,
+    likeCount: 24,
+    title: "فیزیک",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "Physics",
+  },
+];
+
+const categories = [
+  { id: 1, label: "C#", value: "C#" },
+  { id: 1, label: "C++", value: "C++" },
+  { id: 1, label: "ReactJS", value: "ReactJS" },
+  { id: 1, label: "SQL", value: "SQL" },
+  { id: 1, label: "فیزیک", value: "Physics" },
+];
 
 const orderBy = [
   {
@@ -43,6 +374,7 @@ const orderBy = [
 ];
 
 export const Courses = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [values, setValues] = useState([20, 15000000]);
   const [isVertical, setIsVertical] = useState(true);
   const { onOpen } = useModal();
@@ -56,28 +388,28 @@ export const Courses = () => {
   const teacher_name = searchParams.get("teacher_name");
   const items_per_page = parseInt(searchParams.get("items_per_page"));
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["courses"],
-    queryFn: () =>
-      getAllCourses({
-        PageNumber: 1,
-        RowsOfPage: 60,
-        SortingCol: "LastUpdate",
-        SortType: "DESC",
-      }),
-    staleTime: 5000,
-  });
-  const {
-    data: categories,
-    isLoading: categoryLoading,
-    isError: categoryError,
-  } = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => getCategories(),
-    staleTime: 5000,
-  });
+  // const { data, isLoading, isError } = useQuery({
+  //   queryKey: ["courses"],
+  //   queryFn: () =>
+  //     getAllCourses({
+  //       PageNumber: 1,
+  //       RowsOfPage: 60,
+  //       SortingCol: "LastUpdate",
+  //       SortType: "DESC",
+  //     }),
+  //   staleTime: 5000,
+  // });
+  // const {
+  //   data: categories,
+  //   isLoading: categoryLoading,
+  //   isError: categoryError,
+  // } = useQuery({
+  //   queryKey: ["categories"],
+  //   queryFn: () => getCategories(),
+  //   staleTime: 5000,
+  // });
 
-  let filteredData = data?.courseFilterDtos?.filter((course) => {
+  let filteredData = courses.filter((course) => {
     if (!course_name && !categoryId && !status && !teacher_name) {
       if (course.cost >= values[0] && course.cost <= values[1]) return course;
     } else if (
@@ -130,24 +462,25 @@ export const Courses = () => {
     filteredData = newArray;
   }
 
-  if (isLoading || categoryLoading) return <Loading />;
-  if (isError || categoryError) return <Error />;
+  // if (isLoading || categoryLoading) return <Loading />;
+  // if (isError || categoryError) return <Error />;
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  if (isLoading) return <Loading />;
 
   return (
-    <div className="max-w-[1700px] bg-gra mx-auto flex flex-col items-start justify-center gap-y-10 p-10 2xl:p-20">
+    <div className="max-w-[1700px] bg-gra mx-auto flex flex-col items-start justify-center gap-10 p-5 md:p-10 2xl:p-20">
       <div className="flex justify-center items-center">
         <NavigatorTracer />
       </div>
       <Banner title="لیست دوره ها" />
       <Seperator />
-      <div
-        className={cn(
-          "flex flex-col xl:flex-row items-start justify-between gap-x-5",
-          isVertical
-            ? "w-full"
-            : "w-3/4 lg:w-3/5 xl:w-4/6 2xl:w-full mx-auto xl:mx-0"
-        )}
-      >
+      <div className="w-full flex flex-col xl:flex-row items-start justify-between gap-5">
         {/* Filter div */}
         <Filter categories={categories} values={values} setValues={setValues} />
         <MobileFilter values={values} setValues={setValues} />

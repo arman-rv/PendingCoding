@@ -1,8 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { useQuery } from "react-query";
-import toast from "react-hot-toast";
-
 import { useModal } from "../hooks/use-modal-store";
 import { useUser } from "../hooks/use-user";
 import { useState } from "react";
@@ -18,29 +15,24 @@ const backdrop = {
     transition: { duration: 0.5 },
   },
   exit: {
-    y: "100px",
+    y: "-200px",
     opacity: 0,
     transition: { duration: 0.5 },
   },
 };
 
 export const ConfirmDeleteModal = () => {
-  const { isOpen, onClose, type, data } = useModal();
+  const { isOpen, onClose, type, data:id } = useModal();
   const { removeFromCart } = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
   const isModalOpen = isOpen && type === "confirmDeleteModal";
 
-  const { course, reserveId } = data;
-
-  const { refetch } = useQuery({
-    queryKey: ["course_id", course?.courseId],
-  });
 
   const handleDelete = async () => {
     try {
       setIsLoading(true);
-      await removeFromCart(course?.courseId, reserveId).then(() => refetch());
+      await removeFromCart(id)
     } catch (error) {
       console.log(error);
     } finally {
@@ -50,10 +42,10 @@ export const ConfirmDeleteModal = () => {
   };
 
   return (
-    isModalOpen && (
-      <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait">
+      {isModalOpen && (
         <motion.div
-          className="fixed inset-0 w-full h-full bg-gray-300/50 z-10"
+          className="fixed inset-0 w-full h-full bg-gray-400/70 dark:bg-gray-700/70 z-10"
           variants={backdrop}
           animate="visible"
           initial="hidden"
@@ -66,7 +58,7 @@ export const ConfirmDeleteModal = () => {
             initial="hidden"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className="fixed inset-0 w-96 h-fit m-auto bg-white rounded-xl p-3 z-50"
+            className="fixed inset-0 w-96 h-fit m-auto bg-gray-50 dark:bg-gray-200 rounded-xl p-3 z-50"
           >
             <X
               className="self-start justify-self-start text-rose-700 cursor-pointer"
@@ -95,7 +87,7 @@ export const ConfirmDeleteModal = () => {
             </div>
           </motion.div>
         </motion.div>
-      </AnimatePresence>
-    )
+      )}
+    </AnimatePresence>
   );
 };

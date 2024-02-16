@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import toast from "react-hot-toast";
+import { motion, AnimatePresence } from "framer-motion";
 import { Dot, Menu, ShoppingCart } from "lucide-react";
-import { motion } from "framer-motion";
 
 import { useModal } from "../../hooks/use-modal-store";
 import { useScrollTop } from "../../hooks/use-scroll-top";
@@ -13,14 +13,14 @@ import { ThemeToggle } from "../../components/theme-toggle";
 
 import { cn } from "../../../libs/utils";
 
-import { routes } from "../../components/routes/routes";
 import { useTheme } from "../../components/providers/theme-provider";
-
-import defaultImage from "../../assets/my-profile.jpg";
 import {
   removeItem,
   setItem,
 } from "../../core/services/common/storage.services";
+
+import { routes } from "../../components/routes/routes";
+import defaultImage from "../../assets/my-profile.jpg";
 
 const backdrop = {
   hidden: {
@@ -33,7 +33,7 @@ const backdrop = {
     transition: { duration: 0.5 },
   },
   exit: {
-    y: "40px",
+    y: "-40px",
     opacity: 0,
     transition: { duration: 0.5 },
   },
@@ -113,38 +113,40 @@ const Navbar = () => {
               ref={dropDownRef}
               onClick={handleDropdown}
               className={cn(
-                "w-10 h-10 relative cursor-pointer opacity-80 hover:opacity-100 transition",
+                "w-12 h-12 rounded-full relative cursor-pointer opacity-80 hover:opacity-100 transition",
                 dropdown && "opacity-100"
               )}
             >
               <img
-                className="object-contain rounded-full"
-                src={userData.user.currentPictureAddress}
+                className="object-cover rounded-full"
+                src={userData.user.currentPictureAddress || defaultImage}
                 alt={defaultImage}
               />
-              {dropdown && (
-                <motion.div
-                  variants={backdrop}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  onClick={handleDropdown}
-                  className="absolute -left-12 top-11 px-2 py-3 w-32 bg-gray-100 dark:bg-gray-500 border border-gray-200/80 dark:border-gray-500 shadow-xl rounded-lg flex flex-col items-center justify-center gap-y-1"
-                >
-                  <Link
-                    to="/dashboard"
-                    className="border-[3px] border-primary dark:border-dark-primary w-full text-center rounded-full bg-gray-100 dark:bg-gray-400 dark:hover:bg-gray-300 dark:text-dark-primary/80 dark:hover:text-dark-primary hover:bg-gray-100 text-primary hover:text-primary/90 transition font-semibold"
+              <AnimatePresence mode="wait">
+                {dropdown && (
+                  <motion.div
+                    variants={backdrop}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    onClick={handleDropdown}
+                    className="absolute -left-12 top-11 px-2 py-3 w-32 bg-gray-100 dark:bg-gray-500 border border-gray-200/80 dark:border-gray-500 shadow-xl rounded-lg flex flex-col items-center justify-center gap-y-1"
                   >
-                    داشبورد
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="border-[3px] border-primary dark:border-dark-primary w-full text-center rounded-full bg-primary dark:bg-dark-primary hover:bg-primary/90 dark:hover:bg-dark-primary/90 text-white/80 dark:text-gray-200/80 dark:hover:text-gray-200 hover:text-white/80 transition"
-                  >
-                    خروج
-                  </button>
-                </motion.div>
-              )}
+                    <Link
+                      to="/dashboard"
+                      className="border-[3px] border-primary dark:border-dark-primary w-full text-center rounded-full bg-gray-100 dark:bg-gray-400 dark:hover:bg-gray-300 dark:text-dark-primary/80 dark:hover:text-dark-primary hover:bg-gray-100 text-primary hover:text-primary/90 transition font-semibold"
+                    >
+                      داشبورد
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="border-[3px] border-primary dark:border-dark-primary w-full text-center rounded-full bg-primary dark:bg-dark-primary hover:bg-primary/90 dark:hover:bg-dark-primary/90 text-white/80 dark:text-gray-200/80 dark:hover:text-gray-200 hover:text-white/80 transition"
+                    >
+                      خروج
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           ) : (
             <Link

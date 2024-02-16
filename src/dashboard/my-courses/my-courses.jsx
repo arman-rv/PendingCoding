@@ -1,22 +1,23 @@
-import { useQuery } from "react-query";
-
-import { getUserCourses } from "../../core/services/api/user";
+import { useEffect, useState } from "react";
 
 import { Banner } from "../../components/banner";
 import { Loading } from "../../components/loading";
-import { Error } from "../../components/error";
+
 import { BoughtCourses } from "./bought-courses";
+import { useUser } from "../../hooks/use-user";
 
 export const MyCourses = () => {
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["my_courses"],
-    queryFn: () => getUserCourses(),
-    staleTime: 5000,
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const { userData } = useUser();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   if (isLoading) return <Loading />;
-  if (isError) return <Error />;
-console.log(data)
+
   return (
     <div className=" py-10 px-10">
       {/* Disconted Courses
@@ -29,7 +30,7 @@ console.log(data)
           className="text-xl"
           height="h-10"
         />
-        <BoughtCourses courses={data?.listOfMyCourses} />
+        <BoughtCourses courses={userData.myCourses} />
       </div>
     </div>
   );

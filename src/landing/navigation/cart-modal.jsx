@@ -34,7 +34,7 @@ export const CartModal = () => {
     <AnimatePresence mode="wait">
       {isModalOpen && (
         <motion.div
-          className="fixed inset-0 w-full h-full bg-gray-300/70 dark:bg-gray-700/70 z-40"
+          className="fixed inset-0 w-full h-full bg-gray-400/70 dark:bg-gray-700/70 z-40"
           variants={backdrop}
           animate="visible"
           initial="hidden"

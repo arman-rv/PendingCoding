@@ -29,8 +29,10 @@ export const Filter = ({ categories, values, setValues }) => {
           {categories?.map((category) => (
             <CategoryItem
               key={category.id}
-              label={category.techName}
-              value={category.techName}
+              label={category.label}
+              value={category.value}
+              // label={category.techName}
+              // value={category.techName}
             />
           ))}
         </div>

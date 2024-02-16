@@ -40,7 +40,7 @@ export const SearchInput = ({ queryName, placeholder, className }) => {
 
   return (
     <div className="relative w-full">
-      <Search className="h-6 w-6 absolute top-1/4 left-2 text-slate-500/90" />
+      <Search className="h-6 w-6 absolute top-[21%] left-2 text-slate-500/90" />
       <input
         value={value}
         className={cn(

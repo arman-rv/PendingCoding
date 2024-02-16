@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
 import {
   ChevronDown,
@@ -46,6 +47,10 @@ export const CommentCard = ({ comment, updateFn, user }) => {
   const [showReplies, setShowReplies] = useState(false);
   const [isAnswering, setIsAnswering] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [likeCount, setLikeCount] = useState(comment.likeCount);
+  const [dissLikeCount, setDisLikeCount] = useState(comment.disslikeCount);
+  const [isUserLiked, setIsUserLiked] = useState(false);
+  const [isUserDisliked, setIsUserDisliked] = useState(false);
 
   const fullName = `${user?.fName}-${user?.lName}`;
 
@@ -99,16 +104,21 @@ export const CommentCard = ({ comment, updateFn, user }) => {
 
   const handleLike = async () => {
     try {
-      if (!userData.user) return onOpen("unauthorizedModal");
       setIsLoading(true);
-      const params = {
-        CourseCommandId: comment.id,
-      };
-      await likeComment(params).then((res) => {
-        updateFn();
-        if (res.success) toast.success("نظر پسندیده شد");
-        else toast.error(res.message);
-      });
+      if (isUserLiked) {
+        setIsUserLiked(false);
+        setLikeCount((c) => c - 1);
+      }
+      if (isUserDisliked) {
+        setIsUserLiked(true);
+        setIsUserDisliked(false);
+        setLikeCount((c) => c + 1);
+        setDisLikeCount((c) => c - 1);
+      }
+      if (!isUserDisliked && !isUserLiked) {
+        setIsUserLiked(true);
+        setLikeCount((c) => c + 1);
+      }
     } catch (error) {
       console.log(error);
       toast.error("مشکلی پیش آمده دوباره امتحان کنید");
@@ -116,18 +126,23 @@ export const CommentCard = ({ comment, updateFn, user }) => {
       setIsLoading(false);
     }
   };
-  const handleDisLike = async () => {
+  const handleDisslike = () => {
     try {
-      if (!userData.user) return onOpen("unauthorizedModal");
       setIsLoading(true);
-      const params = {
-        CourseCommandId: comment?.id,
-      };
-      await disLikeComment(params).then((res) => {
-        updateFn();
-        if (res.success) toast.success("نظر نقد شد");
-        else toast.error(res.message);
-      });
+      if (isUserDisliked) {
+        setIsUserDisliked(false);
+        setDisLikeCount((c) => c - 1);
+      }
+      if (isUserLiked) {
+        setIsUserDisliked(true);
+        setIsUserLiked(false);
+        setDisLikeCount((c) => c + 1);
+        setLikeCount((c) => c - 1);
+      }
+      if (!isUserDisliked && !isUserLiked) {
+        setIsUserDisliked(true);
+        setDisLikeCount((c) => c + 1);
+      }
     } catch (error) {
       console.log(error);
       toast.error("مشکلی پیش آمده دوباره امتحان کنید");
@@ -135,6 +150,45 @@ export const CommentCard = ({ comment, updateFn, user }) => {
       setIsLoading(false);
     }
   };
+
+  // const handleLike = async () => {
+  //   try {
+  //     if (!userData.user) return onOpen("unauthorizedModal");
+  //     setIsLoading(true);
+  //     const params = {
+  //       CourseCommandId: comment.id,
+  //     };
+  //     await likeComment(params).then((res) => {
+  //       updateFn();
+  //       if (res.success) toast.success("نظر پسندیده شد");
+  //       else toast.error(res.message);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("مشکلی پیش آمده دوباره امتحان کنید");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+  // const handleDisLike = async () => {
+  //   try {
+  //     if (!userData.user) return onOpen("unauthorizedModal");
+  //     setIsLoading(true);
+  //     const params = {
+  //       CourseCommandId: comment?.id,
+  //     };
+  //     await disLikeComment(params).then((res) => {
+  //       updateFn();
+  //       if (res.success) toast.success("نظر نقد شد");
+  //       else toast.error(res.message);
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("مشکلی پیش آمده دوباره امتحان کنید");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleAnswer = () => {
     if (userData.user) setIsAnswering(true);
@@ -216,7 +270,7 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                   </p>
                 </form>
               ) : (
-                <p className="dark:text-gray-300 text-gray-500">
+                <p className="w-11/12 text-justify dark:text-gray-300 text-gray-500">
                   {comment?.describe}
                 </p>
               )}
@@ -230,40 +284,41 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                     <ThumbsUp
                       className={cn(
                         "h-7 w-7 md:h-5 md:w-5 mt-2",
-                        comment?.currentUserEmotion === "LIKED" &&
-                          "fill-primary dark:fill-dark-primary"
+                        isUserLiked && "fill-primary dark:fill-dark-primary"
                       )}
                     />
                     <p className="text-2xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
-                      {getPersianNumbers(comment?.likeCount)}
+                      {getPersianNumbers(likeCount)}
                     </p>
                   </button>
                   <button
-                    onClick={handleDisLike}
+                    onClick={handleDisslike}
                     disabled={isLoading}
                     className="flex items-center justify-center gap-x-1 dark:text-dark-destructive text-destructive hover:text-destructive/80 dark:hover:text-dark-destructive/80 transition disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <ThumbsDown
                       className={cn(
                         "h-7 w-7 md:h-5 md:w-5 mt-2",
-                        comment?.currentUserEmotion === "DISSLIKED" &&
+                        isUserDisliked &&
                           "fill-destructive dark:fill-dark-destructive"
                       )}
                     />
                     <p className="text-2xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
-                      {getPersianNumbers(comment?.disslikeCount)}
+                      {getPersianNumbers(dissLikeCount)}
                     </p>
                   </button>
                 </div>
               )}
             </div>
-            {isAnswering && (
-              <AnswerForm
-                comment={comment}
-                setIsAnswering={setIsAnswering}
-                updateFn={updateFn}
-              />
-            )}
+            <AnimatePresence mode="wait">
+              {isAnswering && (
+                <AnswerForm
+                  comment={comment}
+                  setIsAnswering={setIsAnswering}
+                  updateFn={updateFn}
+                />
+              )}
+            </AnimatePresence>
             {!isAnswering && !isEditing && (
               <div className="w-full flex items-center justify-between">
                 {fullName === comment?.author ? (

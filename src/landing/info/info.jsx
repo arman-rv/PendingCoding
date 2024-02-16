@@ -1,54 +1,77 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Link } from "react-router-dom";
 import { ArrowUpLeft } from "lucide-react";
-import { useQueries } from "react-query";
+// import { useQueries } from "react-query";
 
-import { getAllTeachers } from "../../core/services/api/get-teacher";
+// import { getAllTeachers } from "../../core/services/api/get-teacher";
 
 import { TeacherLatestImage } from "./teacher-latest-image";
 import { Loading } from "../../components/loading";
-import { Error } from "../../components/error";
+// import { Error } from "../../components/error";
 
 import { getPersianNumbers } from "../../../libs/get-persian-numbers";
-import { getLandingReport } from "../../core/services/api/get-landing-report";
+// import { getLandingReport } from "../../core/services/api/get-landing-report";
 
 import fun from "../../assets/fun.svg";
 import defaultImage from "../../assets/my-profile.jpg";
 import logo from "../../assets/logo.svg";
+import Amir from "../../assets/amir.jpg";
+import Arman from "../../assets/arman.jpg";
+
+const teachers = [
+  { id: 1, name: "امیرعباس بابائی", pictureAddress: Amir },
+  { id: 2, name: "آرمان رضوانی", pictureAddress: Arman },
+  { id: 3, name: "امیرعباس بابائی", pictureAddress: Amir },
+  { id: 4, name: "آرمان رضوانی", pictureAddress: Arman },
+  { id: 5, name: "امیرعباس بابائی", pictureAddress: Amir },
+];
+const landingReport = {
+  courseCount: 434,
+  teacherCount: 212,
+  studentCount: 2321,
+};
 
 export const Info = () => {
-  const [isMounted, setIsMounted] = useState(false);
-  const results = useQueries([
-    {
-      queryKey: ["teachers"],
-      queryFn: () => getAllTeachers(),
-      staleTime: 5000,
-      enabled: false,
-    },
-    {
-      queryKey: ["landing_report"],
-      queryFn: () => getLandingReport(),
-      staleTime: 5000,
-      enabled: false,
-    },
-  ]);
+  const [isLoading, setIsLoading] = useState(true);
+  // const [isMounted, setIsMounted] = useState(false);
+  // const results = useQueries([
+  //   {
+  //     queryKey: ["teachers"],
+  //     queryFn: () => getAllTeachers(),
+  //     staleTime: 5000,
+  //     enabled: false,
+  //   },
+  //   {
+  //     queryKey: ["landing_report"],
+  //     queryFn: () => getLandingReport(),
+  //     staleTime: 5000,
+  //     enabled: false,
+  //   },
+  // ]);
 
-  const isLoading = results.some((result) => result.isLoading);
-  const isError = results.some((result) => result.isError);
+  // const isLoading = results.some((result) => result.isLoading);
+  // const isError = results.some((result) => result.isError);
 
-  useLayoutEffect(() => {
-    if (!isMounted) {
-      setIsMounted(true);
-      results?.[0].refetch();
-      results?.[1].refetch();
-    }
-  }, [isMounted, results]);
+  // useLayoutEffect(() => {
+  //   if (!isMounted) {
+  //     setIsMounted(true);
+  //     results?.[0].refetch();
+  //     results?.[1].refetch();
+  //   }
+  // }, [isMounted, results]);
 
-  if (!isMounted) return null;
-  if (isError) return <Error />;
+  // if (!isMounted) return null;
+  // if (isError) return <Error />;
+  // if (isLoading) return <Loading />;
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
   if (isLoading) return <Loading />;
-
   return (
     <div className="flex flex-col items-center justify-center gap-y-16">
       <h1 className="text-gray-500 dark:text-gray-300 text-4xl xl:text-2xl">
@@ -59,24 +82,24 @@ export const Info = () => {
         <div className="flex flex-col items-center justify-center gap-y-5">
           <div className="text-gray-400 dark:text-gray-300/80 text-sm text-center xl:text-start xl:ml-auto">
             <h3 className="text-gray-500 dark:text-gray-300/80 text-2xl">
-              {getPersianNumbers(results?.[1].data?.courseCount)}
+              {getPersianNumbers(landingReport.courseCount)}
             </h3>
             دوره مدرن آموزشی
           </div>
           <div className="text-gray-400 dark:text-gray-300/80 text-sm text-center xl:text-start xl:ml-auto">
             <h3 className="text-gray-500 dark:text-gray-300/80 text-2xl">
-              {getPersianNumbers(results?.[1].data?.teacherCount)}
+              {getPersianNumbers(landingReport.teacherCount)}
             </h3>
             استاد مجرّب در مجموعه
           </div>
           <div>
             <div className="group flex flex-col items-center xl:items-start justify-center">
-              {results?.[0]?.data.slice(0, 3).map((teacher, index) => (
+              {teachers.slice(0, 3).map((teacher, index) => (
                 <TeacherLatestImage
                   key={teacher.id}
                   id={teacher.id}
                   index={index}
-                  name={teacher.fullName || "امیرعباس"}
+                  name={teacher.name || "امیرعباس"}
                   image={teacher.pictureAddress || defaultImage}
                 />
               ))}
@@ -100,7 +123,7 @@ export const Info = () => {
           />
           <div className="flex flex-col items-center xl:items-start justify-center gap-y-1">
             <h1 className="text-3xl text-gray-600 dark:text-gray-300/80">
-              {getPersianNumbers(results?.[1].data?.studentCount)}
+              {getPersianNumbers(landingReport.studentCount)}
             </h1>
             <h2 className="text-gray-500 dark:text-gray-300/80 text-lg">
               دانشجویان مجموعه

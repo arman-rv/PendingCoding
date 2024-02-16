@@ -17,18 +17,22 @@ export const BestTeachersMobile = ({ teachers }) => {
               {teacher.fullName || "TeacherName"}
               <MoveRight className="text-gray-400/70 dark:text-gray-400 mx-auto h-20 w-20" />
             </p>
-            <span>
-              <img src={teacher.image || teacher1} alt="TeacherPic" />
-            </span>
+              <img
+                className="object-cover w-32 h-32 rounded-full"
+                src={teacher.image || teacher1}
+                alt="TeacherPic"
+              />
           </div>
         ) : (
           <div
             key={index}
             className="flex flex-row justify-between items-center gap-x-16"
           >
-            <span>
-              <img src={teacher.image || teacher2} alt="TeacherPic" />
-            </span>
+              <img
+                className="object-cover w-32 h-32 rounded-full"
+                src={teacher.image || teacher2}
+                alt="TeacherPic"
+              />
             <p className="text-gray-600 dark:text-gray-300 text-lg flex items-center justify-center gap-x-5">
               <MoveLeft className="text-gray-400/70 dark:text-gray-400 mx-auto h-20 w-20" />
               {teacher.fullName || "TeacherName"}

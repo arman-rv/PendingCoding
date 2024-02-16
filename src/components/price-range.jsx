@@ -41,7 +41,7 @@ export const PriceRange = ({ values, setValues }) => {
               value={values?.[0]}
               onChange={handleMin}
               type="number"
-              className="disabled:cursor-not-allowed w-20 text-left outline-none bg-gray-100 dark:bg-gray-300 text-primary dark:text-gray-800 rounded-full duration-200"
+              className="border-0 focus:border-0 disabled:cursor-not-allowed w-20 text-left outline-none bg-gray-100 dark:bg-gray-300 text-primary dark:text-gray-800 rounded-full duration-200"
             />
           </div>
         </div>
@@ -59,7 +59,7 @@ export const PriceRange = ({ values, setValues }) => {
               value={values?.[1]}
               onChange={handleMax}
               type="number"
-              className="disabled:cursor-not-allowed w-20 text-left outline-none bg-gray-100 dark:bg-gray-300 text-primary dark:text-gray-800 rounded-full duration-200"
+              className="border-0 focus:border-0 disabled:cursor-not-allowed w-20 text-left outline-none bg-gray-100 dark:bg-gray-300 text-primary dark:text-gray-800 rounded-full duration-200"
             />
           </div>
         </div>

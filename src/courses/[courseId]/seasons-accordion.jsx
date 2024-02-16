@@ -5,7 +5,7 @@ import {
   AccordionBody,
 } from "@material-tailwind/react";
 import { useUser } from "../../hooks/use-user";
-import { Unlock, Lock } from "lucide-react";
+import { Unlock, Lock, Video } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const CUSTOM_ANIMATION = {
@@ -58,20 +58,30 @@ export function SeasonsAccordion({ season, courseId }) {
           className="text-lg text-gray-500 dark:text-gray-400"
           onClick={() => handleOpen(1)}
         >
-          {season.name}
+          <div className="flex items-center gap-5">
+            <Video className="w-6 h-6" />
+            {season.name}
+          </div>
         </AccordionHeader>
-        {season.videos.map((video) => (
-          <AccordionBody key={video.videoLink}>
-            <div className="w-full flex items-center justify-between text-gray-500 dark:text-gray-400">
+        {season.videos.map((video, index) => (
+          <AccordionBody
+            key={video.videoLink}
+            className="border border-t-0 rounded-lg rounded-t-none p-4 "
+          >
+            <div className="w-full flex items-center justify-between text-gray-500 dark:text-gray-400 px-3">
               {boughtCourse ? (
                 <Link
                   to={`/courses/${courseId}/${getId(video.videoLink)}`}
                   className="text-base hover:text-gray-900 dark:hover:text-gray-200 transition"
                 >
-                  {video.title}
+                  <Video className="w-6 h-6" />
+                  {`${index + 1}.${video.title}`}
                 </Link>
               ) : (
-                <p className="">{video.title}</p>
+                <span className="flex items-center gap-5">
+                  <Video className="w-6 h-6" />
+                  <p className="text-[17px]"> {`${index + 1}. ${video.title}`}</p>
+                </span>
               )}
               {boughtCourse ? (
                 <Unlock className="w-5 h-5" />

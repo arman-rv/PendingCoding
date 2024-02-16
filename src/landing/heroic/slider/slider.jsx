@@ -1,26 +1,71 @@
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
+// import { useQuery } from "react-query";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, FreeMode } from "swiper/modules";
 import { Link } from "react-router-dom";
 
 import { cn } from "../../../../libs/utils";
 
-import { getAllBlogs } from "../../../core/services/api/get-blogs";
+// import { getAllBlogs } from "../../../core/services/api/get-blogs";
 import { Loading } from "../../../components/loading";
-import { Error } from "../../../components/error";
+// import { Error } from "../../../components/error";
 
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/autoplay";
 
-export const Slider = () => {
-  const { data, isLoading, isError } = useQuery("news", () => getAllBlogs(), {
-    staleTime: 5000,
-  });
+const blogs = [
+  {
+    id: 1,
+    newsCatregoryName: "خبر",
+    title: "این متن فقط برای نمایش است",
+    miniDescribe: "این متن فقط برای نمایش است",
+  },
+  {
+    id: 2,
+    newsCatregoryName: "خبر",
+    title: "این متن فقط برای نمایش است",
+    miniDescribe: "این متن فقط برای نمایش است",
+  },
+  {
+    id: 3,
+    newsCatregoryName: "خبر",
+    title: "این متن فقط برای نمایش است",
+    miniDescribe: "این متن فقط برای نمایش است",
+  },
+  {
+    id: 4,
+    newsCatregoryName: "خبر",
+    title: "این متن فقط برای نمایش است",
+    miniDescribe: "این متن فقط برای نمایش است",
+  },
+  {
+    id: 5,
+    newsCatregoryName: "خبر",
+    title: "این متن فقط برای نمایش است",
+    miniDescribe: "این متن فقط برای نمایش است",
+  },
+  {
+    id: 6,
+    newsCatregoryName: "خبر",
+    title: "این متن فقط برای نمایش است",
+    miniDescribe: "این متن فقط برای نمایش است",
+  },
+];
 
+export const Slider = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  // const { data, isLoading, isError } = useQuery("news", () => getAllBlogs(), {
+  //   staleTime: 5000,
+  // });
+
+  // if (isLoading) return <Loading />;
+  // if (isError) return <Error />;
+  // const { news: blogs } = data;
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 2000);
+  }, []);
   if (isLoading) return <Loading />;
-  if (isError) return <Error />;
-  const { news: blogs } = data;
   return (
     <div className="flex flex-1 items-center justify-center">
       <div className="w-[400px] sm:w-[500px] md:w-[450px] lg:w-[600px] xl:w-[1000px]">

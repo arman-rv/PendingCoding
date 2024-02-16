@@ -1,6 +1,5 @@
-import { useState, useLayoutEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useQuery } from "react-query";
 import { BookX, Menu } from "lucide-react";
 
 import NavigatorTracer from "../components/navigator-tracer";
@@ -9,13 +8,14 @@ import { Seperator } from "../components/seperator";
 import { SearchInput } from "../components/search";
 import { Select } from "../components/select";
 import { Loading } from "../components/loading";
-import { Error } from "../components/error";
 import { TeacherCards } from "./teacher-cards";
 
 import { useModal } from "../hooks/use-modal-store";
 
 import { cn } from "../../libs/utils";
-import { getAllTeachers } from "../core/services/api/get-teacher";
+
+import Amir from "../assets/amir.jpg";
+import Arman from "../assets/arman.jpg";
 
 const orderBy = [
   {
@@ -35,25 +35,108 @@ const orderBy = [
   },
 ];
 
+const teachers = [
+  {
+    teacherId: 1,
+    fullName: "امیرعباس بابائی",
+    pictureAddress: Amir,
+    newsCount: 20,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 2,
+    fullName: "آرمان رضوانی",
+    pictureAddress: Arman,
+    newsCount: 20,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 3,
+    fullName: "امیرعباس بابائی",
+    pictureAddress: Amir,
+    newsCount: 20,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 4,
+    fullName: "آرمان رضوانی",
+    pictureAddress: Arman,
+    newsCount: 20,
+    courseCounts: 5,
+  },
+  {
+    teacherId: 5,
+    fullName: "امیرعباس بابائی",
+    pictureAddress: Amir,
+    newsCount: 50,
+    courseCounts: 5,
+  },
+  {
+    teacherId: 6,
+    fullName: "آرمان رضوانی",
+    pictureAddress: Arman,
+    newsCount: 50,
+    courseCounts: 5,
+  },
+  {
+    teacherId: 7,
+    fullName: "امیرعباس بابائی",
+    pictureAddress: Amir,
+    newsCount: 13,
+    courseCounts: 5,
+  },
+  {
+    teacherId: 8,
+    fullName: "آرمان رضوانی",
+    pictureAddress: Arman,
+    newsCount: 13,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 9,
+    fullName: "امیرعباس بابائی",
+    pictureAddress: Amir,
+    newsCount: 13,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 10,
+    fullName: "آرمان رضوانی",
+    pictureAddress: Arman,
+    newsCount: 13,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 12,
+    fullName: "امیرعباس بابائی",
+    pictureAddress: Amir,
+    newsCount: 13,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 13,
+    fullName: "آرمان رضوانی",
+    pictureAddress: Arman,
+    newsCount: 13,
+    courseCounts: 2,
+  },
+];
+
 export const Teachers = () => {
   const [isVertical, setIsVertical] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
   const { onOpen } = useModal();
 
   const [searchParams] = useSearchParams();
 
-  const {
-    data: teachers,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["teachers"],
-    queryFn: () => getAllTeachers(),
-    staleTime: 5000,
-  });
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   if (isLoading) return <Loading />;
-
-  if (isError) return <Error />;
 
   const teacher_name = searchParams.get("teacher_name");
   const teacherFilterBy = searchParams.get("teacherFilterBy");

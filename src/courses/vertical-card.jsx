@@ -10,15 +10,19 @@ import { StarRate } from "../components/starRate";
 import { ToolTip } from "../components/tool-tip";
 
 import defaultCourseImage from "../assets/python.jpg";
+import { useUser } from "../hooks/use-user";
 
 const status = {
   "درحال برگذاری": <BookOpen className="text-gray-600 dark:text-gray-300" />,
 };
 
-export const VerticalCard = ({ course, reservedCourses }) => {
+export const VerticalCard = ({ course }) => {
+  const { userData } = useUser();
   const isPurchased = useMemo(
-    () => reservedCourses?.find((c) => c.courseId === course?.courseId),
-    [reservedCourses, course?.courseId]
+    () =>
+      userData.cart.find((c) => c.courseId === course.courseId) ||
+      userData.myCourses.find((c) => c.courseId === course.courseId),
+    [userData.cart, userData.myCourses, course]
   );
 
   const lastUpdate = new Date(course?.lastUpdate)
@@ -45,7 +49,7 @@ export const VerticalCard = ({ course, reservedCourses }) => {
         loading="lazy"
         src={course.tumbImageAddress || defaultCourseImage}
         alt="CourseImage"
-        className="object-cover rounded-t-xl w-full h-56"
+        className="object-fill rounded-t-xl w-full h-60"
       />
       <div className="self-start">
         <h1 className="text-lg text-gray-600 dark:text-gray-200 mr-5">
@@ -103,7 +107,7 @@ export const VerticalCard = ({ course, reservedCourses }) => {
         {isPurchased ? (
           <Link
             to={`/courses/${course.courseId}`}
-            className="flex justify-center items-center gap-x-1 text-gray-500 dark:text-gray-200/80 hover:text-gray-800 dark:hover:text-gray-100 transition"
+            className="flex justify-center items-center gap-x-1 text-primary/80 dark:text-gray-200/80 hover:text-primary  dark:hover:text-gray-100 transition"
           >
             <Eye />
             مشاهده دوره

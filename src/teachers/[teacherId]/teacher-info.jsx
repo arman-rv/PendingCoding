@@ -1,40 +1,347 @@
-import { useState } from "react";
-import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
-
-import { getTeacherById } from "../../core/services/api/get-teacher";
-import { getAllCourses } from "../../core/services/api/get-courses";
+import { useState, useEffect } from "react";
 
 import { Loading } from "../../components/loading";
-import { Error } from "../../components/error";
 import NavigatorTracer from "../../components/navigator-tracer";
 import { Header } from "./header";
 import { Description } from "./description";
 import { Banner } from "../../components/banner";
 import { Slider } from "./slider";
 
+import Image from "../../assets/REACTjs.webp";
+import CSharp from "../../assets/cSharp.jpg";
+import CPlus from "../../assets/c++.jpg";
+import Physics from "../../assets/physics.jpg";
+import SQL from "../../assets/sql.jpg";
+import Amir from "../../assets/amir.jpg";
+
+const teacher = {
+  teacherId: 1,
+  fullName: "امیرعباس بابائی",
+  pictureAddress: Amir,
+  newsCount: 20,
+  courseCounts: 2,
+  skills: ["ReactJS", "HTML5", "CSS3", "JavaScript"],
+};
+const courses = [
+  {
+    courseId: 0,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 1,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 2,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 3,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 4,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 5,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 6,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 7,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 8,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 9,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 10,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 11,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 24,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 12,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Image,
+    likeCount: 24,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 13,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: CPlus,
+    likeCount: 24,
+    title: "C++",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "C++",
+  },
+  {
+    courseId: 14,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: CPlus,
+    likeCount: 24,
+    title: "C++",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "C++",
+  },
+  {
+    courseId: 15,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: CSharp,
+    likeCount: 24,
+    title: "C#",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "C#",
+  },
+  {
+    courseId: 16,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: CSharp,
+    likeCount: 24,
+    title: "C#",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "C#",
+  },
+  {
+    courseId: 17,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: SQL,
+    likeCount: 24,
+    title: "SQL",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "SQL",
+  },
+  {
+    courseId: 18,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: SQL,
+    likeCount: 24,
+    title: "SQL",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "SQL",
+  },
+  {
+    courseId: 19,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Physics,
+    likeCount: 24,
+    title: "فیزیک",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "Physics",
+  },
+  {
+    courseId: 20,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: Physics,
+    likeCount: 24,
+    title: "فیزیک",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    teacherName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "Physics",
+  },
+];
+
 export const TeacherInfo = () => {
-  const { id } = useParams();
-
-  const {
-    data: teacher,
-    isLoading: isTeacherLoading,
-    isError: isTeacherError,
-  } = useQuery({
-    queryKey: ["teacher_id", id],
-    queryFn: () => getTeacherById(id),
-    staleTime: 5000,
-  });
-
-  const {
-    data: courses,
-    isLoading: coursesLoading,
-    isError: coursesError,
-  } = useQuery({
-    queryKey: ["teacher_course"],
-    queryFn: () => getAllCourses({ TeacherId: id }),
-    staleTime: 5000,
-  });
+  const [isLoading, setIsLoading] = useState(true);
   const details = [
     {
       id: 1,
@@ -56,58 +363,23 @@ export const TeacherInfo = () => {
     {
       id: 2,
       label: "دوره‌های ترم جاری",
-      courses: courses?.courseFilterDtos,
+      courses: courses,
     },
     {
       id: 3,
       label: "تمام دوره ها",
-      courses: courses?.courseFilterDtos,
+      courses: courses,
     },
-    // {
-    //   id: 4,
-    //   label: "نظرات",
-    //   comments: [
-    //     {
-    //       id: 1,
-    //       comment: `لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله
-    //       .در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
-    //       کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را
-    //       برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام
-    //       و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی
-    //        .سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد`,
-    //       createdAt: teacher?.createdAt,
-    //       user: {
-    //         name: teacher?.studentName,
-    //         image: teacher??.studentImage,
-    //       },
-    //       responds: [
-    //         {
-    //           id: teacher?.teacherId,
-    //           name: teacher?.teacher,
-    //           image: teacher??.studentImage,
-    //           respond: `.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-    //           چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد
-    //           .نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد`,
-    //           role: "student",
-    //         },
-    //         {
-    //           id: teacher?.studentId || 1234,
-    //           name: teacher?.studentName,
-    //           image: teacher??.studentImage,
-    //           respond: `.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-    //           چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد
-    //           .نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد`,
-    //           role: "student",
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
   ];
   const [selected, setSelected] = useState(details[0].label);
 
-  if (isTeacherLoading && coursesLoading) return <Loading />;
-  if (isTeacherError && coursesError) return <Error />;
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="max-w-[1700px] mt-20 mx-auto flex flex-col justify-center items-start gap-y-10 px-5 md:px-28 py-5">
@@ -130,7 +402,7 @@ export const TeacherInfo = () => {
         {/* Course Image & Description */}
         <div className="w-full flex flex-col items-start justify-center gap-y-5">
           <img
-            className="rounded-xl w-full h-[475px] object-fill"
+            className="rounded-xl w-full h-[500px] object-cover"
             src={teacher?.pictureAddress}
             alt="courseImage"
           />

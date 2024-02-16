@@ -50,7 +50,7 @@ export const TeacherLatestImage = ({ index, id, name, image }) => {
         index === 2 && "-translate-y-9 group-hover:translate-y-0"
       )}
     >
-      <img src={image} className="self-center mx-auto rounded-full w-12 h-12" alt="TeacherProf" />
+      <img src={image} className="self-center mx-auto rounded-full w-16 h-16 object-cover" alt="TeacherProf" />
     </Link>
   );
 };

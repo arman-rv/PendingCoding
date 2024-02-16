@@ -1,32 +1,116 @@
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, FreeMode } from "swiper/modules";
 
-import { getAllTeachers } from "../../core/services/api/get-teacher";
-
 import { VerticalCard } from "../vertical-card";
 import { Loading } from "../../components/loading";
-import { Error } from "../../components/error";
 
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/autoplay";
 
 import defaultProfileImage from "../../assets/my-profile.jpg";
+import Amir from "../../assets/amir.jpg";
+import Arman from "../../assets/arman.jpg";
+
+const teachers = [
+  {
+    teacherId: 1,
+    fullName: "امیرعباس بابائی",
+    pictureAddress: Amir,
+    newsCount: 20,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 2,
+    fullName: "آرمان رضوانی",
+    pictureAddress: Arman,
+    newsCount: 20,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 3,
+    fullName: "امیرعباس بابائی",
+    pictureAddress: Amir,
+    newsCount: 20,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 4,
+    fullName: "آرمان رضوانی",
+    pictureAddress: Arman,
+    newsCount: 20,
+    courseCounts: 5,
+  },
+  {
+    teacherId: 5,
+    fullName: "امیرعباس بابائی",
+    pictureAddress: Amir,
+    newsCount: 50,
+    courseCounts: 5,
+  },
+  {
+    teacherId: 6,
+    fullName: "آرمان رضوانی",
+    pictureAddress: Arman,
+    newsCount: 50,
+    courseCounts: 5,
+  },
+  {
+    teacherId: 7,
+    fullName: "امیرعباس بابائی",
+    pictureAddress: Amir,
+    newsCount: 13,
+    courseCounts: 5,
+  },
+  {
+    teacherId: 8,
+    fullName: "آرمان رضوانی",
+    pictureAddress: Arman,
+    newsCount: 13,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 9,
+    fullName: "امیرعباس بابائی",
+    pictureAddress: Amir,
+    newsCount: 13,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 10,
+    fullName: "آرمان رضوانی",
+    pictureAddress: Arman,
+    newsCount: 13,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 12,
+    fullName: "امیرعباس بابائی",
+    pictureAddress: Amir,
+    newsCount: 13,
+    courseCounts: 2,
+  },
+  {
+    teacherId: 13,
+    fullName: "آرمان رضوانی",
+    pictureAddress: Arman,
+    newsCount: 13,
+    courseCounts: 2,
+  },
+];
 
 export const Slider = () => {
-  const {
-    data: teachers,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["teachers"],
-    queryFn: () => getAllTeachers(),
-    staleTime: 5000,
-  });
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   if (isLoading) return <Loading />;
-  if (isError) return <Error />;
+
   return (
     <div className="w-full">
       <Swiper

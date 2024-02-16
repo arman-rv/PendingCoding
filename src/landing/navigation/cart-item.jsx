@@ -1,14 +1,10 @@
 import { Book, Clock, LayoutDashboard, Tags, User, Users } from "lucide-react";
-import { useQuery } from "react-query";
 
 import { getPersianNumbers } from "../../../libs/get-persian-numbers";
 import { useUser } from "../../hooks/use-user";
 
 export const CartItem = ({ course }) => {
   const { removeFromCart } = useUser();
-  const { data } = useQuery({
-    queryKey: ["course_id", course?.courseId],
-  });
 
   const startDate = (course) =>
     new Date(course.startTime).toLocaleDateString("fa-IR-u-nu-latn").split("/");
@@ -96,9 +92,7 @@ export const CartItem = ({ course }) => {
       <div className="w-full flex justify-between items-center px-5">
         <div className="w-full flex items-center justify-end gap-x-5">
           <button
-            onClick={() =>
-              removeFromCart(course?.courseId, data?.courseReseveId)
-            }
+            onClick={() => removeFromCart(course?.courseId)}
             className="px-5 py-2 text-lg bg-destructive hover:bg-destructive/80 text-white hover:text-white/90 disabled:text-white/90 disabled:bg-destructive/90 transition rounded-xl"
           >
             حذف

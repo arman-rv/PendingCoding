@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
+// import { useMemo } from "react";
+// import { useQuery } from "react-query";
+// import { useParams } from "react-router-dom";
 import {
   Book,
   Bookmark,
@@ -14,16 +16,6 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 
-import {
-  addCourseToFavorites,
-  deleteCourseFavorite,
-  deleteCourseLike,
-  dissLikeCourse,
-  getCourseById,
-  likeCourse,
-  rateCourse,
-} from "../../core/services/api/get-courses";
-import { getTeacherById } from "../../core/services/api/get-teacher";
 
 import { getPersianNumbers } from "../../../libs/get-persian-numbers";
 import { cn } from "../../../libs/utils";
@@ -33,7 +25,6 @@ import { useUser } from "../../hooks/use-user";
 
 import { StarRate } from "../../components/starRate";
 import { Loading } from "../../components/loading";
-import { Error } from "../../components/error";
 import NavigatorTracer from "../../components/navigator-tracer";
 import { NewCourseCard } from "../../components/new-course-card";
 import { Banner } from "../../components/banner";
@@ -41,39 +32,117 @@ import { Header } from "./header";
 import { Description } from "./description";
 import { Slider } from "./slider";
 
-import defaultCourseThumbnail from "../../assets/typescript.jpeg";
+import defaultCourseThumbnail from "../../assets/REACTjs.webp";
+import Amir from "../../assets/amir.jpg";
+
+const course = {
+  courseId: 0,
+  createdAt: "2024-02-16T05:34:42.901Z",
+  startTime: "2024-02-16T05:34:42.901Z",
+  endTime: "2024-02-16T05:34:42.901Z",
+  imageAddress: defaultCourseThumbnail,
+  likeCount: 32,
+  dissLikeCount: 10,
+  title: "ری اکت",
+  currentRegistrants: 20,
+  statusName: "درحال ثبت نام",
+  teacherName: "آرمان رضوانی",
+  levelName: "پیشرفته",
+  cost: 200_000,
+  courseRate: 3,
+  currentRate: 4,
+  technologyList: "ReactJS",
+  currentUserDissLike: 0,
+  currentUserLike: 0,
+  describe: JSON.stringify([
+    {
+      name: "مقدمات",
+      videos: [
+        {
+          title: "مقدمات",
+          videoLink:
+            "https://www.youtube.com/watch?v=j942wKiXFu8&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d",
+        },
+      ],
+    },
+    {
+      name: "فصل 1",
+      videos: [
+        {
+          title: "فصل 1",
+          videoLink:
+            "https://www.youtube.com/watch?v=kVeOpcw4GWY&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d&index=2",
+        },
+      ],
+    },
+    {
+      name: "فصل 2",
+      videos: [
+        {
+          title: "فصل 2",
+          videoLink:
+            "https://www.youtube.com/watch?v=9D1x7-2FmTA&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d&index=3",
+        },
+      ],
+    },
+  ]),
+  miniDescribe:
+    "در این دوره شما استاد طراحی فرانت اند با ابزار فوق العاده قدرت مند React خواهید شد. ما در این دوره حتی اگر صفر باشید شما را به سطح استادی میرسانیم و با اتمام این دوره خیلی راحت میتوانید به بازار کار وارد شوید.",
+  techs: ["ReactJS", "HTML5", "CSS3"],
+  capacity: 40,
+};
+
+const teacher = {
+  teacherId: 1,
+  fullName: "امیرعباس بابائی",
+  pictureAddress: Amir,
+  skills: ["ReactJS", "HTML5", "CSS3", "JavaScript", "C#", "Python"],
+};
+
+const fade = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: { duration: 0.3 },
+  },
+};
 
 export const CourseInfo = () => {
-  const { id } = useParams();
+  // const { id } = useParams();
   const { isOpen, onOpen } = useModal();
-  const { userData } = useUser();
-  const [isBookMarked, setIsBookMarked] = useState(false);
-  const [teacher, setTeacher] = useState(null);
+  const { userData, courseBookmark, removeCourseBookmark } = useUser();
+  const [isLoading, setIsLoading] = useState(true);
+  // const [isBookmarked, setIsBookmarked] = useState(false);
+  // const [teacher, setTeacher] = useState(null);
   const [isPending, setIsPending] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  const [likeCount, setLikeCount] = useState(0);
-  const [dissLikeCount, setDisLikeCount] = useState(0);
+  // const [isMounted, setIsMounted] = useState(false);
+  const [likeCount, setLikeCount] = useState(course.likeCount);
+  const [dissLikeCount, setDisLikeCount] = useState(course.dissLikeCount);
+  const [isUserLiked, setIsUserLiked] = useState(false);
+  const [isUserDisliked, setIsUserDisliked] = useState(false);
 
-  const {
-    data: course,
-    isLoading,
-    isError,
-    isSuccess,
-    refetch,
-  } = useQuery({
-    queryKey: ["course_id", id],
-    queryFn: () => getCourseById(id),
-    staleTime: 5000,
-    enabled: false,
-  });
-  useMemo(() => {
-    if (isSuccess) {
-      getTeacherById(course?.teacherId).then((res) => setTeacher(res));
-      setLikeCount(course?.likeCount);
-      setDisLikeCount(course?.dissLikeCount);
-      setIsBookMarked;
-    }
-  }, [isSuccess, course?.teacherId, course?.likeCount, course?.dissLikeCount]);
+  // const {
+  //   data: course,
+  //   isLoading,
+  //   isError,
+  //   isSuccess,
+  //   refetch,
+  // } = useQuery({
+  //   queryKey: ["course_id", id],
+  //   queryFn: () => getCourseById(id),
+  //   staleTime: 5000,
+  //   enabled: false,
+  // });
+  // useMemo(() => {
+  //   if (isSuccess) {
+  //     getTeacherById(course?.teacherId).then((res) => setTeacher(res));
+  //     setLikeCount(course?.likeCount);
+  //     setDisLikeCount(course?.dissLikeCount);
+  //     m;
+  //   }
+  // }, [isSuccess, course?.teacherId, course?.likeCount, course?.dissLikeCount]);
   const details = course && [
     {
       id: 1,
@@ -106,64 +175,26 @@ export const CourseInfo = () => {
       comments: [
         {
           id: 1,
-          comment: `لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله
+          title: "متشکرم از دوره خوبتنون",
+          describe: `لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله
           .در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
           کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را
           برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام
           و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی
            .سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد`,
-          createdAt: course?.createdAt,
-          user: {
-            name: course?.studentName,
-            image: course?.studentImage,
-          },
-          responds: [
-            {
-              id: course?.teacherId,
-              name: course?.teacher,
-              image: course?.teacherAvatar,
-              respond: `.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-              چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد
-              .نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد`,
-              role: "admin",
-            },
-            {
-              id: course?.studentId || 1234,
-              name: course?.studentName,
-              image: course?.studentImage,
-              respond: `.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-              چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد
-              .نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد`,
-              role: "student",
-            },
-          ],
+          insertDate: course?.createdAt,
+          pictureAddress: Amir,
+          author: "امیرعباس",
+          currentUserEmotion: "",
+          likeCount: 4,
+          disslikeCount: 1,
+          acceptReplysCount: 1,
         },
       ],
     },
   ];
   const [selected, setSelected] = useState("توضیحات");
 
-  const isInCart = useMemo(
-    () => course?.courseReseveId !== "00000000-0000-0000-0000-000000000000",
-    [course?.courseReseveId]
-  );
-  const isPurchased = useMemo(
-    () => +course?.isCourseUser,
-    [course?.isCourseUser]
-  );
-
-  useEffect(() => {
-    if (!isMounted) {
-      setIsMounted(true);
-      refetch();
-    }
-  }, [isMounted, refetch]);
-
-  useMemo(() => {
-    const isBookMarked =
-      course?.userFavoriteId !== "00000000-0000-0000-0000-000000000000";
-    setIsBookMarked(isBookMarked);
-  }, [course?.userFavoriteId]);
 
   const startDate = new Date(course?.startTime)
     .toLocaleDateString("fa-IR-u-nu-latn")
@@ -191,18 +222,70 @@ export const CourseInfo = () => {
     try {
       if (!userData.user) return onOpen("unauthorizedModal");
       setIsPending(true);
-      if (isBookMarked)
-        await deleteCourseFavorite(course?.userFavoriteId).then((res) => {
-          if (res.success)
-            refetch().then(() => toast.success("از علاقه مندی حذف شد"));
-          else toast.error("مشکلی پیش آمده دوباره امتحان کنید");
-        });
-      else {
-        await addCourseToFavorites(course?.courseId).then((res) => {
-          if (res.success)
-            refetch().then(() => toast.success("به علاقه مندی اضافه شد"));
-          else toast.error("مشکلی پیش آمده دوباره امتحان کنید");
-        });
+      if (isBookmarked) await removeCourseBookmark(course.courseId);
+      else await courseBookmark(course);
+    } catch (error) {
+      console.log(error);
+      toast.error("مشکلی پیش آمده دوباره امتحان کنید");
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const isBookmarked = useMemo(
+    () => userData.favoriteCourse.some((c) => c.courseId === course.courseId),
+    [userData.favoriteCourse]
+  );
+
+  const isInCart = useMemo(
+    () => userData.cart.some((c) => c.courseId === course.courseId),
+    [userData.cart]
+  );
+  const isPurchased = useMemo(
+    () => userData.myCourses.some((c) => c.courseId === course.courseId),
+    [userData.myCourses]
+  );
+
+  const handleLike = async () => {
+    try {
+      setIsPending(true);
+      if (isUserLiked) {
+        setIsUserLiked(false);
+        setLikeCount((c) => c - 1);
+      }
+      if (isUserDisliked) {
+        setIsUserLiked(true);
+        setIsUserDisliked(false);
+        setLikeCount((c) => c + 1);
+        setDisLikeCount((c) => c - 1);
+      }
+      if (!isUserDisliked && !isUserLiked) {
+        setIsUserLiked(true);
+        setLikeCount((c) => c + 1);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("مشکلی پیش آمده دوباره امتحان کنید");
+    } finally {
+      setIsPending(false);
+    }
+  };
+  const handleDisslike = () => {
+    try {
+      setIsPending(true);
+      if (isUserDisliked) {
+        setIsUserDisliked(false);
+        setDisLikeCount((c) => c - 1);
+      }
+      if (isUserLiked) {
+        setIsUserDisliked(true);
+        setIsUserLiked(false);
+        setDisLikeCount((c) => c + 1);
+        setLikeCount((c) => c - 1);
+      }
+      if (!isUserDisliked && !isUserLiked) {
+        setIsUserDisliked(true);
+        setDisLikeCount((c) => c + 1);
       }
     } catch (error) {
       console.log(error);
@@ -212,49 +295,20 @@ export const CourseInfo = () => {
     }
   };
 
-  const handleLike = async () => {
-    try {
-      if (!userData.user) return onOpen("unauthorizedModal");
-      setIsPending(true);
-      if (+course?.currentUserLike)
-        await deleteCourseLike(course?.userLikeId).then(() => {
-          toast.success("لایک پس گرفته شد");
-          refetch();
-        });
-      else
-        await likeCourse(course?.courseId).then(() => {
-          toast.success("دوره پسندیده شد");
-          refetch();
-        });
-    } catch (error) {
-      console.log(error);
-      toast.error("مشکلی پیش آمده دوباره امتحان کنید");
-    } finally {
-      setIsPending(false);
-    }
-  };
-  const handleDisLike = async () => {
-    try {
-      if (!userData.user) return onOpen("unauthorizedModal");
-      setIsPending(true);
-      await dissLikeCourse(course?.courseId).then(() => {
-        toast.success("دوره نقد شد");
-        refetch();
-      });
-    } catch (error) {
-      console.log(error);
-      toast.error("مشکلی پیش آمده دوباره امتحان کنید");
-    } finally {
-      setIsPending(false);
-    }
-  };
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
-  if (!isMounted) return null;
-  if (isLoading && !teacher) return <Loading />;
-  if (isError) return <Error />;
-
+  if (isLoading) return <Loading />;
   return (
-    <div className="max-w-[1700px] mx-auto flex flex-col justify-center items-start gap-y-10 px-5 py-5 pt-20">
+    <motion.div
+      variants={fade}
+      initial="initial"
+      animate="animate"
+      className="max-w-[1700px] mx-auto flex flex-col justify-center items-start gap-y-10 px-5 py-5 pt-20"
+    >
       <div>
         <NavigatorTracer />
       </div>
@@ -269,7 +323,7 @@ export const CourseInfo = () => {
             <Bookmark
               className={cn(
                 "h-9 w-9",
-                isBookMarked && "fill-primary dark:fill-dark-primary"
+                isBookmarked && "fill-primary dark:fill-dark-primary"
               )}
             />
           </button>
@@ -287,7 +341,7 @@ export const CourseInfo = () => {
             <img
               src={teacher?.pictureAddress}
               alt="teacherPic"
-              className="h-10 w-10 rounded-full"
+              className="object-cover h-14 w-14 rounded-full"
             />
           ) : (
             <User className="dark:text-gray-300/80" />
@@ -310,8 +364,7 @@ export const CourseInfo = () => {
             <ThumbsUp
               className={cn(
                 "h-7 w-7 md:h-5 md:w-5",
-                +course?.currentUserLike &&
-                  "fill-primary dark:fill-dark-primary"
+                isUserLiked && "fill-primary dark:fill-dark-primary"
               )}
             />
             <p className="text-2xl md:text-lg dark:text-gray-300 text-gray-500">
@@ -319,15 +372,14 @@ export const CourseInfo = () => {
             </p>
           </button>
           <button
-            onClick={handleDisLike}
+            onClick={handleDisslike}
             disabled={isPending}
             className="flex items-center justify-center gap-x-2 dark:text-dark-destructive text-destructive hover:text-destructive/80 dark:hover:text-dark-destructive/80 transition disabled:opacity-70 disabled:cursor-not-allowed"
           >
             <ThumbsDown
               className={cn(
                 "h-7 w-7 md:h-5 md:w-5",
-                +course?.currentUserDissLike &&
-                  "fill-destructive dark:fill-dark-destructive"
+                isUserDisliked && "fill-destructive dark:fill-dark-destructive"
               )}
             />
             <p className="text-2xl md:text-lg dark:text-gray-300 text-gray-500">
@@ -339,7 +391,7 @@ export const CourseInfo = () => {
               id="CourseId"
               data={course}
               queryKey="course_id"
-              rateFn={rateCourse}
+              rateFn={() => {}}
             />
           </div>
         </div>
@@ -360,10 +412,7 @@ export const CourseInfo = () => {
               onClick={() =>
                 onOpen(
                   userData.user ? "confirmDeleteModal" : "unauthorizedModal",
-                  {
-                    course: course && course,
-                    reserveId: course?.courseReseveId,
-                  }
+                  course.courseId
                 )
               }
               className="w-full px-20 py-2 bg-destructive dark:bg-dark-destructive hover:bg-destructive/80 dark:hover:bg-dark-destructive/80 text-white hover:text-white/90 disabled:text-white/90 disabled:bg-destructive/80 disabled:cursor-not-allowed transition rounded-full "
@@ -377,9 +426,10 @@ export const CourseInfo = () => {
           ) : (
             <button
               onClick={() =>
-                onOpen(userData.user ? "confirmModal" : "unauthorizedModal", {
-                  course: course && course,
-                })
+                onOpen(
+                  userData.user ? "confirmModal" : "unauthorizedModal",
+                  course
+                )
               }
               className="w-full px-20 py-2 bg-primary dark:bg-dark-primary hover:bg-primary/80 dark:hover:bg-dark-primary/80 text-white hover:text-white/90 disabled:text-white/90 disabled:bg-primary/80 disabled:cursor-not-allowed transition rounded-full "
             >
@@ -400,7 +450,7 @@ export const CourseInfo = () => {
       <div className="w-full flex flex-col xl:flex-row justify-between items-center xl:items-start gap-x-5 gap-y-20">
         {/* Course Image & Description */}
         <div className="w-full flex flex-col items-start justify-center gap-y-5">
-          <div className="relative w-full h-[475px]">
+          <div className="relative w-full mx-auto h-[500px]">
             <img
               className="rounded-xl w-full h-full object-fill"
               src={defaultCourseThumbnail || course?.imageAddress}
@@ -430,8 +480,8 @@ export const CourseInfo = () => {
         </div>
 
         {/* Course Infos */}
-        <div className="w-full xl:w-1/4 flex flex-col items-center xl:items-start justify-center gap-y-10">
-          <div className="flex flex-col items-start justify-center gap-y-5">
+        <div className="w-full xl:w-1/4 flex flex-col sm:flex-row xl:flex-col flex-wrap items-center sm:items-start xl:items-start justify-evenly gap-y-10">
+          <div className="flex flex-col items-start gap-7 ">
             <Banner title="مشخصات دوره" className="text-xl" height="h-9" />
             <span className="flex justify-between items-center text-gray-500 dark:text-gray-300 text-sm gap-x-2">
               <User2 className="text-primary dark:text-gray-300/80 h-6 w-6" />
@@ -477,7 +527,7 @@ export const CourseInfo = () => {
               </h5>
             </span>
           </div>
-          <div className="flex flex-col justify-center items-start w-1/4 xl:w-full">
+          <div className="flex flex-col justify-center items-center xl:items-start w-full sm:w-1/4 xl:w-full">
             <Banner
               title="جدید ترین دوره ها"
               className="text-xl"
@@ -492,6 +542,6 @@ export const CourseInfo = () => {
         <Slider />
         <div></div>
       </div>
-    </div>
+    </motion.div>
   );
 };

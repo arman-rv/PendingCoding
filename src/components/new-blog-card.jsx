@@ -1,26 +1,77 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { LayoutDashboard } from "lucide-react";
-import { useQuery } from "react-query";
-import { getAllBlogs } from "../core/services/api/get-blogs";
+
 import { Loading } from "./loading";
-import { Error } from "./error";
+
+import CSharp from "../assets/cSharp.jpg";
+import Physics from "../assets/physics.jpg";
+import CPlus from "../assets/c++.jpg";
+
+const blogs = [
+  {
+    id: 0,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: CSharp,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    newsCatregoryName:"خبر"
+  },
+  {
+    id: 1,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Physics,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    newsCatregoryName:"خبر"
+  },
+  {
+    id: 2,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: CPlus,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    newsCatregoryName:"مقالات"
+  },
+];
 
 export const NewBlogCard = () => {
-  const {
-    data: blogs,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["blogs"],
-    queryFn: () => getAllBlogs(),
-    staleTime: 5000,
-  });
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
   if (isLoading) return <Loading />;
-  if (isError) return <Error />;
+
   return (
     <>
-      {blogs?.news.slice(0, 3).map((blog) => (
+      {blogs.slice(0, 3).map((blog) => (
         <div key={blog.id} className="py-2">
           <Link
             to={`/blogs/${blog.id}`}

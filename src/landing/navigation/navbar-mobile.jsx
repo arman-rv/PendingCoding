@@ -34,7 +34,7 @@ export const NavbarMobile = () => {
     <AnimatePresence mode="wait">
       {isDialogOpen && (
         <motion.div
-          className="fixed inset-0 bg-gray-200/60 dark:bg-gray-700/70 z-10"
+          className="fixed inset-0 bg-gray-400/70 dark:bg-gray-700/70 z-10"
           variants={backdrop}
           animate="visible"
           initial="hidden"
@@ -55,7 +55,7 @@ export const NavbarMobile = () => {
             />
             <button
               onClick={() => onClose()}
-              className="flex items-center justify-center my-5"
+              className="flex items-center justify-center my-3"
             >
               <ThemeToggle />
             </button>

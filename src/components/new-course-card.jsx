@@ -1,27 +1,74 @@
-import { useQuery } from "react-query";
+// import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 import { Loading } from "./loading";
-import { Error } from "./error";
+// import { Error } from "./error";
 
 import { getPersianNumbers } from "../../libs/get-persian-numbers";
-import { getTopCourses } from "../core/services/api/get-courses";
+// import { getTopCourses } from "../core/services/api/get-courses";
 
-import defaultCourseThumbnail from "../assets/default-course-thumbnail.png";
+import CSharp from "../assets/cSharp.jpg";
+import CPlus from "../assets/c++.jpg";
+import SQL from "../assets/sql.jpg";
+
+const courses = [
+  {
+    courseId: 0,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: CSharp,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 1,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: CPlus,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+  {
+    courseId: 2,
+    lastUpdate: "2024-02-16T05:34:42.901Z",
+    tumbImageAddress: SQL,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    teacherName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+  },
+];
 
 export const NewCourseCard = () => {
-  const {
-    data: courses,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["top_course"],
-    queryFn: () => getTopCourses(3),
-    staleTime: 5000,
-  });
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
   if (isLoading) return <Loading />;
-  if (isError) return <Error />;
 
   return (
     <>
@@ -32,7 +79,7 @@ export const NewCourseCard = () => {
             className="flex items-center justify-center gap-x-3 hover:bg-gray-200 hover:shadow-lg dark:hover:bg-gray-700 transition px-5 py-2 rounded-xl"
           >
             <img
-              src={course.tumbImageAddress || defaultCourseThumbnail}
+              src={course.tumbImageAddress || CSharp}
               alt="courseImage"
               className="w-16 h-16 rounded-full object-cover"
             />

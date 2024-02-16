@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ReactPaginate from "react-paginate";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useQuery } from "react-query";
 
@@ -20,6 +21,16 @@ const filters = [
   { id: 3, label: 18, value: 18 },
 ];
 
+const fade = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: { duration: 0.3 },
+  },
+};
+
 export const CourseCards = ({ courses, itemsPerPage, isVertical }) => {
   const [itemOffset, setItemOffset] = useState(0);
   const endOffset = itemOffset + itemsPerPage;
@@ -39,9 +50,12 @@ export const CourseCards = ({ courses, itemsPerPage, isVertical }) => {
 
   return (
     <>
-      <div
+      <motion.div
+        variants={fade}
+        initial="initial"
+        animate="animate"
         className={cn(
-          "w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-20 md:gap-20 xl:gap-32 2xl:gap-10",
+          "w-full flex flex-wrap gap-20 items-center justify-evenly",
           !isVertical && "hidden"
         )}
       >
@@ -52,10 +66,13 @@ export const CourseCards = ({ courses, itemsPerPage, isVertical }) => {
             reservedCourses={reservedCourses}
           />
         ))}
-      </div>
-      <div
+      </motion.div>
+      <motion.div
+        variants={fade}
+        initial="initial"
+        animate="animate"
         className={cn(
-          "w-full flex flex-col items-center gap-y-10",
+          "w-full flex flex-col justify-center items-center gap-10",
           isVertical && "hidden"
         )}
       >
@@ -66,7 +83,7 @@ export const CourseCards = ({ courses, itemsPerPage, isVertical }) => {
             reservedCourses={reservedCourses}
           />
         ))}
-      </div>
+      </motion.div>
       <div className="flex flex-col lg:flex-row items-center justify-between gap-y-5 mt-10">
         <div className="flex items-center justify-center text-gray-400">
           <h1>

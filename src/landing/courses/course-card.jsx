@@ -24,7 +24,8 @@ const status = {
   "درحال برگذاری": <BookOpen className="text-gray-600 dark:text-gray-300" />,
 };
 
-export const CourseCard = ({ course, index, updateFn }) => {
+//Add // updateFn
+export const CourseCard = ({ course, index }) => {
   const [isPending, setIsPending] = useState(false);
   const { userData } = useUser();
   const { onOpen } = useModal();
@@ -54,12 +55,12 @@ export const CourseCard = ({ course, index, updateFn }) => {
       if (course?.userIsLiked)
         await deleteCourseLike(course?.courseId).then(() => {
           toast.success("لایک پس گرفته شد");
-          updateFn();
+          // updateFn();
         });
       else
         await likeCourse(course?.courseId).then(() => {
           toast.success("دوره لایک شد");
-          updateFn();
+          // updateFn();
         });
     } catch (error) {
       console.log(error);
@@ -74,7 +75,7 @@ export const CourseCard = ({ course, index, updateFn }) => {
       setIsPending(true);
       await dissLikeCourse(course?.courseId).then(() => {
         toast.success("دوره دیسلایک شد");
-        updateFn();
+        // updateFn();
       });
     } catch (error) {
       console.log(error);
@@ -90,7 +91,7 @@ export const CourseCard = ({ course, index, updateFn }) => {
         <img
           src={course?.tumbImageAddress || defaultCourseImage}
           alt="CourseImage"
-          className="object-cover rounded-t-xl w-full h-72"
+          className="object-fill rounded-t-xl w-full h-72"
         />
         <div className="self-start">
           <h1 className="text-lg text-gray-600 dark:text-gray-200 mr-5">

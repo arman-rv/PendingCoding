@@ -25,6 +25,7 @@ const Login = ({ login, dataLogin }) => {
   });
 
   const { userData, setUserData } = useUser();
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -40,49 +41,49 @@ const Login = ({ login, dataLogin }) => {
     setIsCheck(!isCheck);
   };
 
-  const onSubmit = async (values) => {
-    let toaster;
-    // login API
-    const obj = {
-      phoneOrGmail: values.email,
-      password: values.password,
-      rememberMe: isCheck,
-    };
-    toaster = toast.loading("در حال پردازش لطفاٌ صبر کنید");
-    const loginResult = await loginAPI(obj).then(async (res) => {
-      toast.remove(toaster);
-      if (res.success) {
-        setItem("token", res.token);
-        await getUserCourses().then(async (response) => {
-          await getUserProfile().then((uInfo) => {
-            const newObj = {
-              ...userData,
-              user: {
-                email: values.email,
-                password: values.password,
-                ...uInfo,
-              },
-              myCourses: response.listOfMyCourses,
-            };
-            setItem("user", newObj);
-            setUserData(newObj);
-            toast.success("با موافقیت وارد شدید");
-            setTimeout(() => {
-              navigate("/");
-            }, 500);
-          });
-        });
-        setItem("user", JSON.stringify(newObj));
-        toast.success("با موافقیت وارد شدید");
-        setTimeout(() => {
-          navigate("/");
-          setUserData(newObj);
-        }, 500);
-      }
-    });
+  // const onSubmit = async (values) => {
+  //   let toaster;
+  //   // login API
+  //   const obj = {
+  //     phoneOrGmail: values.email,
+  //     password: values.password,
+  //     rememberMe: isCheck,
+  //   };
+  //   toaster = toast.loading("در حال پردازش لطفاٌ صبر کنید");
+  //   const loginResult = await loginAPI(obj).then(async (res) => {
+  //     toast.remove(toaster);
+  //     if (res.success) {
+  //       setItem("token", res.token);
+  //       await getUserCourses().then(async (response) => {
+  //         await getUserProfile().then((uInfo) => {
+  //           const newObj = {
+  //             ...userData,
+  //             user: {
+  //               email: values.email,
+  //               password: values.password,
+  //               ...uInfo,
+  //             },
+  //             myCourses: response.listOfMyCourses,
+  //           };
+  //           setItem("user", newObj);
+  //           setUserData(newObj);
+  //           toast.success("با موافقیت وارد شدید");
+  //           setTimeout(() => {
+  //             navigate("/");
+  //           }, 500);
+  //         });
+  //       });
+  //       setItem("user", JSON.stringify(newObj));
+  //       toast.success("با موافقیت وارد شدید");
+  //       setTimeout(() => {
+  //         navigate("/");
+  //         setUserData(newObj);
+  //       }, 500);
+  //     }
+  //   });
 
-    console.log(loginResult, obj);
-  };
+  //   console.log(loginResult, obj);
+  // };
   // const onSubmit = async (values) => {
   //   // login API
   //   const obj = {
@@ -99,6 +100,31 @@ const Login = ({ login, dataLogin }) => {
   //     } else toast.error(res.message);
   //   });
   // };
+
+  const onSubmit = (values) => {
+    let toaster;
+    try {
+      setIsLoading(true);
+      const newObj = {
+        ...userData,
+        user: { email: values.email, password: values.password },
+      };
+      setItem("user", newObj);
+      setUserData(newObj);
+      toaster = toast.loading("در حال انجام عملیات");
+      setTimeout(() => {
+        navigate("/");
+        toast.success("با موفقیت وارد شدید");
+      }, 800);
+      setTimeout(() => {
+        toast.remove(toaster);
+      }, 500);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <motion.div
@@ -212,6 +238,7 @@ const Login = ({ login, dataLogin }) => {
           </div>
 
           <button
+            disabled={isLoading}
             className="
             bg-[#505050] cursor-pointer rounded-[50px] text-[18px] text-white w-[100%] p-[10px_0] transition hover:bg-[#626262]
             disabled:bg-[#5e5e5e] disabled:cursor-no-drop

@@ -17,7 +17,7 @@ const backdrop = {
     transition: { duration: 0.5 },
   },
   exit: {
-    y: "100px",
+    y: "-200px",
     opacity: 0,
     transition: { duration: 0.5 },
   },
@@ -45,10 +45,10 @@ export const RespondModal = () => {
     console.log(values);
   };
   return (
-    isModalOpen && (
-      <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait">
+      {isModalOpen && (
         <motion.div
-          className="fixed inset-0 w-full h-full bg-gray-300/50 z-10"
+          className="fixed inset-0 w-full h-full bg-gray-400/70 dark:bg-gray-700/70 z-10"
           variants={backdrop}
           animate="visible"
           initial="hidden"
@@ -61,7 +61,7 @@ export const RespondModal = () => {
             initial="hidden"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className="fixed inset-0 w-96 h-fit m-auto bg-white rounded-xl p-3"
+            className="fixed inset-0 w-96 h-fit m-auto bg-gray-50 dark:bg-gray-200 rounded-xl p-3"
           >
             <X
               className="self-start justify-self-start text-rose-700 cursor-pointer"
@@ -93,7 +93,7 @@ export const RespondModal = () => {
             </div>
           </motion.div>
         </motion.div>
-      </AnimatePresence>
-    )
+      )}
+    </AnimatePresence>
   );
 };

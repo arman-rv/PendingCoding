@@ -17,26 +17,22 @@ export const BestTeachers = ({ teachers }) => {
                 {teacher.fullName || "TeacherName"}
                 <MoveUp className="text-gray-400/70 dark:text-gray-400 mx-auto h-16 w-16" />
               </p>
-              <span>
                 <img
                   src={teacher.image || teacher1}
                   alt="TeacherProf"
-                  className="object-contain w-44 h-44"
+                  className="object-cover w-40 h-[120px] lg:h-40 rounded-full"
                 />
-              </span>
             </div>
           ) : (
             <div
               key={teacher.id}
               className="flex flex-col items-center justify-center lg:mb-10 xl:mb-16 gap-y-10"
             >
-              <span>
                 <img
                   src={teacher.image || teacher2}
                   alt="TeacherProf"
-                  className="object-contain w-44 h-44"
+                  className="object-cover w-40 h-[120px] lg:h-40 rounded-full"
                 />
-              </span>
               <p className="text-gray-600 dark:text-gray-300 text-lg text-center">
                 <MoveDown className="text-gray-400/70 dark:text-gray-400 mx-auto h-16 w-16" />
                 {teacher.fullName || "TeacherName"}

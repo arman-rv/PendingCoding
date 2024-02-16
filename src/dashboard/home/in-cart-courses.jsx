@@ -11,10 +11,11 @@ import ReactPaginate from "react-paginate";
 
 import { SearchInput } from "../../components/search";
 
-import { useUser } from "../../hooks/use-user";
 import { getPersianNumbers } from "../../../libs/get-persian-numbers";
 import { persianPagination } from "../../../libs/get-persian-numbers";
 import { scrollToTop } from "../../../libs/scroll-to-top";
+
+import { useUser } from "../../hooks/use-user";
 
 export const InCartCourses = ({ courses }) => {
   const { removeFromCart, checkout } = useUser();
@@ -49,9 +50,7 @@ export const InCartCourses = ({ courses }) => {
   );
 
   const startDate = (course) =>
-    new Date(course.reserverDate)
-      .toLocaleDateString("fa-IR-u-nu-latn")
-      .split("/");
+    new Date(course.createdAt).toLocaleDateString("fa-IR-u-nu-latn").split("/");
 
   const months = [
     "فروردين",
@@ -88,7 +87,6 @@ export const InCartCourses = ({ courses }) => {
     try {
       setIsLoading(true);
       checkout(course);
-      toast.success("دوره تسویه شد");
     } catch (error) {
       toast.error("مشکلی پیش آمده بعداٌ تلاش کنید");
       console.log(error.message);
@@ -217,7 +215,7 @@ export const InCartCourses = ({ courses }) => {
                           to={`/courses/${course.courseId}`}
                           className="text-gray-500 hover:text-gray-800 transition"
                         >
-                          {course.courseName}
+                          {course.title}
                         </Link>
                       </th>
                       <td className="px-6 py-4">{`${getPersianNumbers(
@@ -236,6 +234,13 @@ export const InCartCourses = ({ courses }) => {
                           className="bg-destructive hover:bg-destructive/80 dark:bg-dark-destructive dark:hover:bg-dark-destructive/80 disabled:bg-destructive/70 text-white hover:text-white/80 disabled:text-white/80 disabled:cursor-not-allowed px-5 py-2 rounded-xl"
                         >
                           حذف
+                        </button>
+                        <button
+                          onClick={() => handleCheckout(course)}
+                          disabled={isLoading}
+                          className="bg-primary hover:bg-primary/80 dark:bg-dark-primary dark:hover:bg-dark-primary/80 disabled:bg-primary/70 text-white hover:text-white/80 disabled:text-white/80 disabled:cursor-not-allowed px-5 py-2 rounded-xl"
+                        >
+                          تسویه
                         </button>
                       </td>
                     </tr>

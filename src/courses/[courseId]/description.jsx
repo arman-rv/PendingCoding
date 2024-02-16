@@ -172,7 +172,7 @@ export const Description = ({ teacher, details, selected }) => {
       >
         <div className="w-full xl:max-w-xs flex flex-col justify-center items-center gap-y-3 pb-5 xl:pl-5 border-b xl:border-l xl:border-b-0 border-gray-300 dark:border-gray-400">
           <img
-            className="w-24 h-24 rounded-full"
+            className="object-cover w-24 h-24 rounded-full"
             src={teacher?.pictureAddress || defaultProfileImage}
             alt="teacherAvatar"
           />
@@ -231,7 +231,7 @@ export const Description = ({ teacher, details, selected }) => {
         className="flex flex-col items-center justify-center gap-y-10"
       >
         <div className="w-full border-2 border-gray-300 dark:border-gray-500 px-5 py-4 rounded-xl">
-          {isLoading ? (
+          {/* {isLoading ? (
             <Loading />
           ) : (
             <>
@@ -273,77 +273,87 @@ export const Description = ({ teacher, details, selected }) => {
               )}
             </>
           )}
-          {isError && <Error />}
-        </div>
-        <div className="w-full flex flex-col justify-center items-start gap-y-7">
-          <Banner
-            title="دیدگاه خود را با ما به اشتراک بگذارید"
-            height="h-8"
-            className="text-lg"
-          />
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full flex flex-col gap-y-2"
-          >
-            <label
-              htmlFor="respond"
-              className="text-sm text-gray-500 dark:text-gray-300 px-1"
-            >
-              عنوان
-            </label>
-            <input
-              className={cn(
-                "resize-none w-full max-w-sm disabled:cursor-not-allowed outline-none bg-gray-100 dark:bg-gray-300 text-gray-500 dark:placeholder:text-gray-600 dark:text-gray-800 border-2 rounded-xl px-6 pl-9 py-3 duration-200 border-gray-300 focus:border-gray-400",
-                form.formState.errors.subject &&
-                  "border-destructive dark:border-dark-destructive focus:border-destructive dark:focus:border-dark-destructive"
-              )}
-              placeholder="عنوان پیام"
-              {...form.register("subject")}
+          {isError && <Error />} */}
+          {details?.comments.map((comment) => (
+            <CommentCard
+              key={comment.id}
+              comment={comment}
+              user={data}
+              updateFn={refetch}
             />
-            <p
-              className={cn(
-                "opacity-0 text-destructive dark:text-dark-destructive",
-                form.formState.errors.subject && "opacity-100"
-              )}
-            >
-              {form.formState.errors.subject
-                ? form.formState.errors.subject.message
-                : "ss"}
-            </p>
-            <label
-              htmlFor="respond"
-              className="text-sm text-gray-500 dark:text-gray-300 px-1"
-            >
-              پاسخ
-            </label>
-            <textarea
-              className={cn(
-                "resize-none w-full h-40 disabled:cursor-not-allowed outline-none bg-gray-100 dark:bg-gray-300 text-gray-500 dark:placeholder:text-gray-600 dark:text-gray-800 border-2 rounded-xl px-6 pl-12 py-3 duration-200 border-gray-300 focus:border-gray-400",
-                form.formState.errors.message &&
-                  "border-destructive dark:border-dark-destructive focus:border-destructive dark:focus:border-dark-destructive"
-              )}
-              placeholder="متن پیام"
-              {...form.register("message")}
-            />
-            <p
-              className={cn(
-                "opacity-0 text-destructive dark:text-dark-destructive",
-                form.formState.errors.message && "opacity-100"
-              )}
-            >
-              {form.formState.errors.message
-                ? form.formState.errors.message.message
-                : "ss"}
-            </p>
-            <button
-              type="submit"
-              disabled={isSubmitting || !isValid}
-              className="text-white hover:text-white/80 bg-[#505050] hover:bg-[#505050]/80 disabled:bg-[#505050]/80 disabled:text-white/80 disabled:cursor-not-allowed py-2 text-lg self-start my-4 mr-5 px-10 rounded-xl transition"
-            >
-              ارسال پیام
-            </button>
-          </form>
+          ))}
         </div>
+        {userData.user && (
+          <div className="w-full flex flex-col justify-center items-start gap-y-7">
+            <Banner
+              title="دیدگاه خود را با ما به اشتراک بگذارید"
+              height="h-8"
+              className="text-lg"
+            />
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="w-full flex flex-col gap-y-2"
+            >
+              <label
+                htmlFor="respond"
+                className="text-sm text-gray-500 dark:text-gray-300 px-1"
+              >
+                عنوان
+              </label>
+              <input
+                className={cn(
+                  "resize-none w-full max-w-sm disabled:cursor-not-allowed outline-none bg-gray-100 dark:bg-gray-300 text-gray-500 dark:placeholder:text-gray-600 dark:text-gray-800 border-2 rounded-xl px-6 pl-9 py-3 duration-200 border-gray-300 focus:border-gray-400",
+                  form.formState.errors.subject &&
+                    "border-destructive dark:border-dark-destructive focus:border-destructive dark:focus:border-dark-destructive"
+                )}
+                placeholder="عنوان پیام"
+                {...form.register("subject")}
+              />
+              <p
+                className={cn(
+                  "opacity-0 text-destructive dark:text-dark-destructive",
+                  form.formState.errors.subject && "opacity-100"
+                )}
+              >
+                {form.formState.errors.subject
+                  ? form.formState.errors.subject.message
+                  : "ss"}
+              </p>
+              <label
+                htmlFor="respond"
+                className="text-sm text-gray-500 dark:text-gray-300 px-1"
+              >
+                پاسخ
+              </label>
+              <textarea
+                className={cn(
+                  "resize-none w-full h-40 disabled:cursor-not-allowed outline-none bg-gray-100 dark:bg-gray-300 text-gray-500 dark:placeholder:text-gray-600 dark:text-gray-800 border-2 rounded-xl px-6 pl-12 py-3 duration-200 border-gray-300 focus:border-gray-400",
+                  form.formState.errors.message &&
+                    "border-destructive dark:border-dark-destructive focus:border-destructive dark:focus:border-dark-destructive"
+                )}
+                placeholder="متن پیام"
+                {...form.register("message")}
+              />
+              <p
+                className={cn(
+                  "opacity-0 text-destructive dark:text-dark-destructive",
+                  form.formState.errors.message && "opacity-100"
+                )}
+              >
+                {form.formState.errors.message
+                  ? form.formState.errors.message.message
+                  : "ss"}
+              </p>
+              <button
+                type="submit"
+                disabled={isSubmitting || !isValid}
+                className="text-white hover:text-white/80 bg-[#505050] hover:bg-[#505050]/80 disabled:bg-[#505050]/80 disabled:text-white/80 disabled:cursor-not-allowed py-2 text-lg self-start my-4 mr-5 px-10 rounded-xl transition"
+              >
+                ارسال پیام
+              </button>
+            </form>
+          </div>
+        )}
       </motion.div>
     );
   }

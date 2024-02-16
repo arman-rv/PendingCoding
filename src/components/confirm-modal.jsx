@@ -1,14 +1,9 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { useQuery } from "react-query";
-import { toast } from "react-hot-toast";
-import { useParams } from "react-router-dom";
 
 import { useModal } from "../hooks/use-modal-store";
 import { useUser } from "../hooks/use-user";
-import { setItem } from "../core/services/common/storage.services";
-import { reserveCourse } from "../core/services/api/user";
 
 const backdrop = {
   hidden: {
@@ -21,39 +16,23 @@ const backdrop = {
     transition: { duration: 0.5 },
   },
   exit: {
-    y: "100px",
+    y: "-200px",
     opacity: 0,
     transition: { duration: 0.5 },
   },
 };
 
 export const ConfirmModal = () => {
-  const { id } = useParams();
-  const { isOpen, onClose, type } = useModal();
-  const { userData, setUserData } = useUser();
+  const { isOpen, onClose, type, data: course } = useModal();
+  const { addToCart } = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
   const isModalOpen = isOpen && type === "confirmModal";
-  const { refetch } = useQuery({
-    queryKey: ["course_id", id],
-  });
 
   const handleConfirm = async () => {
     try {
       setIsLoading(true);
-      await reserveCourse(id).then(() => {
-        refetch().then((res) => {
-          const newObj = {
-            ...userData,
-            cart: userData.cart.find((c) => c.courseId === id)
-              ? [...userData.cart]
-              : [...userData.cart, { ...res.data }],
-          };
-          setUserData(newObj);
-          setItem("user", newObj);
-          toast.success("دوره به سبدتون اضافه شد");
-        });
-      });
+      await addToCart(course);
     } catch (error) {
       console.log(error);
     } finally {
@@ -63,10 +42,10 @@ export const ConfirmModal = () => {
   };
 
   return (
-    isModalOpen && (
-      <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait">
+      {isModalOpen && (
         <motion.div
-          className="fixed inset-0 w-full h-full bg-gray-300/50 z-10"
+          className="fixed inset-0 w-full h-full bg-gray-400/70 dark:bg-gray-700/70 z-10"
           variants={backdrop}
           animate="visible"
           initial="hidden"
@@ -79,7 +58,7 @@ export const ConfirmModal = () => {
             initial="hidden"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className="fixed inset-0 w-96 h-fit m-auto bg-white rounded-xl p-3 z-50"
+            className="fixed inset-0 w-96 h-fit m-auto bg-gray-50 dark:bg-gray-200 rounded-xl p-3 z-50"
           >
             <X
               className="self-start justify-self-start text-rose-700 cursor-pointer"
@@ -108,7 +87,7 @@ export const ConfirmModal = () => {
             </div>
           </motion.div>
         </motion.div>
-      </AnimatePresence>
-    )
+      )}
+    </AnimatePresence>
   );
 };

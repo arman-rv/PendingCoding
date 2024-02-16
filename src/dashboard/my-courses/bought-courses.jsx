@@ -6,19 +6,15 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import toast from "react-hot-toast";
 import ReactPaginate from "react-paginate";
 
 import { SearchInput } from "../../components/search";
 
-import { useUser } from "../../hooks/use-user";
 import { getPersianNumbers } from "../../../libs/get-persian-numbers";
 import { persianPagination } from "../../../libs/get-persian-numbers";
 import { scrollToTop } from "../../../libs/scroll-to-top";
 
 export const BoughtCourses = ({ courses }) => {
-  const { removeFromCart, checkout } = useUser();
-  const [isLoading, setIsLoading] = useState(false);
   const [filteredCart, setFilteredCart] = useState([]);
   const [isAsc, setIsAsc] = useState(false);
   const [searchParams] = useSearchParams();
@@ -48,7 +44,7 @@ export const BoughtCourses = ({ courses }) => {
     [filteredCart, itemOffset, endOffset]
   );
   const startDate = (course) =>
-    new Date(course.lastUpdate)
+    new Date(course.createdAt)
       .toLocaleDateString("fa-IR-u-nu-latn")
       .split("/");
 
@@ -184,7 +180,7 @@ export const BoughtCourses = ({ courses }) => {
                           to={`/courses/${course.courseId}`}
                           className="text-gray-500 hover:text-gray-800 transition"
                         >
-                          {course.courseTitle}
+                          {course.title}
                         </Link>
                       </th>
                       <td className="px-6 py-4">{`${getPersianNumbers(

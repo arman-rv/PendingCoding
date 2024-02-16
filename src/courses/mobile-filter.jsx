@@ -102,10 +102,10 @@ export const MobileFilter = ({ values, setValues }) => {
   const isDialogOpen = isOpen && type === "filterDialog";
 
   return (
-    isDialogOpen && (
-      <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait">
+        {isDialogOpen && (
         <motion.div
-          className="fixed inset-0 w-full h-full bg-gray-300/50 xl:hidden z-10"
+          className="fixed inset-0 w-full h-full bg-gray-400/70 dark:bg-gray-700/70 xl:hidden z-10"
           variants={backdrop}
           animate="visible"
           initial="hidden"
@@ -114,7 +114,7 @@ export const MobileFilter = ({ values, setValues }) => {
         >
           <motion.div
             onClick={(e) => e.stopPropagation()}
-            className="h-full fixed top-0 right-0 flex flex-col items-center justify-start gap-y-5 bg-gray-50 dark:bg-gray-700 border-r border-gray-200 shadow-md p-5 z-[99999]"
+            className="h-full fixed top-0 right-0 flex flex-col items-center justify-start gap-y-5 bg-gray-50 dark:bg-gray-200 border-r border-gray-200 shadow-md p-5 z-[99999]"
             variants={backdrop}
             animate="visible"
             initial="hidden"
@@ -199,7 +199,7 @@ export const MobileFilter = ({ values, setValues }) => {
             </div>
           </motion.div>
         </motion.div>
+        )}
       </AnimatePresence>
-    )
   );
 };

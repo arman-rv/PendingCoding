@@ -67,7 +67,7 @@ export const VerticalCard = ({ blog }) => {
       </div>
       <div className="flex justify-start w-full items-center px-3 py-2">
         <span className="flex flex-col justify-center items-start gap-y-1 px-3 py-1">
-          <p className="text-sm text-gray-500 dark:text-gray-200/80 line-clamp-3 text-justify">
+          <p className="text-sm text-gray-500 dark:text-gray-200/80 line-clamp-2 text-start">
             {blog.description}
           </p>
         </span>
@@ -77,7 +77,7 @@ export const VerticalCard = ({ blog }) => {
         <span>
           <h5 className="text-gray-600 dark:text-gray-200/80 flex justify-center items-center gap-x-1">
             <LayoutDashboard className="h-5 w-5 text-primary dark:text-gray-200/80" />
-            {blog.newsCatregoryName ? "مقالات" : "خبر "}
+            {blog.isBlog ? "مقالات" : "خبر "}
           </h5>
         </span>
         <Link

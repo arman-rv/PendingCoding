@@ -1,35 +1,22 @@
-import { useQueries } from "react-query";
-
 import { Banner } from "../../components/banner";
 import { Loading } from "../../components/loading";
-import { Error } from "../../components/error";
 import { FavoriteCourses } from "./favorite-courses";
 import { FavoriteBlogs } from "./favorite-blogs";
 
-import {
-  getUserFavoriteBlogs,
-  getUserFavoriteCourses,
-} from "../../core/services/api/user";
+import { useEffect, useState } from "react";
+import { useUser } from "../../hooks/use-user";
 
 export const Favorites = () => {
-  const result = useQueries([
-    {
-      queryKey: ["favorite_courses"],
-      queryFn: () => getUserFavoriteCourses(),
-      staleTime: 5000,
-    },
-    {
-      queryKey: ["favorite_blogs"],
-      queryFn: () => getUserFavoriteBlogs(),
-      staleTime: 5000,
-    },
-  ]);
+  const [isLoading, setIsLoading] = useState(true);
+  const { userData } = useUser();
 
-  const isLoading = result?.[0].isLoading || result?.[1].isLoading;
-  const isError = result?.[0].isError || result?.[1].isError;
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   if (isLoading) return <Loading />;
-  if (isError) return <Error />;
 
   return (
     <div className="p-10 bg-[#EEEEEE] dark:bg-gray-800">
@@ -43,7 +30,7 @@ export const Favorites = () => {
           className="text-xl"
           height="h-10"
         />
-        <FavoriteCourses courses={result?.[0].data?.favoriteCourseDto} />
+        <FavoriteCourses courses={userData.favoriteCourse} />
       </div>
       <div className="flex flex-col items-start justify-center gap-y-5 mt-10">
         <Banner
@@ -51,7 +38,7 @@ export const Favorites = () => {
           className="text-xl"
           height="h-10"
         />
-        <FavoriteBlogs blogs={result?.[1].data?.myFavoriteNews} />
+        {/* <FavoriteBlogs blogs={userData.FavoriteBlogs} /> */}
       </div>
     </div>
   );

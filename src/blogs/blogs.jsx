@@ -1,9 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Grid2x2, Newspaper, Rows } from "lucide-react";
-import { useQuery } from "react-query";
 import { useSearchParams } from "react-router-dom";
-
-import { getAllBlogs } from "../core/services/api/get-blogs";
 
 import NavigatorTracer from "../components/navigator-tracer";
 import { Seperator } from "../components/seperator";
@@ -12,8 +9,499 @@ import { Select } from "../components/select";
 import { Banner } from "../components/banner";
 import { cn } from "../../libs/utils";
 import { Loading } from "../components/loading";
-import { Error } from "../components/error";
 import { BlogCards } from "./blog-cards";
+
+import Image from "../assets/REACTjs.webp";
+import CSharp from "../assets/cSharp.jpg";
+import CPlus from "../assets/c++.jpg";
+import Physics from "../assets/physics.jpg";
+import SQL from "../assets/sql.jpg";
+
+const blogs = [
+  {
+    id: 0,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: false,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    addUserFullName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 1,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: false,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    addUserFullName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 2,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: false,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    addUserFullName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 200_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 3,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: false,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    addUserFullName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 4,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: false,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    addUserFullName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 5,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: false,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    addUserFullName: "آرمان رضوانی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 6,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: false,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 7,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: false,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 8,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: false,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 500_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 9,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: false,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 10,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: true,
+    likeCount: 32,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال ثبت نام",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 11,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: true,
+    likeCount: 24,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 12,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Image,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: true,
+    likeCount: 24,
+    title: "ری اکت",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "ReactJS",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 13,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: CPlus,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: true,
+    likeCount: 24,
+    title: "C++",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "C++",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 14,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: CPlus,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: true,
+    likeCount: 24,
+    title: "C++",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "C++",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 15,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: CSharp,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: true,
+    likeCount: 24,
+    title: "C#",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "C#",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 16,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: CSharp,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: true,
+    likeCount: 24,
+    title: "C#",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "C#",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 17,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: SQL,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: true,
+    likeCount: 24,
+    title: "SQL",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "SQL",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 18,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: SQL,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: true,
+    likeCount: 24,
+    title: "SQL",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "SQL",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 19,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Physics,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: false,
+    likeCount: 24,
+    title: "فیزیک",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "Physics",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+  {
+    id: 20,
+    updateDate: "2024-02-16T05:34:42.901Z",
+    currentImageAddressTumb: Physics,
+    description: `adsadoj
+    adasdmasdnaoandna
+    ojasnodaijasndnasdansdiasdniandidn1
+    u21d21hd12dn12dg1d12d1dtdb1pudg12d1pdgy
+    udpygddgypbqwdbqwdqdbhqbdbqdu`,
+    isBlog: false,
+    likeCount: 24,
+    title: "فیزیک",
+    currentRegistrants: 20,
+    statusName: "درحال برگذاری",
+    addUserFullName: "امیرعباس بابائی",
+    levelName: "پیشرفته",
+    cost: 2_000_000,
+    courseRate: 3,
+    currentRate: 4,
+    technologyList: "Physics",
+    currentView: 20,
+    currentLikeCount: 32,
+  },
+];
 
 const orderBy = [
   {
@@ -41,20 +529,15 @@ const orderBy = [
 export const Blogs = () => {
   let filteredData = [];
   const [isVertical, setIsVertical] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
   const [searchParams] = useSearchParams();
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["blogs"],
-    queryFn: () => getAllBlogs(),
-    staleTime: 5000,
-  });
+
   const blog_name = searchParams.get("blog_name");
   const blogFilterBy = searchParams.get("blogFilterBy");
   const itemsPerPage = parseInt(searchParams.get("items-per-page"));
 
-  if (isLoading) return <Loading />;
-  if (isError) return <Error />;
-
-  filteredData = data?.news.filter((blog) => {
+  filteredData = blogs.filter((blog) => {
     if (!blog_name) return blog;
     else if (
       blog?.title
@@ -77,6 +560,14 @@ export const Blogs = () => {
 
     filteredData = newArray;
   }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="max-w-[1900px] mx-auto flex flex-col items-start justify-center gap-y-10 p-0 md:p-20">

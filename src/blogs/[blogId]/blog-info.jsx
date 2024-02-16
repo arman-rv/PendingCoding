@@ -1,19 +1,11 @@
-import { useMemo, useState } from "react";
-import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
 import { Bookmark, Heart, User } from "lucide-react";
 import toast from "react-hot-toast";
 
-import {
-  addBlogToFavorite,
-  getBlogById,
-  likeBlog,
-} from "../../core/services/api/get-blogs";
 import { useModal } from "../../hooks/use-modal-store";
 import { useUser } from "../../hooks/use-user";
 
 import { Loading } from "../../components/loading";
-import { Error } from "../../components/error";
 import NavigatorTracer from "../../components/navigator-tracer";
 import { Header } from "./header";
 import { Description } from "./description";
@@ -24,100 +16,94 @@ import { Slider } from "./slider";
 import { getPersianNumbers } from "../../../libs/get-persian-numbers";
 import { cn } from "../../../libs/utils";
 
-export const BlogInfo = () => {
-  const { id } = useParams();
+import defaultCourseThumbnail from "../../assets/REACTjs.webp";
+import Amir from "../../assets/amir.jpg";
 
+const blog = {
+  courseId: 0,
+  updatedAt: "2024-02-16T05:34:42.901Z",
+  startTime: "2024-02-16T05:34:42.901Z",
+  endTime: "2024-02-16T05:34:42.901Z",
+  currentImageAddress: defaultCourseThumbnail,
+  likeCount: 32,
+  dissLikeCount: 10,
+  title: "ری اکت",
+  currentRegistrants: 20,
+  statusName: "درحال ثبت نام",
+  addUserFullName: "امیرعباس بابائی",
+  levelName: "پیشرفته",
+  cost: 200_000,
+  courseRate: 3,
+  currentRate: 4,
+  technologyList: "ReactJS",
+  currentUserDissLike: 0,
+  currentUserLike: 0,
+  describe: `لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله
+    .در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
+    کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را
+    برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام
+    و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی
+    .سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد`,
+  miniDescribe:
+    "در این دوره شما استاد طراحی فرانت اند با ابزار فوق العاده قدرت مند React خواهید شد. ما در این دوره حتی اگر صفر باشید شما را به سطح استادی میرسانیم و با اتمام این دوره خیلی راحت میتوانید به بازار کار وارد شوید.",
+  techs: ["ReactJS", "HTML5", "CSS3"],
+  capacity: 40,
+  teacherAvatar: Amir,
+  newsCatregoryName: "خبر",
+};
+
+export const BlogInfo = () => {
   const { isOpen, onOpen } = useModal();
 
-  const { userData} = useUser();
-  const [isBookMarked, setIsBookMarked] = useState(false);
+  const { userData, blogBookmark, removeBlogBookmark } = useUser();
   const [isPending, setIsPending] = useState(false);
-  // const [likeCount, setLikeCount] = useState(0);
-  // const [dissLikeCount, setDisLikeCount] = useState(0);
-
-  const {
-    data: blog,
-    isLoading,
-    isError,
-    refetch,
-  } = useQuery({
-    queryKey: ["blog_id", id],
-    queryFn: () => getBlogById(id),
-    staleTime: 5000,
-  });
+  const [likeCount, setLikeCount] = useState(blog.likeCount);
+  const [isUserLiked, setIsUserLiked] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const details = [
     {
       id: 1,
       label: "توضیحات",
-      value: blog?.detailsNewsDto.describe,
+      value: blog.describe,
     },
     {
       id: 2,
       label: "نظرات",
-      comments: blog?.commentDtos.filter(
-        (c) => c.parentId === "00000000-0000-0000-0000-000000000000"
-      ),
+      comments: [
+        {
+          id: 1,
+          title: "متشکرم از دوره خوبتنون",
+          describe: `لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله
+          .در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
+          کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را
+          برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام
+          و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی
+           .سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد`,
+          insertDate: blog?.updatedAt,
+          pictureAddress: Amir,
+          author: "امیرعباس",
+          currentUserEmotion: "",
+          likeCount: 4,
+          disslikeCount: 1,
+          acceptReplysCount: 1,
+        },
+      ],
     },
   ];
-  // [
-  //   {
-  //     id: 1,
-  //     comment: `لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله
-  //     .در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
-  //     کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را
-  //     برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام
-  //     و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی
-  //      .سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد`,
-  //     createdAt: blog?.detailsNewsDto.createdAt,
-  //     user: {
-  //       name: blog?.detailsNewsDto.studentName,
-  //       image: blog?.detailsNewsDto?.studentImage,
-  //     },
-  //     responds: [
-  //       {
-  //         id: blog?.detailsNewsDto.teacherId,
-  //         name: blog?.detailsNewsDto.teacher,
-  //         image: blog?.detailsNewsDto?.teacherAvatar,
-  //         respond: `.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-  //         چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد
-  //         .نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد`,
-  //         role: "admin",
-  //       },
-  //       {
-  //         id: blog?.detailsNewsDto.studentId || 1234,
-  //         name: blog?.detailsNewsDto.studentName,
-  //         image: blog?.detailsNewsDto?.studentImage,
-  //         respond: `.لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است
-  //         چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد
-  //         .نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد`,
-  //         role: "student",
-  //       },
-  //     ],
-  //   },
-  // ],
   const [selected, setSelected] = useState(details[0].label);
 
-  useMemo(() => {
-    setIsBookMarked(blog?.detailsNewsDto.isCurrentUserFavorite);
-  }, [blog?.detailsNewsDto.isCurrentUserFavorite]);
-
-  if (isLoading) return <Loading />;
-  if (isError) return <Error />;
+  const isBookMarked = useMemo(
+    () => userData.favoriteBlog.some((b) => b.id === blog.id),
+    [userData.favoriteBlog]
+  );
 
   const handleBookmark = async () => {
     try {
       if (!userData.user) return onOpen("unauthorizedModal");
       setIsPending(true);
-      if (isBookMarked) return;
-      else {
-        await addBlogToFavorite(blog?.detailsNewsDto.id).then((res) => {
-          if (res.success) {
-            refetch();
-            toast.success("به علاقه مندی اضافه شد");
-          }
-        });
-      }
+      if (isBookMarked) await removeBlogBookmark(blog.id);
+      else await blogBookmark(blog);
     } catch (error) {
       console.log(error);
       toast.error("مشکلی پیش آمده دوباره امتحان کنید");
@@ -128,14 +114,15 @@ export const BlogInfo = () => {
 
   const handleLike = async () => {
     try {
-      if (!userData.user) return onOpen("unauthorizedModal");
       setIsPending(true);
-      await likeBlog(blog?.detailsNewsDto.id).then((res) => {
-        if (res.success) {
-          toast.success("بلاگ پسندیده شد");
-          refetch();
-        } else toast.error(res.message);
-      });
+      if (isUserLiked) {
+        setIsUserLiked(false);
+        setLikeCount((c) => c - 1);
+      }
+      if (!isUserLiked) {
+        setIsUserLiked(true);
+        setLikeCount((c) => c + 1);
+      }
     } catch (error) {
       console.log(error);
       toast.error("مشکلی پیش آمده دوباره امتحان کنید");
@@ -143,21 +130,14 @@ export const BlogInfo = () => {
       setIsPending(false);
     }
   };
-  // const handleDisLike = async () => {
-  //   try {
-  //     if (!userData.user) return onOpen("unauthorizedModal");
-  //     setIsPending(true);
-  //     await likeCourse(blog?.detailsNewsDto.id).then(() => {
-  //       setDisLikeCount((c) => c + 1);
-  //       toast.success("نظر پسندیده شد");
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error("مشکلی پیش آمده دوباره امتحان کنید");
-  //   } finally {
-  //     setIsPending(false);
-  //   }
-  // };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="max-w-[1900px] mx-auto flex flex-col justify-center items-start gap-y-10 px-5 md:px-28 py-5 pt-20">
@@ -179,7 +159,7 @@ export const BlogInfo = () => {
               دسته بندی
             </h5>
             <h5 className="text-sm text-gray-600/80 dark:text-gray-300/80">
-              {blog?.detailsNewsDto.newsCatregoryName}
+              {blog.newsCatregoryName}
             </h5>
           </span>
         </div>
@@ -198,7 +178,7 @@ export const BlogInfo = () => {
               استاد :
             </h5>
             <h5 className="text-sm text-gray-600/80 dark:text-gray-300/80">
-              {blog?.detailsNewsDto.addUserFullName}
+              {blog.addUserFullName}
             </h5>
           </span>
         </div>
@@ -209,32 +189,21 @@ export const BlogInfo = () => {
             className="flex items-center justify-center gap-x-1 dark:text-gray-300 text-gray-500 hover:text-primary dark:hover:text-dark-primary transition disabled:opacity-50 dark:disabled:opacity-70 disabled:cursor-not-allowed"
           >
             <p className="text-2xl dark:text-gray-300 text-gray-500">
-              {getPersianNumbers(blog?.detailsNewsDto.currentLikeCount)}
+              {getPersianNumbers(likeCount)}
             </p>
             <Heart
               className={cn(
                 "h-7 w-7 dark:text-dark-destructive text-destructive hover:text-destructive/80 dark:hover:text-dark-destructive/80 transition",
-                blog?.detailsNewsDto.currentUserIsLike &&
-                  "fill-destructive dark:fill-dark-destructive"
+                isUserLiked && "fill-destructive dark:fill-dark-destructive"
               )}
             />
           </button>
-          {/* <button
-            onClick={handleDisLike}
-            disabled={isPending}
-            className="flex items-center justify-center gap-x-2"
-          >
-            <ThumbsDown className="h-7 w-7 md:h-5 md:w-5 mt-2 dark:text-dark-destructive text-destructive hover:text-destructive/80 dark:hover:text-dark-destructive/80 transition " />
-            <p className="text-2xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
-              {getPersianNumbers(dissLikeCount)}
-            </p>
-          </button> */}
         </div>
       </div>
 
       {/* Title */}
       <h1 className="text-3xl text-gray-700 dark:text-gray-200">
-        {blog?.detailsNewsDto.title}
+        {blog.title}
       </h1>
 
       {/* Main Div */}
@@ -243,7 +212,7 @@ export const BlogInfo = () => {
         <div className="w-full flex flex-col items-start justify-center gap-y-5">
           <img
             className="rounded-xl w-full h-[475px] object-fill"
-            src={blog?.detailsNewsDto.currentImageAddress}
+            src={blog.currentImageAddress}
             alt="blogImage"
           />
           <div className="flex justify-cneter items-center gap-x-20">
@@ -262,16 +231,20 @@ export const BlogInfo = () => {
                 key={detail.id}
                 details={detail}
                 selected={selected}
-                updateFn={refetch}
+                // updateFn={refetch}
               />
             ))}
           </div>
         </div>
 
         {/* blog Infos */}
-        <div className="w-full xl:w-1/4 flex flex-col items-center xl:items-start justify-center gap-y-10">
-          <Banner title="جدید ترین بلاگ ها" className="text-xl" height="h-9" />
-          <div className="flex flex-col items-start justify-center gap-y-5">
+        <div className="w-full xl:w-1/4 flex flex-col sm:flex-row flex-wrap items-center sm:items-start justify-evenly gap-10">
+          <div className="flex flex-col items-start justify-center gap-5">
+            <Banner
+              title="جدید ترین بلاگ ها"
+              className="text-xl"
+              height="h-9"
+            />
             <div className="flex flex-col justify-center items-start">
               <NewBlogCard />
             </div>
@@ -283,8 +256,8 @@ export const BlogInfo = () => {
               اشتراک گذاری
             </button>
           </div>
-          <Banner title="جدیدترین دوره ها" className="text-xl" height="h-9" />
           <div className="flex flex-col justify-center items-start">
+            <Banner title="جدیدترین دوره ها" className="text-xl" height="h-9" />
             <NewCourseCard />
           </div>
         </div>

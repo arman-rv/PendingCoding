@@ -15,7 +15,11 @@ import { getPersianNumbers } from "../../../libs/get-persian-numbers";
 import { persianPagination } from "../../../libs/get-persian-numbers";
 import { scrollToTop } from "../../../libs/scroll-to-top";
 
+import defaultImage from "../../assets/REACTjs.webp";
+import { useUser } from "../../hooks/use-user";
+
 export const FavoriteCourses = ({ courses }) => {
+  const { removeCourseBookmark } = useUser();
   const [isLoading, setIsLoading] = useState(false);
   const [filteredCourses, setfilteredCourses] = useState([]);
   const [isAsc, setIsAsc] = useState(false);
@@ -47,9 +51,7 @@ export const FavoriteCourses = ({ courses }) => {
   );
 
   const updateDate = (course) =>
-    new Date(course.lastUpdate)
-      .toLocaleDateString("fa-IR-u-nu-latn")
-      .split("/");
+    new Date(course.createdAt).toLocaleDateString("fa-IR-u-nu-latn").split("/");
   const months = [
     "فروردين",
     "ارديبهشت",
@@ -65,17 +67,28 @@ export const FavoriteCourses = ({ courses }) => {
     "اسفند",
   ];
 
-  const handleDelete = async (course) => {
+  // const handleDelete = async (course) => {
+  //   try {
+  //     setIsLoading(true);
+  //     await deleteCourseFavorite(course?.favoriteId).then((res) => {
+  //       if (res.success) {
+  //         let newArray = [...filteredCourses];
+  //         newArray = newArray.filter((f) => f.courseId !== course?.courseId);
+  //         setfilteredCourses(newArray);
+  //         toast.success("از لیست علاقه مندی ها حذف شد");
+  //       }
+  //     });
+  //   } catch (error) {
+  //     toast.error("مشکلی پیش آمده بعداٌ تلاش کنید");
+  //     console.log(error.message);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+  const handleDelete = async (id) => {
     try {
       setIsLoading(true);
-      await deleteCourseFavorite(course?.favoriteId).then((res) => {
-        if (res.success) {
-          let newArray = [...filteredCourses];
-          newArray = newArray.filter((f) => f.courseId !== course?.courseId);
-          setfilteredCourses(newArray);
-          toast.success("از لیست علاقه مندی ها حذف شد");
-        }
-      });
+      await removeCourseBookmark(id);
     } catch (error) {
       toast.error("مشکلی پیش آمده بعداٌ تلاش کنید");
       console.log(error.message);
@@ -201,7 +214,7 @@ export const FavoriteCourses = ({ courses }) => {
                     سطح
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    نوع
+                    وضعیت
                   </th>
                   <th scope="col" className="px-6 py-3">
                     عملیات
@@ -219,7 +232,7 @@ export const FavoriteCourses = ({ courses }) => {
                       className="max-w-[300px] px-0 py-2 flex items-center justify-center"
                     >
                       <img
-                        src={course.tumbImageAddress}
+                        src={course.tumbImageAddress || defaultImage}
                         alt="courseImage"
                         className="object-fill w-10 h-10 rounded-full"
                       />
@@ -232,10 +245,10 @@ export const FavoriteCourses = ({ courses }) => {
                         to={`/courses/${course.courseId}`}
                         className="text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-300 transition"
                       >
-                        {course.courseTitle}
+                        {course.title}
                       </Link>
                     </th>
-                    <td className="px-6 py-4">{course.teacheName}</td>
+                    <td className="px-6 py-4">{course.teacherName}</td>
                     <td className="px-6 py-4">{`${getPersianNumbers(
                       updateDate(course)?.[2],
                       true
@@ -243,10 +256,10 @@ export const FavoriteCourses = ({ courses }) => {
                       months[updateDate(course)?.[1] - 1]
                     } ${getPersianNumbers(updateDate(course)?.[0], true)}`}</td>
                     <td className="px-6 py-4">{course?.levelName}</td>
-                    <td className="px-6 py-4">{course.typeName}</td>
+                    <td className="px-6 py-4">{course.statusName}</td>
                     <td className="relative px-6 py-4 text-right">
                       <button
-                        onClick={() => handleDelete(course)}
+                        onClick={() => handleDelete(course.courseId)}
                         disabled={isLoading}
                         className="bg-destructive hover:bg-destructive/80 disabled:bg-destructive/70 text-white hover:text-white/80 disabled:text-white/80 disabled:cursor-not-allowed px-4 py-2 rounded-xl"
                       >

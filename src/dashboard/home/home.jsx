@@ -1,25 +1,22 @@
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
 
 import { Banner } from "../../components/banner";
 import { InCartCourses } from "./in-cart-courses";
 
-import { getUserReservedCourses } from "../../core/services/api/user";
 import { Loading } from "../../components/loading";
-import { Error } from "../../components/error";
+import { useUser } from "../../hooks/use-user";
 
 export const Home = () => {
-  const {
-    data: courses,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["reserved_courses"],
-    queryFn: () => getUserReservedCourses(),
-    staleTime: 5000,
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const { userData } = useUser();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+  }, []);
 
   if (isLoading) return <Loading />;
-  if (isError) return <Error />;
 
   return (
     <div className="p-10">
@@ -29,7 +26,7 @@ export const Home = () => {
       */}
       <div className="flex flex-col items-start justify-center gap-y-5">
         <Banner title="دوره های تسویه نشده" className="text-xl" height="h-10" />
-        <InCartCourses courses={courses} />
+        <InCartCourses courses={userData.cart} />
       </div>
     </div>
   );
