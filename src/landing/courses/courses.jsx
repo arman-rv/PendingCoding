@@ -8,54 +8,7 @@ import { Loading } from "../../components/loading";
 // import { getTopCourses } from "../../core/services/api/get-courses";
 import { useEffect, useState } from "react";
 
-import ReactImage from "../../assets/REACTjs.webp";
-import SQL from "../../assets/sql.jpg";
-import CSharp from "../../assets/cSharp.jpg";
-
-const courses = [
-  {
-    courseId: 1,
-    title: "ری اکت",
-    tumbImageAddress: ReactImage,
-    likeCount: 3,
-    dissLikeCount: 1,
-    userIsLiked: 1,
-    userIsDissLiked: 0,
-    lastUpdate: "2024-02-16T05:34:42.901Z",
-    statusName: "درحال برگذاری",
-    teacherName: "امیرعباس بابائی",
-    levelName: "پیشرفته",
-    cost: 2_000_000,
-  },
-  {
-    courseId: 2,
-    title: "SQL",
-    tumbImageAddress: SQL,
-    likeCount: 3,
-    dissLikeCount: 1,
-    userIsLiked: 1,
-    userIsDissLiked: 0,
-    lastUpdate: "2024-02-16T05:34:42.901Z",
-    statusName: "درحال برگذاری",
-    teacherName: "امیرعباس بابائی",
-    levelName: "پیشرفته",
-    cost: 2_000_000,
-  },
-  {
-    courseId: 3,
-    title: "C#",
-    tumbImageAddress: CSharp,
-    likeCount: 3,
-    dissLikeCount: 1,
-    userIsLiked: 1,
-    userIsDissLiked: 0,
-    lastUpdate: "2024-02-16T05:34:42.901Z",
-    statusName: "درحال برگذاری",
-    teacherName: "امیرعباس بابائی",
-    levelName: "پیشرفته",
-    cost: 2_000_000,
-  },
-];
+import { courses } from "../../static-data/courses";
 
 export const Courses = () => {
   const [isLoading, setIsLoading] = useState(true);

@@ -39,7 +39,7 @@ export const LayoutPage = () => {
   return (
     <div className="w-full h-full bg-[#EEEEEE] dark:bg-gray-800">
       <ModalProvider />
-      <div className="flex justify-center items-center px-6 py-3 shadow-md relative z-[2]">
+      <div className="flex justify-center items-center px-6 py-3 relative z-[2]">
         <Navbar />
       </div>
       <motion.main

@@ -46,7 +46,7 @@ const ContactUs = () => {
       <Banner title="ارتباط با ما" />
 
       <div
-        className="flex m-[80px_0] gap-[20px]
+        className="flex m-[70px_0] gap-[20px]
       
       max-[1500px]:flex-col max-[1500px]:items-center max-[1500px]:gap-[60px]"
       >
