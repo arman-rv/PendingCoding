@@ -37,6 +37,8 @@ export const blogs = [
     isBlog: false,
     currentView: 20,
     currentLikeCount: 32,
+    newsCatregoryName:"مقالات"
+
   },
   {
     id: 1,
@@ -64,6 +66,8 @@ export const blogs = [
     isBlog: false,
     currentView: 20,
     currentLikeCount: 32,
+    newsCatregoryName:"خبر"
+
   },
   {
     id: 2,
@@ -299,6 +303,8 @@ export const blogs = [
     isBlog: false,
     currentView: 20,
     currentLikeCount: 32,
+    newsCatregoryName:"خبر"
+
   },
   {
     id: 12,

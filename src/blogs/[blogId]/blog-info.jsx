@@ -69,6 +69,7 @@ export const BlogInfo = () => {
     newsCatregoryName: blogsItems.newsCatregoryName,
   };
 
+  console.log(blogsItems)
   const { isOpen, onOpen } = useModal();
 
   const { userData, blogBookmark, removeBlogBookmark } = useUser();

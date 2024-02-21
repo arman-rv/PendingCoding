@@ -25,7 +25,7 @@ export const TeacherInfo = () => {
     }
     return x;
   };
-  const currentCourse = teacherCountFind("آرمان رضوانی", courses);
+  const currentCourse = teacherCountFind(teacher.fullName, courses);
 
   const details = [
     {
