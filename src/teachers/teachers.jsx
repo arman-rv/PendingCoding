@@ -13,9 +13,7 @@ import { TeacherCards } from "./teacher-cards";
 import { useModal } from "../hooks/use-modal-store";
 
 import { cn } from "../../libs/utils";
-
-import Amir from "../assets/amir.jpg";
-import Arman from "../assets/arman.jpg";
+import { teachers } from "../static-data/teachers";
 
 const orderBy = [
   {
@@ -35,92 +33,6 @@ const orderBy = [
   },
 ];
 
-const teachers = [
-  {
-    teacherId: 1,
-    fullName: "امیرعباس بابائی",
-    pictureAddress: Amir,
-    newsCount: 20,
-    courseCounts: 2,
-  },
-  {
-    teacherId: 2,
-    fullName: "آرمان رضوانی",
-    pictureAddress: Arman,
-    newsCount: 20,
-    courseCounts: 2,
-  },
-  {
-    teacherId: 3,
-    fullName: "امیرعباس بابائی",
-    pictureAddress: Amir,
-    newsCount: 20,
-    courseCounts: 2,
-  },
-  {
-    teacherId: 4,
-    fullName: "آرمان رضوانی",
-    pictureAddress: Arman,
-    newsCount: 20,
-    courseCounts: 5,
-  },
-  {
-    teacherId: 5,
-    fullName: "امیرعباس بابائی",
-    pictureAddress: Amir,
-    newsCount: 50,
-    courseCounts: 5,
-  },
-  {
-    teacherId: 6,
-    fullName: "آرمان رضوانی",
-    pictureAddress: Arman,
-    newsCount: 50,
-    courseCounts: 5,
-  },
-  {
-    teacherId: 7,
-    fullName: "امیرعباس بابائی",
-    pictureAddress: Amir,
-    newsCount: 13,
-    courseCounts: 5,
-  },
-  {
-    teacherId: 8,
-    fullName: "آرمان رضوانی",
-    pictureAddress: Arman,
-    newsCount: 13,
-    courseCounts: 2,
-  },
-  {
-    teacherId: 9,
-    fullName: "امیرعباس بابائی",
-    pictureAddress: Amir,
-    newsCount: 13,
-    courseCounts: 2,
-  },
-  {
-    teacherId: 10,
-    fullName: "آرمان رضوانی",
-    pictureAddress: Arman,
-    newsCount: 13,
-    courseCounts: 2,
-  },
-  {
-    teacherId: 12,
-    fullName: "امیرعباس بابائی",
-    pictureAddress: Amir,
-    newsCount: 13,
-    courseCounts: 2,
-  },
-  {
-    teacherId: 13,
-    fullName: "آرمان رضوانی",
-    pictureAddress: Arman,
-    newsCount: 13,
-    courseCounts: 2,
-  },
-];
 
 export const Teachers = () => {
   const [isVertical, setIsVertical] = useState(true);

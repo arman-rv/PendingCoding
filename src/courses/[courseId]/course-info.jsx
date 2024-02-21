@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 
-
 import { getPersianNumbers } from "../../../libs/get-persian-numbers";
 import { cn } from "../../../libs/utils";
 
@@ -32,72 +31,12 @@ import { Header } from "./header";
 import { Description } from "./description";
 import { Slider } from "./slider";
 
-import defaultCourseThumbnail from "../../assets/REACTjs.webp";
 import Amir from "../../assets/amir.jpg";
+import Arman from "../../assets/arman.jpg";
 
-const course = {
-  courseId: 0,
-  createdAt: "2024-02-16T05:34:42.901Z",
-  startTime: "2024-02-16T05:34:42.901Z",
-  endTime: "2024-02-16T05:34:42.901Z",
-  imageAddress: defaultCourseThumbnail,
-  likeCount: 32,
-  dissLikeCount: 10,
-  title: "ری اکت",
-  currentRegistrants: 20,
-  statusName: "درحال ثبت نام",
-  teacherName: "آرمان رضوانی",
-  levelName: "پیشرفته",
-  cost: 200_000,
-  courseRate: 3,
-  currentRate: 4,
-  technologyList: "ReactJS",
-  currentUserDissLike: 0,
-  currentUserLike: 0,
-  describe: JSON.stringify([
-    {
-      name: "مقدمات",
-      videos: [
-        {
-          title: "مقدمات",
-          videoLink:
-            "https://www.youtube.com/watch?v=j942wKiXFu8&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d",
-        },
-      ],
-    },
-    {
-      name: "فصل 1",
-      videos: [
-        {
-          title: "فصل 1",
-          videoLink:
-            "https://www.youtube.com/watch?v=kVeOpcw4GWY&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d&index=2",
-        },
-      ],
-    },
-    {
-      name: "فصل 2",
-      videos: [
-        {
-          title: "فصل 2",
-          videoLink:
-            "https://www.youtube.com/watch?v=9D1x7-2FmTA&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d&index=3",
-        },
-      ],
-    },
-  ]),
-  miniDescribe:
-    "در این دوره شما استاد طراحی فرانت اند با ابزار فوق العاده قدرت مند React خواهید شد. ما در این دوره حتی اگر صفر باشید شما را به سطح استادی میرسانیم و با اتمام این دوره خیلی راحت میتوانید به بازار کار وارد شوید.",
-  techs: ["ReactJS", "HTML5", "CSS3"],
-  capacity: 40,
-};
-
-const teacher = {
-  teacherId: 1,
-  fullName: "امیرعباس بابائی",
-  pictureAddress: Amir,
-  skills: ["ReactJS", "HTML5", "CSS3", "JavaScript", "C#", "Python"],
-};
+import { useParams } from "react-router-dom";
+import { courses } from "../../static-data/courses";
+import { blogs } from "../../static-data/blogs";
 
 const fade = {
   initial: {
@@ -110,6 +49,89 @@ const fade = {
 };
 
 export const CourseInfo = () => {
+  const { id } = useParams();
+
+  const courseDetail = courses[id];
+  const courseDescription = blogs[id];
+
+  const categories = [
+    { label: "فرانت اند", value: "FrontEnd" },
+    { label: "بک اند", value: "BackEnd" },
+    { label: "جاوا اسکریپت", value: "JavaScript" },
+    { label: "پایتون", value: "Python" },
+    { label: "مهارت نرم", value: "Soft Skill" },
+  ];
+
+  const handleCategory = () => {
+    for (let i in categories) {
+      console.log(categories.at(i).value);
+      if (courseDetail.technologyList === categories.at(i).value) {
+        return categories.at(i).label;
+      }
+    }
+  };
+  const techCategory = handleCategory();
+
+  const course = {
+    courseId: 0,
+    createdAt: "2024-02-16T05:34:42.901Z",
+    startTime: courseDetail.lastUpdate,
+    endTime: "2025-03-20T05:34:42.901Z",
+    imageAddress: courseDetail.tumbImageAddress,
+    likeCount: courseDetail.likeCount,
+    dissLikeCount: 10,
+    title: courseDetail.title,
+    currentRegistrants: courseDetail.currentRegistrants,
+    statusName: courseDetail.statusName,
+    teacherName: courseDetail.teacherName,
+    levelName: courseDetail.levelName,
+    cost: courseDetail.cost,
+    courseRate: courseDetail.courseRate,
+    currentRate: courseDetail.currentRate,
+    technologyList: courseDetail.technologyList,
+    currentUserDissLike: 0,
+    currentUserLike: 0,
+    describe: JSON.stringify([
+      {
+        name: "مقدمات",
+        videos: [
+          {
+            title: "مقدمات",
+            videoLink:
+              "https://www.youtube.com/watch?v=j942wKiXFu8&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d",
+          },
+        ],
+      },
+      {
+        name: "فصل 1",
+        videos: [
+          {
+            title: "فصل 1",
+            videoLink:
+              "https://www.youtube.com/watch?v=kVeOpcw4GWY&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d&index=2",
+          },
+        ],
+      },
+      {
+        name: "فصل 2",
+        videos: [
+          {
+            title: "فصل 2",
+            videoLink:
+              "https://www.youtube.com/watch?v=9D1x7-2FmTA&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d&index=3",
+          },
+        ],
+      },
+    ]),
+    // miniDescribe:
+    //   "در این دوره شما استاد طراحی فرانت اند با ابزار فوق العاده قدرت مند React خواهید شد. ما در این دوره حتی اگر صفر باشید شما را به سطح استادی میرسانیم و با اتمام این دوره خیلی راحت میتوانید به بازار کار وارد شوید."
+    miniDescribe: courseDescription.description,
+    techs: techCategory,
+    capacity: parseInt(
+      courseDetail.currentRegistrants + courseDetail.currentRegistrants / 3
+    ),
+  };
+
   // const { id } = useParams();
   const { isOpen, onOpen } = useModal();
   const { userData, courseBookmark, removeCourseBookmark } = useUser();
@@ -143,6 +165,39 @@ export const CourseInfo = () => {
   //     m;
   //   }
   // }, [isSuccess, course?.teacherId, course?.likeCount, course?.dissLikeCount]);
+
+  const handleAvatar = () => {
+    const TeacherAvatar = {
+      "آرمان رضوانی": Arman,
+      "امیرعباس بابائی": Amir,
+    };
+    let x;
+    for (const i in TeacherAvatar) {
+      if (course.teacherName === i) {
+        x = TeacherAvatar[i];
+      }
+    }
+    return x;
+  };
+  const teacherAvatar = handleAvatar();
+
+  const handleTeacherId = () => {
+    let x;
+    if (course.teacherName === "آرمان رضوانی") {
+      x = 0;
+    } else if (course.teacherName === "امیرعباس بابائی") {
+      x = 1;
+    }
+    return x;
+  };
+
+  const teacher = {
+    teacherId: handleTeacherId(),
+    fullName: course.teacherName,
+    pictureAddress: teacherAvatar,
+    skills: ["ReactJS", "HTML5", "CSS3", "JavaScript", "C#", "Python"],
+  };
+
   const details = course && [
     {
       id: 1,
@@ -194,7 +249,6 @@ export const CourseInfo = () => {
     },
   ];
   const [selected, setSelected] = useState("توضیحات");
-
 
   const startDate = new Date(course?.startTime)
     .toLocaleDateString("fa-IR-u-nu-latn")
@@ -313,7 +367,7 @@ export const CourseInfo = () => {
         <NavigatorTracer />
       </div>
       {/* BookMark and Teacher Pic */}
-      <div className="w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-10 mt-5 mb-10">
+      <div className="w-full flex flex-col sm:flex-row px-12 justify-between items-start sm:items-center gap-10 mt-5 mb-10">
         <div className="flex justify-center items-center gap-x-2">
           <button
             disabled={isPending}
@@ -322,40 +376,42 @@ export const CourseInfo = () => {
           >
             <Bookmark
               className={cn(
-                "h-9 w-9",
+                "h-12 w-12",
                 isBookmarked && "fill-primary dark:fill-dark-primary"
               )}
             />
           </button>
           <span className="flex flex-col justify-center items-start gap-y-2">
-            <h5 className="text-sm text-gray-400 dark:text-gray-300">
+            <h5 className="text-lg text-gray-400 dark:text-gray-300">
               دسته بندی
             </h5>
-            <h5 className="text-sm text-gray-600/80 dark:text-gray-300/80">
-              {course?.techs.join(",")}
+            <h5 className="text-xl text-gray-600/80 dark:text-gray-300/80">
+              {/* {course?.techs.join(",")} */}
+              {course?.techs}
             </h5>
           </span>
         </div>
-        <div className="flex justify-center items-center gap-x-2">
+        <div className="flex justify-center items-center gap-x-4">
           {teacher?.pictureAddress ? (
             <img
-              src={teacher?.pictureAddress}
+              // src={teacher?.pictureAddress}
+              src={teacherAvatar}
               alt="teacherPic"
-              className="object-cover h-14 w-14 rounded-full"
+              className="object-cover h-[72px] w-[72px] rounded-full"
             />
           ) : (
             <User className="dark:text-gray-300/80" />
           )}
           <span className="flex flex-col justify-center items-start gap-y-2">
-            <h5 className="text-sm text-gray-400 dark:text-gray-300">
+            <h5 className="text-xl text-gray-400 dark:text-gray-300">
               استاد :
             </h5>
-            <h5 className="text-sm text-gray-600/80 dark:text-gray-300/80">
+            <h5 className="text-2xl text-gray-600/80 dark:text-gray-300/80">
               {teacher?.fullName}
             </h5>
           </span>
         </div>
-        <div className="flex justify-center items-center gap-x-3 self-end">
+        <div className="flex justify-center items-center gap-x-5 self-end">
           <button
             onClick={handleLike}
             disabled={isPending}
@@ -363,11 +419,11 @@ export const CourseInfo = () => {
           >
             <ThumbsUp
               className={cn(
-                "h-7 w-7 md:h-5 md:w-5",
+                "h-7 w-7 md:h-8 md:w-8",
                 isUserLiked && "fill-primary dark:fill-dark-primary"
               )}
             />
-            <p className="text-2xl md:text-lg dark:text-gray-300 text-gray-500">
+            <p className="text-2xl md:text-2xl dark:text-gray-300 text-gray-500">
               {getPersianNumbers(likeCount)}
             </p>
           </button>
@@ -378,11 +434,11 @@ export const CourseInfo = () => {
           >
             <ThumbsDown
               className={cn(
-                "h-7 w-7 md:h-5 md:w-5",
+                "h-7 w-7 md:h-8 md:w-8",
                 isUserDisliked && "fill-destructive dark:fill-dark-destructive"
               )}
             />
-            <p className="text-2xl md:text-lg dark:text-gray-300 text-gray-500">
+            <p className="text-2xl md:text-2xl dark:text-gray-300 text-gray-500">
               {getPersianNumbers(dissLikeCount)}
             </p>
           </button>
@@ -392,6 +448,7 @@ export const CourseInfo = () => {
               data={course}
               queryKey="course_id"
               rateFn={() => {}}
+              size={26}
             />
           </div>
         </div>
@@ -453,7 +510,8 @@ export const CourseInfo = () => {
           <div className="relative w-full mx-auto h-[500px]">
             <img
               className="rounded-xl w-full h-full object-fill"
-              src={defaultCourseThumbnail || course?.imageAddress}
+              // src={defaultCourseThumbnail || course?.imageAddress}
+              src={course.imageAddress}
               alt="courseImage"
             />
           </div>

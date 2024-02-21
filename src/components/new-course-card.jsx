@@ -8,57 +8,8 @@ import { Loading } from "./loading";
 import { getPersianNumbers } from "../../libs/get-persian-numbers";
 // import { getTopCourses } from "../core/services/api/get-courses";
 
-import CSharp from "../assets/cSharp.jpg";
-import CPlus from "../assets/c++.jpg";
-import SQL from "../assets/sql.jpg";
+import { courses } from "../static-data/courses";
 
-const courses = [
-  {
-    courseId: 0,
-    lastUpdate: "2024-02-16T05:34:42.901Z",
-    tumbImageAddress: CSharp,
-    likeCount: 32,
-    title: "ری اکت",
-    currentRegistrants: 20,
-    statusName: "درحال ثبت نام",
-    teacherName: "آرمان رضوانی",
-    levelName: "پیشرفته",
-    cost: 200_000,
-    courseRate: 3,
-    currentRate: 4,
-    technologyList: "ReactJS",
-  },
-  {
-    courseId: 1,
-    lastUpdate: "2024-02-16T05:34:42.901Z",
-    tumbImageAddress: CPlus,
-    likeCount: 32,
-    title: "ری اکت",
-    currentRegistrants: 20,
-    statusName: "درحال ثبت نام",
-    teacherName: "آرمان رضوانی",
-    levelName: "پیشرفته",
-    cost: 200_000,
-    courseRate: 3,
-    currentRate: 4,
-    technologyList: "ReactJS",
-  },
-  {
-    courseId: 2,
-    lastUpdate: "2024-02-16T05:34:42.901Z",
-    tumbImageAddress: SQL,
-    likeCount: 32,
-    title: "ری اکت",
-    currentRegistrants: 20,
-    statusName: "درحال ثبت نام",
-    teacherName: "آرمان رضوانی",
-    levelName: "پیشرفته",
-    cost: 200_000,
-    courseRate: 3,
-    currentRate: 4,
-    technologyList: "ReactJS",
-  },
-];
 
 export const NewCourseCard = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -72,7 +23,7 @@ export const NewCourseCard = () => {
 
   return (
     <>
-      {courses?.map((course) => (
+      {courses?.slice(0,3).map((course) => (
         <div key={course.courseId} className="py-2">
           <Link
             to={`/courses/${course.courseId}`}

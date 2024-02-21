@@ -16,43 +16,59 @@ import { Slider } from "./slider";
 import { getPersianNumbers } from "../../../libs/get-persian-numbers";
 import { cn } from "../../../libs/utils";
 
-import defaultCourseThumbnail from "../../assets/REACTjs.webp";
 import Amir from "../../assets/amir.jpg";
+import Arman from "../../assets/arman.jpg";
 
-const blog = {
-  courseId: 0,
-  updatedAt: "2024-02-16T05:34:42.901Z",
-  startTime: "2024-02-16T05:34:42.901Z",
-  endTime: "2024-02-16T05:34:42.901Z",
-  currentImageAddress: defaultCourseThumbnail,
-  likeCount: 32,
-  dissLikeCount: 10,
-  title: "ری اکت",
-  currentRegistrants: 20,
-  statusName: "درحال ثبت نام",
-  addUserFullName: "امیرعباس بابائی",
-  levelName: "پیشرفته",
-  cost: 200_000,
-  courseRate: 3,
-  currentRate: 4,
-  technologyList: "ReactJS",
-  currentUserDissLike: 0,
-  currentUserLike: 0,
-  describe: `لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله
-    .در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد
-    کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را
-    برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام
-    و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی
-    .سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد`,
-  miniDescribe:
-    "در این دوره شما استاد طراحی فرانت اند با ابزار فوق العاده قدرت مند React خواهید شد. ما در این دوره حتی اگر صفر باشید شما را به سطح استادی میرسانیم و با اتمام این دوره خیلی راحت میتوانید به بازار کار وارد شوید.",
-  techs: ["ReactJS", "HTML5", "CSS3"],
-  capacity: 40,
-  teacherAvatar: Amir,
-  newsCatregoryName: "خبر",
-};
+import { blogs } from "../../static-data/blogs";
+import { useParams } from "react-router-dom";
 
 export const BlogInfo = () => {
+  const { id } = useParams();
+  const blogsItems = blogs[id];
+
+  const handleAvatar = () => {
+    const TeacherAvatar = {
+      "آرمان رضوانی": Arman,
+      "امیرعباس بابائی": Amir,
+    };
+    let x;
+    for (const i in TeacherAvatar) {
+      if (blogsItems.addUserFullName === i) {
+        x = TeacherAvatar[i];
+      }
+    }
+    return x;
+  };
+  const teacherAvatar = handleAvatar();
+
+
+  const blog = {
+    courseId: 0,
+    updatedAt: blogsItems.updateDate,
+    startTime: "2024-02-16T05:34:42.901Z",
+    endTime: "2024-02-16T05:34:42.901Z",
+    currentImageAddress: blogsItems.currentImageAddressTumb,
+    likeCount: blogsItems.likeCount,
+    dissLikeCount: 10,
+    title: "ری اکت",
+    currentRegistrants: blogsItems.currentRegistrants,
+    statusName: blogsItems.statusName,
+    addUserFullName: blogsItems.addUserFullName,
+    levelName: blogsItems.levelName,
+    cost: blogsItems.cost,
+    courseRate: blogsItems.courseRate,
+    currentRate: blogsItems.currentRate,
+    technologyList: blogsItems.technologyList,
+    currentUserDissLike: 0,
+    currentUserLike: 0,
+    describe: blogsItems.description,
+    miniDescribe: blogsItems.description,
+    techs: ["ReactJS", "HTML5", "CSS3"],
+    capacity: 40,
+    teacherAvatar: teacherAvatar,
+    newsCatregoryName: blogsItems.newsCatregoryName,
+  };
+
   const { isOpen, onOpen } = useModal();
 
   const { userData, blogBookmark, removeBlogBookmark } = useUser();
@@ -150,34 +166,34 @@ export const BlogInfo = () => {
           <Bookmark
             onClick={handleBookmark}
             className={cn(
-              "h-9 w-9 text-primary hover:text-primary/80 dark:text-dark-primary dark:hover:text-dark-primary/80 transition cursor-pointer",
+              "h-12 w-12 text-primary hover:text-primary/80 dark:text-dark-primary dark:hover:text-dark-primary/80 transition cursor-pointer",
               isBookMarked && "fill-primary dark:fill-dark-primary"
             )}
           />
           <span className="flex flex-col justify-center items-center gap-y-2">
-            <h5 className="text-sm text-gray-400 dark:text-gray-300">
+            <h5 className="text-lg text-gray-400 dark:text-gray-300">
               دسته بندی
             </h5>
-            <h5 className="text-sm text-gray-600/80 dark:text-gray-300/80">
+            <h5 className="text-xl text-gray-600/80 dark:text-gray-300/80">
               {blog.newsCatregoryName}
             </h5>
           </span>
         </div>
-        <div className="flex justify-center items-center gap-x-2">
+        <div className="flex justify-center items-center gap-x-4">
           {blog?.teacherAvatar ? (
             <img
               src={blog?.teacherAvatar}
               alt="teacherAvatar"
-              className="h-10 w-10 rounded-full"
+              className="h-[72px] w-[72px] rounded-full"
             />
           ) : (
             <User className="dark:text-gray-300/80 self-center" />
           )}
           <span className="flex flex-col justify-center items-start gap-y-2">
-            <h5 className="text-sm text-gray-400 dark:text-gray-300">
+            <h5 className="text-xl text-gray-400 dark:text-gray-300">
               استاد :
             </h5>
-            <h5 className="text-sm text-gray-600/80 dark:text-gray-300/80">
+            <h5 className="text-xl text-gray-600/80 dark:text-gray-300/80">
               {blog.addUserFullName}
             </h5>
           </span>
@@ -186,14 +202,14 @@ export const BlogInfo = () => {
           <button
             onClick={handleLike}
             disabled={isPending}
-            className="flex items-center justify-center gap-x-1 dark:text-gray-300 text-gray-500 hover:text-primary dark:hover:text-dark-primary transition disabled:opacity-50 dark:disabled:opacity-70 disabled:cursor-not-allowed"
+            className="flex items-center justify-center gap-x-2 dark:text-gray-300 text-gray-500 hover:text-primary dark:hover:text-dark-primary transition disabled:opacity-50 dark:disabled:opacity-70 disabled:cursor-not-allowed"
           >
             <p className="text-2xl dark:text-gray-300 text-gray-500">
               {getPersianNumbers(likeCount)}
             </p>
             <Heart
               className={cn(
-                "h-7 w-7 dark:text-dark-destructive text-destructive hover:text-destructive/80 dark:hover:text-dark-destructive/80 transition",
+                "h-9 w-9 dark:text-dark-destructive text-destructive hover:text-destructive/80 dark:hover:text-dark-destructive/80 transition",
                 isUserLiked && "fill-destructive dark:fill-dark-destructive"
               )}
             />

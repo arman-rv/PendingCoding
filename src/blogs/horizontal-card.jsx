@@ -38,7 +38,7 @@ export const HorizontalCard = ({ blog }) => {
         alt="blogImage"
         className="xl:h-1/3 xl:w-1/3 object-contain rounded-xl"
       />
-      <div className="flex flex-col justify-start items-center gap-y-10 w-full px-10">
+      <div className="flex flex-col justify-start items-center gap-y-8 w-full px-10">
         <div className="self-start xl:self-start mt-5 xl:mt-0">
           <h1 className="text-lg text-gray-600 dark:text-gray-200 mr-5">
             {blog.title}
@@ -72,9 +72,10 @@ export const HorizontalCard = ({ blog }) => {
         </div>
         <span className="w-full">
           <p className="text-gray-500 dark:text-gray-200/80 text-justify line-clamp-6">
-            {blog.miniDescribe}
+            {blog.description.slice(0,270) + "....."}
           </p>
         </span>
+
         <div className="w-full border border-gray-300" />
         <Link
           to={`/blogs/${blog.id}`}

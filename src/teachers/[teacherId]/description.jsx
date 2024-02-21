@@ -54,7 +54,7 @@ export const Description = ({ details, selected }) => {
         exit="hidden"
         className="border-2 border-gray-300 dark:border-gray-500 px-5 py-4 rounded-xl text-gray-500 dark:text-gray-300 leading-10 text-sm text-justify"
       >
-        <p className="self-start leading-9 text-gray-600 dark:text-gray-300 text-justify">
+        <p className="text-lg self-start leading-9 text-gray-600 dark:text-gray-300 text-justify">
           {details.value}
         </p>
       </motion.p>

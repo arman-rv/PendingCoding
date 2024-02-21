@@ -7,7 +7,7 @@ import { useUser } from "../hooks/use-user";
 
 import { useTheme } from "./providers/theme-provider";
 
-export const StarRate = ({ id, data, queryKey, rateFn }) => {
+export const StarRate = ({ id, data, queryKey, rateFn , size }) => {
   const [rating, setRating] = useState(
     data?.courseRate || data?.currentRate || 0
   );
@@ -75,7 +75,7 @@ export const StarRate = ({ id, data, queryKey, rateFn }) => {
               className="hidden"
             />
             <Star
-              size={20}
+              size={size? size : 20}
               fill={
                 currentRate <= rating
                   ? isDarkTheme
