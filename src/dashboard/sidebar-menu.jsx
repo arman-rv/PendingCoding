@@ -11,7 +11,7 @@ import defaultProfile from "../assets/my-profile.jpg";
 export const SidebarMenu = ({ user }) => {
   const { pathname } = useLocation();
 
-  const fullName = `${user?.fName} ${user?.lName}`;
+  const fullName = `${user?.email}`.split("@")[0];
 
   return (
     <div className="w-[250px] fixed right-0 h-full bg-white dark:bg-gray-700 border-l-2 border-l-gray-100 dark:border-l-gray-700 dark:shadow-gray-400 dark:shadow-md shadow-lg py-10">

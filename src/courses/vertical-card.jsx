@@ -1,5 +1,12 @@
 import { useMemo } from "react";
-import { Clock, Eye, Tags, User2, BookOpen } from "lucide-react";
+import {
+  Clock,
+  Eye,
+  Tags,
+  User2,
+  MonitorPlay,
+  BookOpenCheck,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 
 import { rateCourse } from "../core/services/api/get-courses";
@@ -13,7 +20,10 @@ import defaultCourseImage from "../assets/python.jpg";
 import { useUser } from "../hooks/use-user";
 
 const status = {
-  "درحال برگذاری": <BookOpen className="text-gray-600 dark:text-gray-300" />,
+  "درحال برگذاری": <MonitorPlay className="text-gray-600 dark:text-gray-300" />,
+  "درحال ثبت نام": (
+    <BookOpenCheck className="text-gray-600 dark:text-gray-300" />
+  ),
 };
 
 export const VerticalCard = ({ course }) => {
@@ -44,7 +54,7 @@ export const VerticalCard = ({ course }) => {
   ];
 
   return (
-    <div className="w-[320px] flex flex-col items-center justify-center gap-y-5 bg-gray-100 dark:bg-gray-600 rounded-t-3xl rounded-b-lg self-center justify-self-center overflow-hidden">
+    <div className="w-[320px] flex flex-col items-center justify-center gap-y-5 bg-gray-100 dark:bg-gray-600 rounded-t-3xl rounded-b-lg self-center justify-self-center">
       <img
         loading="lazy"
         src={course.tumbImageAddress || defaultCourseImage}
@@ -78,7 +88,7 @@ export const VerticalCard = ({ course }) => {
           />
         </span>
       </div>
-      <div className="flex justify-start w-full items-center px-3 py-2">
+      <div className="flex justify-start w-full items-center px-5 py-2">
         <ToolTip name={course?.statusName}>
           {status[course?.statusName]}
         </ToolTip>
