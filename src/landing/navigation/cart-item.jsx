@@ -46,7 +46,7 @@ export const CartItem = ({ course }) => {
           <span className="flex justify-center items-center gap-x-2">
             <LayoutDashboard className="text-primary h-6 w-6" />
             <h1 className="text-gray-700 text-lg">
-              {`موضوع: ${course.techs.join(",")}`}
+              {`موضوع: ${course.technologyList}`}
             </h1>
           </span>
           <span className="flex justify-center items-center gap-x-2">

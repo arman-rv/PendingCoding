@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Clock, Tags, ThumbsUp, ThumbsDown, BookOpen } from "lucide-react";
+import {
+  Clock,
+  Tags,
+  ThumbsUp,
+  ThumbsDown,
+  MonitorPlay,
+  BookOpenCheck,
+} from "lucide-react";
 import { toast } from "react-hot-toast";
 
 import { getPersianNumbers } from "../../../libs/get-persian-numbers";
@@ -21,7 +28,10 @@ import {
 } from "../../core/services/api/get-courses";
 
 const status = {
-  "درحال برگذاری": <BookOpen className="text-gray-600 dark:text-gray-300" />,
+  "درحال برگذاری": <MonitorPlay className="text-gray-600 dark:text-gray-300" />,
+  "درحال ثبت نام": (
+    <BookOpenCheck className="text-gray-600 dark:text-gray-300" />
+  ),
 };
 
 //Add // updateFn
@@ -147,7 +157,7 @@ export const CourseCard = ({ course, index }) => {
             />
           </span>
         </div>
-        <div className="flex justify-start w-full items-center px-3 py-2">
+        <div className="flex justify-start w-full items-center px-5 py-2">
           <ToolTip name={course?.statusName}>
             {status[course?.statusName]}
           </ToolTip>
