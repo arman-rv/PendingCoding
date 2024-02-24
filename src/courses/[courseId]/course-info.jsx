@@ -288,18 +288,17 @@ export const CourseInfo = () => {
 
   const isBookmarked = useMemo(
     () => userData.favoriteCourse.some((c) => c.courseId === course.courseId),
-    [userData.favoriteCourse]
+    [userData.favoriteCourse, course.courseId]
   );
 
   const isInCart = useMemo(
     () => userData.cart.some((c) => c.courseId === course.courseId),
-    [userData.cart]
+    [userData.cart, course.courseId]
   );
   const isPurchased = useMemo(
     () => userData.myCourses.some((c) => c.courseId === course.courseId),
-    [userData.myCourses]
+    [userData.myCourses, course.courseId]
   );
-
   const handleLike = async () => {
     try {
       setIsPending(true);
@@ -367,8 +366,8 @@ export const CourseInfo = () => {
         <NavigatorTracer />
       </div>
       {/* BookMark and Teacher Pic */}
-      <div className="w-full flex flex-col sm:flex-row px-12 justify-between items-start sm:items-center gap-10 mt-5 mb-10">
-        <div className="flex justify-center items-center gap-x-2">
+      <div className="w-full flex flex-wrap sm:px-12 justify-center sm:justify-between items-start sm:items-center gap-10 mt-5 mb-10">
+        <div className="flex justify-center items-center gap-2">
           <button
             disabled={isPending}
             onClick={handleBookmark}
@@ -381,7 +380,7 @@ export const CourseInfo = () => {
               )}
             />
           </button>
-          <span className="flex flex-col justify-center items-start gap-y-2">
+          <span className="flex flex-col justify-center items-start gap-2">
             <h5 className="text-lg text-gray-400 dark:text-gray-300">
               دسته بندی
             </h5>
@@ -411,7 +410,7 @@ export const CourseInfo = () => {
             </h5>
           </span>
         </div>
-        <div className="flex justify-center items-center gap-x-5 self-end">
+        <div className="flex flex-wrap justify-center items-center gap-5 self-center">
           <button
             onClick={handleLike}
             disabled={isPending}
@@ -455,7 +454,7 @@ export const CourseInfo = () => {
       </div>
 
       {/* Title & Add */}
-      <div className="w-full flex flex-col md:flex-row justify-between items-center gap-y-10 px-10">
+      <div className="w-full flex flex-col md:flex-row justify-between items-center gap-y-10 sm:px-10">
         {/* Title Div */}
         <div>
           <h1 className="text-3xl text-gray-700 dark:text-gray-200">
@@ -472,12 +471,12 @@ export const CourseInfo = () => {
                   course.courseId
                 )
               }
-              className="w-full px-20 py-2 bg-destructive dark:bg-dark-destructive hover:bg-destructive/80 dark:hover:bg-dark-destructive/80 text-white hover:text-white/90 disabled:text-white/90 disabled:bg-destructive/80 disabled:cursor-not-allowed transition rounded-full "
+              className="w-full sm:px-20 py-3 text-center bg-destructive dark:bg-dark-destructive hover:bg-destructive/80 dark:hover:bg-dark-destructive/80 text-white hover:text-white/90 disabled:text-white/90 disabled:bg-destructive/80 disabled:cursor-not-allowed transition rounded-full "
             >
               حذف از سبد خرید
             </button>
           ) : isPurchased ? (
-            <p className="w-full px-20 py-2 bg-emerald-500 dark:bg-emerald-700 cursor-default text-gray-100 dark:text-gray-200 rounded-full">
+            <p className="w-full sm:px-20 py-3 text-center bg-emerald-500 dark:bg-emerald-700 cursor-default text-gray-100 dark:text-gray-200 rounded-full">
               شما این دوره را خریده‌اید
             </p>
           ) : (
@@ -488,7 +487,7 @@ export const CourseInfo = () => {
                   course
                 )
               }
-              className="w-full px-20 py-2 bg-primary dark:bg-dark-primary hover:bg-primary/80 dark:hover:bg-dark-primary/80 text-white hover:text-white/90 disabled:text-white/90 disabled:bg-primary/80 disabled:cursor-not-allowed transition rounded-full "
+              className="w-full sm:px-20 py-3 text-center bg-primary dark:bg-dark-primary hover:bg-primary/80 dark:hover:bg-dark-primary/80 text-white hover:text-white/90 disabled:text-white/90 disabled:bg-primary/80 disabled:cursor-not-allowed transition rounded-full "
             >
               افزودن به سبد خرید
             </button>
@@ -496,7 +495,7 @@ export const CourseInfo = () => {
           <button
             onClick={() => onOpen("shareModal")}
             disabled={isOpen}
-            className="w-full px-20 py-2 border-2 border-primary dark:border-dark-primary bg-white/20 dark:bg-gray-300 dark:hover:bg-gray-300/90 hover:bg-[#EEEEEE] text-primary hover:text-primary/90 disabled:text-primary/90 disabled:bg-[#EEEEEE] disabled:cursor-not-allowed transition rounded-full "
+            className="w-full px-14 sm:px-20 py-2 text-center border-2 border-primary dark:border-dark-primary bg-white/20 dark:bg-gray-300 dark:hover:bg-gray-300/90 hover:bg-[#EEEEEE] text-primary hover:text-primary/90 disabled:text-primary/90 disabled:bg-[#EEEEEE] disabled:cursor-not-allowed transition rounded-full "
           >
             اشتراک گذاری
           </button>
@@ -507,15 +506,15 @@ export const CourseInfo = () => {
       <div className="w-full flex flex-col xl:flex-row justify-between items-center xl:items-start gap-x-5 gap-y-20">
         {/* Course Image & Description */}
         <div className="w-full flex flex-col items-start justify-center gap-y-5">
-          <div className="relative w-full mx-auto h-[500px]">
+          <div className="relative w-full mx-auto h-[300px] sm:h-[500px]">
             <img
-              className="rounded-xl w-full h-full object-fill"
+              className="rounded-xl w-full h-full object"
               // src={defaultCourseThumbnail || course?.imageAddress}
               src={course.imageAddress}
               alt="courseImage"
             />
           </div>
-          <div className="w-full flex justify-between items-center gap-x-10">
+          <div className="w-full flex flex-wrap sm:flex-nowrap justify-between items-center gap-10">
             {details?.map((datail) => (
               <Header
                 key={datail.id}

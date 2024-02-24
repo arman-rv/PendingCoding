@@ -1,10 +1,12 @@
 import { Book, Clock, LayoutDashboard, Tags, User, Users } from "lucide-react";
 
 import { getPersianNumbers } from "../../../libs/get-persian-numbers";
-import { useUser } from "../../hooks/use-user";
+// import { useUser } from "../../hooks/use-user";
+import { useModal } from "../../hooks/use-modal-store";
 
 export const CartItem = ({ course }) => {
-  const { removeFromCart } = useUser();
+  // const { removeFromCart } = useUser();
+  const { onOpen } = useModal();
 
   const startDate = (course) =>
     new Date(course.startTime).toLocaleDateString("fa-IR-u-nu-latn").split("/");
@@ -92,7 +94,7 @@ export const CartItem = ({ course }) => {
       <div className="w-full flex justify-between items-center px-5">
         <div className="w-full flex items-center justify-end gap-x-5">
           <button
-            onClick={() => removeFromCart(course?.courseId)}
+            onClick={() => onOpen("confirmDeleteModal")}
             className="px-5 py-2 text-lg bg-destructive hover:bg-destructive/80 text-white hover:text-white/90 disabled:text-white/90 disabled:bg-destructive/90 transition rounded-xl"
           >
             حذف

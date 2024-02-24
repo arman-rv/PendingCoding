@@ -103,7 +103,7 @@ export const MobileFilter = ({ values, setValues }) => {
 
   return (
     <AnimatePresence mode="wait">
-        {isDialogOpen && (
+      {isDialogOpen && (
         <motion.div
           className="fixed inset-0 w-full h-full bg-gray-400/70 dark:bg-gray-700/70 xl:hidden z-10"
           variants={backdrop}
@@ -114,14 +114,14 @@ export const MobileFilter = ({ values, setValues }) => {
         >
           <motion.div
             onClick={(e) => e.stopPropagation()}
-            className="h-full fixed top-0 right-0 flex flex-col items-center justify-start gap-y-5 bg-gray-50 dark:bg-gray-200 border-r border-gray-200 shadow-md p-5 z-[99999]"
+            className="w-11/12 sm:w-[400px] h-full fixed top-0 right-0 flex flex-col items-center justify-start gap-y-5 bg-gray-50 dark:bg-gray-200 border-r border-gray-200 shadow-md p-5 z-[99999]"
             variants={backdrop}
             animate="visible"
             initial="hidden"
             exit="exit"
           >
             <X
-              className="self-start justify-self-start text-rose-700 cursor-pointer"
+              className="w-7 h-7 self-start justify-self-start text-rose-700 cursor-pointer"
               onClick={onClose}
             />
             <div className="flex flex-col items-center justify-center gap-y-5">
@@ -132,7 +132,7 @@ export const MobileFilter = ({ values, setValues }) => {
                   </h1>
                   <div className="w-5 border border-gray-500 dark:border-gray-300/80 self-center" />
                 </div>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="flex flex-wrap gap-3 justify-evenly items-center">
                   {categories.map((category) => (
                     <CategoryItem
                       key={category.id}
@@ -167,25 +167,28 @@ export const MobileFilter = ({ values, setValues }) => {
                 <div className="w-5 absolute left-0 border border-gray-500 mt-3" />
               </div>
               <Seperator />
-              <div className="w-full flex justify-between items-center">
-                <div className="flex flex-col justify-center items-start gap-y-2 w-full">
+              <div className="flex justify-between items-center">
+                <div className="w-11/12 flex flex-col justify-center items-start gap-2">
                   <h1 className="text-base text-gray-500 dark:text-gray-300/90 mb-2">
                     استاد
                   </h1>
                   <SearchInput
                     queryName="teacher_name"
                     className="w-full text-sm py-2 px-4"
-                    placeholder="جستجو استاد مورد نظر. . ."
+                    placeholder="استاد ..."
                   />
                 </div>
               </div>
             </div>
-            <div className="flex flex-col justify-between items-center w-full gap-y-5">
+            <div className="w-11/12 flex flex-col justify-between items-center gap-5">
               <div>
+                <h1 className="text-base text-gray-500 dark:text-gray-300/90 mb-2">
+                  دوره
+                </h1>
                 <SearchInput
                   queryName="course_name"
-                  placeholder="جستجو کنید ..."
-                  className="px-4 py-2"
+                  placeholder="دوره ..."
+                  className="px-4 py-2 w-full"
                 />
               </div>
               <div className="flex justify-center items-center gap-x-5">
@@ -199,7 +202,7 @@ export const MobileFilter = ({ values, setValues }) => {
             </div>
           </motion.div>
         </motion.div>
-        )}
-      </AnimatePresence>
+      )}
+    </AnimatePresence>
   );
 };

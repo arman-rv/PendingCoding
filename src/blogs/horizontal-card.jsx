@@ -31,20 +31,20 @@ export const HorizontalCard = ({ blog }) => {
   ];
 
   return (
-    <div className="w-full flex flex-col xl:flex-row items-center justify-center bg-gray-100 dark:bg-gray-600 rounded-lg shadow-lg xl:px-10 py-5">
+    <div className="w-full flex flex-col lg:flex-row items-center justify-center bg-gray-100 dark:bg-gray-600 rounded-lg shadow-lg lg:px-10 pb-5">
       <img
         loading="lazy"
         src={blog.currentImageAddressTumb}
         alt="blogImage"
-        className="xl:h-1/3 xl:w-1/3 object-contain rounded-xl"
+        className="w-full h-80 lg:w-1/3 lg:h-1/3 object-fill rounded-xl rounded-b-none lg:rounded-b-xl"
       />
-      <div className="flex flex-col justify-start items-center gap-y-8 w-full px-10">
+      <div className="flex flex-col justify-start items-center gap-y-8 w-full px-6 sm:px-10">
         <div className="self-start xl:self-start mt-5 xl:mt-0">
-          <h1 className="text-lg text-gray-600 dark:text-gray-200 mr-5">
+          <h1 className="text-lg text-gray-600 dark:text-gray-200 sm:mr-5">
             {blog.title}
           </h1>
         </div>
-        <div className="w-full px-5 flex flex-col md:flex-row justify-between items-center gap-y-5">
+        <div className="w-full px-5 flex flex-wrap justify-between items-center gap-5">
           <span className="text-gray-500 dark:text-gray-200/80 text-sm flex items-center justify-center gap-x-1">
             <PenTool className="h-5 w-5 text-primary dark:text-gray-200/80" />
             {blog.addUserFullName}
@@ -72,7 +72,7 @@ export const HorizontalCard = ({ blog }) => {
         </div>
         <span className="w-full">
           <p className="text-gray-500 dark:text-gray-200/80 text-justify line-clamp-6">
-            {blog.description.slice(0,270) + "....."}
+            {blog.description.slice(0, 270) + "....."}
           </p>
         </span>
 

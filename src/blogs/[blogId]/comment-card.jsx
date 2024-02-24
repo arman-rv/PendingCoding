@@ -13,8 +13,7 @@ import {
   Pencil,
 } from "lucide-react";
 
-import { editComment, likeComment } from "../../core/services/api/get-blogs";
-import { disLikeComment } from "../../core/services/api/get-courses";
+import { editComment } from "../../core/services/api/get-blogs";
 
 import { getPersianNumbers } from "../../../libs/get-persian-numbers";
 import { cn } from "../../../libs/utils";
@@ -169,8 +168,8 @@ export const CommentCard = ({ comment, updateFn, user }) => {
       <div className="flex flex-col lg:flex-row justify-center items-center py-2 gap-x-10">
         <div className="shadow-md dark:shadow-gray-600 bg-gray-300/20 dark:bg-gray-700 rounded-lg w-full flex flex-col justify-center items-start px-4 py-2">
           {/* Title and Author div */}
-          <div className="flex justify-between items-center gap-x-5 py-5 border-b-2 border-gray-400/50 dark:border-gray-400 rounded-xl w-full">
-            <span className="flex gap-x-3">
+          <div className="flex flex-wrap justify-center sm:justify-between items-center gap-5 py-5 border-b-2 border-gray-400/50 dark:border-gray-400 rounded-xl w-full">
+            <span className="flex items-center gap-x-3">
               {comment?.pictureAddress ? (
                 <img
                   className="w-12 h-12 object-cover rounded-full"
@@ -181,14 +180,14 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                 <User className="dark:text-gray-300 text-gray-500" />
               )}
               <h2 className="text-gray-600 dark:text-gray-200">
-                {comment?.autor}
+                {comment?.author}
               </h2>
             </span>
             <h4 className="text-gray-600 dark:text-gray-200 ml-5">{`عنوان : ${comment?.title}`}</h4>
           </div>
           <div className="w-full my-2">
             {/* Comment,likes,dislikes */}
-            <div className="flex items-center justify-between py-2 pb-7 px-4">
+            <div className="w-full flex flex-wrap sm:flex-nowrap items-center justify-end sm:justify-between py-2 pb-7 px-4">
               <div>
                 {isEditing ? (
                   <form
@@ -247,11 +246,11 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                   >
                     <ThumbsUp
                       className={cn(
-                        "h-7 w-7 md:h-5 md:w-5 mt-2 dark:text-dark-primary text-primary hover:text-primary/80 dark:hover:text-dark-primary/80 transition",
+                        "h-5 w-5 mt-2 dark:text-dark-primary text-primary hover:text-primary/80 dark:hover:text-dark-primary/80 transition",
                         isUserLiked && "fill-primary dark:fill-dark-primary"
                       )}
                     />
-                    <p className="text-2xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
+                    <p className="text-xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
                       {getPersianNumbers(likeCount)}
                     </p>
                   </button>
@@ -262,12 +261,12 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                   >
                     <ThumbsDown
                       className={cn(
-                        "h-7 w-7 md:h-5 md:w-5 mt-2 dark:text-dark-destructive text-destructive hover:text-destructive/80 dark:hover:text-dark-destructive/80 transition",
+                        "h-5 w-5 mt-2 dark:text-dark-destructive text-destructive hover:text-destructive/80 dark:hover:text-dark-destructive/80 transition",
                         isUserDisliked &&
                           "fill-destructive dark:fill-dark-destructive"
                       )}
                     />
-                    <p className="text-2xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
+                    <p className="text-xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
                       {getPersianNumbers(dissLikeCount)}
                     </p>
                   </button>
@@ -304,7 +303,7 @@ export const CommentCard = ({ comment, updateFn, user }) => {
               </div>
             )}
             {/* post_date */}
-            <div className="flex flex-row-reverse items-center justify-between mt-5">
+            <div className="flex flex-row-reverse flex-wrap items-center justify-between gap-5 mt-5">
               <p className="dark:text-gray-300 text-gray-500">
                 {`${getPersianNumbers(postDate?.[2], true)} ${
                   months[postDate?.[1] - 1]
@@ -319,7 +318,7 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                 </p>
               </span>
             </div>
-            {comment.replyCount !== 0 && (
+            {comment.acceptReplysCount !== 0 && (
               <>
                 {showReplies ? (
                   <>
@@ -327,9 +326,9 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                       onClick={() => setShowReplies(false)}
                       className="flex mt-4 text-sm text-gray-700 bg-gray-300 hover:bg-gray-300/80 hover:text-gray-500/80 transition rounded-lg px-4 py-3"
                     >
-                      {comment.replyCount > 1
+                      {comment.acceptReplysCount > 1
                         ? `پنهان کردن پاسخ‌ها`
-                        : comment.replyCount === 1 && "پنهان کردن پاسخ‌"}
+                        : comment.acceptReplysCount === 1 && "پنهان کردن پاسخ‌"}
                       <ChevronUp className="h-4 w-4 mt-[2px]" />
                     </button>
                     <CommentResponds commentId={comment.id} />
@@ -339,11 +338,11 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                     onClick={() => setShowReplies(true)}
                     className="flex mt-4 text-sm text-gray-700 bg-gray-300 hover:bg-gray-300/80 hover:text-gray-500/80 transition rounded-lg px-4 py-3"
                   >
-                    {comment.replyCount > 1
+                    {comment.acceptReplysCount > 1
                       ? `نمایش پاسخ‌ها (${getPersianNumbers(
-                          comment.replyCount
+                          comment.acceptReplysCount
                         )})`
-                      : comment.replyCount === 1 && "نمایش  پاسخ‌"}
+                      : comment.acceptReplysCount === 1 && "نمایش  پاسخ‌"}
                     <ChevronDown className="h-4 w-4 mt-[2px]" />
                   </button>
                 )}

@@ -9,7 +9,7 @@ import logo from "../../../assets/logo.svg";
 
 export const Intro = () => {
   return (
-    <div className="flex flex-1 flex-col lg:flex-row-reverse items-center justify-center gap-y-20 p-20 md:gap-x-10 lg:gap-x-12 xl:gap-x-40">
+    <div className="flex flex-1 flex-col lg:flex-row-reverse items-center justify-center gap-20 p-10 sm:p-20 md:gap-x-10 lg:gap-12 xl:gap-40">
       {/* Text and Description div */}
       <div className="flex flex-col order-1 md:order-2 justify-start items-start gap-y-8">
         <div className="flex items-center justify-center gap-x-2 text-gray-600 dark:text-gray-300">

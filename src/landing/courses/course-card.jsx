@@ -97,14 +97,14 @@ export const CourseCard = ({ course, index }) => {
 
   return (
     <div className={index === 1 && "2xl:mt-24"}>
-      <div className="w-[400px] mx-auto flex flex-col items-center justify-center gap-y-5 bg-gray-100 dark:bg-gray-600 dark:shadow-gray-700 dark:shadow-lg shadow-lg rounded-t-3xl rounded-b-lg">
+      <div className="w-11/12 max-w-sm sm:w-[400px] sm:max-w-full mx-auto flex flex-col items-center justify-center gap-5 bg-gray-100 dark:bg-gray-600 dark:shadow-gray-700 dark:shadow-lg shadow-lg rounded-t-3xl rounded-b-lg">
         <img
           src={course?.tumbImageAddress || defaultCourseImage}
           alt="CourseImage"
           className="object-fill rounded-t-xl w-full h-72"
         />
         <div className="self-start">
-          <h1 className="text-lg text-gray-600 dark:text-gray-200 mr-5">
+          <h1 className="text-2xl sm:text-lg text-gray-600 dark:text-gray-200 mr-5">
             {course?.title}
           </h1>
         </div>
@@ -112,15 +112,15 @@ export const CourseCard = ({ course, index }) => {
           <button
             onClick={handleLike}
             disabled={isPending}
-            className="flex items-center justify-center gap-x-2  dark:text-dark-primary text-primary hover:text-primary/80 dark:hover:text-dark-primary/80 transition"
+            className="flex items-center justify-center gap-2  dark:text-dark-primary text-primary hover:text-primary/80 dark:hover:text-dark-primary/80 transition"
           >
             <ThumbsUp
               className={cn(
-                "h-7 w-7 md:h-5 md:w-5",
+                "h-5 w-5 md:h-5 md:w-5",
                 +course?.userIsLiked && "fill-primary dark:fill-dark-primary"
               )}
             />
-            <p className="text-2xl md:text-lg dark:text-gray-300 text-gray-500">
+            <p className="text-xl md:text-lg dark:text-gray-300 text-gray-500">
               {getPersianNumbers(course?.likeCount)}
             </p>
           </button>
@@ -131,32 +131,52 @@ export const CourseCard = ({ course, index }) => {
           >
             <ThumbsDown
               className={cn(
-                "h-7 w-7 md:h-5 md:w-5",
+                "h-5 w-5 md:h-5 md:w-5",
                 +course?.userIsDissLiked &&
                   "fill-destructive dark:fill-dark-destructive"
               )}
             />
-            <p className="text-2xl md:text-lg dark:text-gray-300 text-gray-500">
+            <p className="text-xl md:text-lg dark:text-gray-300 text-gray-500">
               {getPersianNumbers(course?.dissLikeCount)}
             </p>
           </button>
-          <ToolTip name="آخرین بروزرسانی">
-            <span className="text-gray-500 dark:text-gray-200/80 text-sm flex items-center justify-center gap-x-1">
-              <Clock className="h-4 w-4 text-primary dark:text-gray-200/80" />
-              {`${getPersianNumbers(lastUpdate?.[2], true)} ${
-                months[lastUpdate?.[1] - 1]
-              } ${getPersianNumbers(lastUpdate?.[0], true)}`}
+          <div className="hidden sm:flex justify-between items-center">
+            <ToolTip name="آخرین بروزرسانی">
+              <span className="text-gray-500 dark:text-gray-200/80 text-sm flex items-center justify-center gap-x-1">
+                <Clock className="h-4 w-4 text-primary dark:text-gray-200/80" />
+                {`${getPersianNumbers(lastUpdate?.[2], true)} ${
+                  months[lastUpdate?.[1] - 1]
+                } ${getPersianNumbers(lastUpdate?.[0], true)}`}
+              </span>
+            </ToolTip>
+            <span className="flex flex-row-reverse items-center justify-center gap-x-1">
+              <StarRate
+                data={course}
+                queryKey="courses"
+                id="CourseId"
+                rateFn={rateCourse}
+              />
             </span>
-          </ToolTip>
-          <span className="flex flex-row-reverse items-center justify-center gap-x-1">
-            <StarRate
-              data={course}
-              queryKey="courses"
-              id="CourseId"
-              rateFn={rateCourse}
-            />
-          </span>
+          </div>
         </div>
+        <div className="w-full px-5 flex sm:hidden justify-between items-center">
+            <ToolTip name="آخرین بروزرسانی">
+              <span className="text-gray-500 dark:text-gray-200/80 text-sm flex items-center justify-center gap-x-1">
+                <Clock className="h-4 w-4 text-primary dark:text-gray-200/80" />
+                {`${getPersianNumbers(lastUpdate?.[2], true)} ${
+                  months[lastUpdate?.[1] - 1]
+                } ${getPersianNumbers(lastUpdate?.[0], true)}`}
+              </span>
+            </ToolTip>
+            <span className="flex flex-row-reverse items-center justify-center gap-x-1">
+              <StarRate
+                data={course}
+                queryKey="courses"
+                id="CourseId"
+                rateFn={rateCourse}
+              />
+            </span>
+          </div>
         <div className="flex justify-start w-full items-center px-5 py-2">
           <ToolTip name={course?.statusName}>
             {status[course?.statusName]}

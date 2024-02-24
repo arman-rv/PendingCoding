@@ -12,7 +12,6 @@ import { Loading } from "../components/loading";
 import { BlogCards } from "./blog-cards";
 import { blogs } from "../static-data/blogs";
 
-
 const orderBy = [
   {
     id: 19,
@@ -86,15 +85,11 @@ export const Blogs = () => {
       </div>
       <Banner title="لیست بلاگ" />
       <Seperator />
-      <div
-        className={cn(
-          "w-full flex flex-col xl:flex-row items-start justify-between gap-x-10"
-        )}
-      >
+      <div className="w-full flex flex-col xl:flex-row items-start justify-between gap-x-10">
         {/* Grid div */}
         <div className="w-full flex flex-col justify-center items-start gap-y-5">
           {/* FilterDiv */}
-          <div className="w-full flex flex-col md:flex-row justify-between items-center gap-y-2">
+          <div className="w-full flex flex-wrap justify-between items-center gap-2 px-5">
             <div>
               <SearchInput
                 queryName="blog_name"
@@ -102,7 +97,7 @@ export const Blogs = () => {
                 className="px-4 py-2"
               />
             </div>
-            <div className="flex flex-col md:flex-row justify-center items-center gap-5">
+            <div className="flex flex-wrap justify-center items-center gap-5">
               <Select
                 queryName="blogFilterBy"
                 placeholder="جستجو بر اساس"

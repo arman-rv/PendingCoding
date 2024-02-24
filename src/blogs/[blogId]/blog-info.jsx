@@ -41,7 +41,6 @@ export const BlogInfo = () => {
   };
   const teacherAvatar = handleAvatar();
 
-
   const blog = {
     courseId: 0,
     updatedAt: blogsItems.updateDate,
@@ -69,7 +68,7 @@ export const BlogInfo = () => {
     newsCatregoryName: blogsItems.newsCatregoryName,
   };
 
-  console.log(blogsItems)
+  console.log(blogsItems);
   const { isOpen, onOpen } = useModal();
 
   const { userData, blogBookmark, removeBlogBookmark } = useUser();
@@ -112,7 +111,7 @@ export const BlogInfo = () => {
 
   const isBookMarked = useMemo(
     () => userData.favoriteBlog.some((b) => b.id === blog.id),
-    [userData.favoriteBlog]
+    [userData.favoriteBlog, blog.id]
   );
 
   const handleBookmark = async () => {

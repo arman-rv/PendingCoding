@@ -10,8 +10,6 @@ import { getAllTeachers } from "../../../core/services/api/get-teacher";
 
 import defaultPic from "../../../assets/my-profile.jpg";
 import { useQueries } from "react-query";
-import { Error } from "../../../components/error";
-import { Loader2 } from "lucide-react";
 
 const backdrop = {
   initial: {
@@ -94,18 +92,18 @@ export const SearchResult = () => {
         initial="initial"
         animate="start"
         exit="exit"
-        className="bg-zinc-100 shadow-md dark:bg-gray-400 absolute z-50 border-2 border-gray-300/80 w-[clamp(360px,200%,800px)] rounded-md py-2 px-5"
+        className="bg-zinc-100 shadow-md dark:bg-gray-400 absolute z-50 border-2 border-gray-300/80 w-[clamp(320px,90%,800px)] md:w-[clamp(360px,200%,800px)] rounded-md py-2 px-5"
       >
         {isLoading ? (
           <Loading />
         ) : (
-          <div className="flex items-start justify-center gap-x-10">
+          <div className="max-w-xs md:max-w-full flex flex-col md:flex-row items-center md:items-start justify-center gap-10">
             {datas?.[0]?.length === 0 ? (
               <div className="max-w-[200px]">
                 <h1 className="text-gray-700">استادی یافت نشد</h1>
               </div>
             ) : (
-              <div className="h-full w-full max-w-[200px] flex flex-col justify-center items-start gap-y-2">
+              <div className="h-full w-full max-w-[300px] flex flex-col justify-center items-start gap-2">
                 <div className="border-b-2 border-gray-300 dark:border-gray-700 w-full">
                   <h1 className="text-lg text-center text-gray-500 dark:text-gray-900">
                     اساتید

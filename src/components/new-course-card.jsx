@@ -27,7 +27,7 @@ export const NewCourseCard = () => {
         <div key={course.courseId} className="py-2">
           <Link
             to={`/courses/${course.courseId}`}
-            className="flex items-center justify-center gap-x-3 hover:bg-gray-200 hover:shadow-lg dark:hover:bg-gray-700 transition px-5 py-2 rounded-xl"
+            className="flex items-center justify-center gap-5 hover:bg-gray-200 hover:shadow-lg dark:hover:bg-gray-700 transition px-5 py-2 rounded-xl"
           >
             <img
               src={course.tumbImageAddress || CSharp}
