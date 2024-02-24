@@ -54,7 +54,7 @@ export const VerticalCard = ({ course }) => {
   ];
 
   return (
-    <div className="w-11/12 max-w-[320px] flex flex-col items-center justify-center gap-y-5 bg-gray-100 dark:bg-gray-600 rounded-t-3xl rounded-b-lg self-center justify-self-center">
+    <div className="w-11/12 max-w-[350px] flex flex-col items-center justify-center gap-y-5 bg-gray-100 dark:bg-gray-600 rounded-t-3xl rounded-b-lg self-center justify-self-center">
       <img
         loading="lazy"
         src={course.tumbImageAddress || defaultCourseImage}
@@ -80,8 +80,8 @@ export const VerticalCard = ({ course }) => {
           </span>
         </ToolTip>
       </div>
-      <div className="flex flex-wrap justify-center sm:justify-between w-full items-center gap-5 px-5 py-2">
-        <div className="flex  items-center justify-center">
+      <div className="flex flex-wrap sm:flex-nowrap justify-center sm:justify-between w-full items-center gap-5 px-5 py-2">
+        <div className="flex items-center justify-center">
           <ToolTip name={course?.statusName}>
             {status[course?.statusName]}
           </ToolTip>

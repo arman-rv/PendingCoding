@@ -55,7 +55,7 @@ export const CourseCards = ({ courses, itemsPerPage, isVertical }) => {
         initial="initial"
         animate="animate"
         className={cn(
-          "w-full flex flex-wrap gap-20 items-center justify-evenly",
+          "w-full flex flex-wrap gap-10 items-center justify-evenly",
           !isVertical && "hidden"
         )}
       >
