@@ -1,12 +1,9 @@
-import { useParams } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 import { CommentRespondCard } from "./comment-respond-card";
 import { Loading } from "../../components/loading";
 import { Error } from "../../components/error";
-
-import { getCommentReplies } from "../../core/services/api/get-courses";
 
 const backdrop = {
   hidden: {
@@ -31,21 +28,15 @@ const backdrop = {
   },
 };
 
-export const CommentResponds = ({ commentId }) => {
-  const { id } = useParams();
-  const {
-    data: responds,
-    isLoading,
-    isError,
-    refetch,
-  } = useQuery({
-    queryKey: ["course_comment_responds", commentId],
-    queryFn: () => getCommentReplies(id, commentId),
-    staleTime: 5000,
-  });
+export const CommentResponds = ({ commentId, respond }) => {
+  const [isLoading, setIsLoading] = useState(true);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  }, []);
   if (isLoading) return <Loading />;
-  if (isError) return <Error />;
 
   return (
     <motion.div
@@ -54,13 +45,13 @@ export const CommentResponds = ({ commentId }) => {
       animate="visible"
       exit="hidden"
     >
-      {responds?.map((respond) => (
-        <CommentRespondCard
-          key={respond.id}
-          respond={respond}
-          updateFn={refetch}
-        />
-      ))}
+      {/* {responds?.map((respond) => ( */}
+      <CommentRespondCard
+        key={respond.id}
+        respond={respond}
+        // updateFn={refetch}
+      />
+      {/* ))} */}
     </motion.div>
   );
 };

@@ -175,24 +175,24 @@ export const CommentRespondCard = ({ respond, updateFn }) => {
     <div className="flex flex-col lg:flex-row justify-center items-center py-2 gap-x-10">
       <div className="bg-gray-300/20 shadow-md dark:bg-gray-700 rounded-lg w-full flex flex-col justify-center items-start px-4 py-2">
         {/* Title and Author div */}
-        <div className="flex justify-start items-center gap-x-5 py-5 border-b-2 border-gray-400/50 dark:border-gray-400 rounded-xl w-full">
-          <span className="flex gap-x-3">
+        <div className="flex flex-wrap justify-center sm:justify-between items-center gap-5 py-5 border-b-2 border-gray-400/50 dark:border-gray-400 rounded-xl w-full">
+          <span className="flex gap-3">
             <User className="dark:text-gray-300 text-gray-500" />
             <h2 className="text-gray-600 dark:text-gray-200">
               {respond?.author}
             </h2>
           </span>
-          <h4 className="text-gray-600 dark:text-gray-200">{`عنوان : ${respond?.title}`}</h4>
+          <h4 className="text-gray-600 dark:text-gray-200 text-center">{`عنوان : ${respond?.title}`}</h4>
         </div>
         <div className="w-full my-2">
           {/* Comment,likes,dislikes */}
-          <div className="flex items-center justify-between py-2 pb-7 px-4">
+          <div className="flex flex-wrap items-center justify-between py-2 pb-7 px-4 space-y-4">
             <div>
-              <p className="dark:text-gray-300 text-gray-500">
+              <p className="w-11/12 dark:text-gray-300 text-gray-500 text-justify">
                 {respond?.describe}
               </p>
             </div>
-            <div className="flex items-center justify-center gap-x-3">
+            <div className="flex items-center justify-end w-full gap-3">
               <button
                 onClick={handleLike}
                 disabled={isLoading}
@@ -200,12 +200,12 @@ export const CommentRespondCard = ({ respond, updateFn }) => {
               >
                 <ThumbsUp
                   className={cn(
-                    "h-7 w-7 md:h-5 md:w-5 mt-2",
+                    "h-5 w-5 mt-2",
                     respond?.currentUserEmotion === "LIKED" &&
                       "fill-primary dark:fill-dark-primary"
                   )}
                 />
-                <p className="text-2xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
+                <p className="text-xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
                   {getPersianNumbers(respond?.likeCount)}
                 </p>
               </button>
@@ -216,12 +216,12 @@ export const CommentRespondCard = ({ respond, updateFn }) => {
               >
                 <ThumbsDown
                   className={cn(
-                    "h-7 w-7 md:h-5 md:w-5 mt-2",
+                    "h-5 w-5 mt-2",
                     respond?.currentUserEmotion === "DISSLIKED" &&
                       "fill-destructive dark:fill-dark-destructive"
                   )}
                 />
-                <p className="text-2xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
+                <p className="text-xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
                   {getPersianNumbers(respond?.disslikeCount)}
                 </p>
               </button>
@@ -343,7 +343,10 @@ export const CommentRespondCard = ({ respond, updateFn }) => {
                       : respond.acceptReplysCount === 1 && "پنهان کردن پاسخ‌"}
                     <ChevronUp className="h-4 w-4 mt-[2px]" />
                   </button>
-                  <CommentRespondCard commentId={respond.id} />
+                  <CommentRespondCard
+                    commentId={respond.id}
+                    respond={respond}
+                  />
                 </>
               ) : (
                 <button

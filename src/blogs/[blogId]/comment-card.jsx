@@ -101,6 +101,7 @@ export const CommentCard = ({ comment, updateFn, user }) => {
 
   const handleLike = async () => {
     try {
+      if (!userData.user) return onOpen("unauthorizedModal");
       setIsLoading(true);
       if (isUserLiked) {
         setIsUserLiked(false);
@@ -125,6 +126,7 @@ export const CommentCard = ({ comment, updateFn, user }) => {
   };
   const handleDisslike = () => {
     try {
+      if (!userData.user) return onOpen("unauthorizedModal");
       setIsLoading(true);
       if (isUserDisliked) {
         setIsUserDisliked(false);
@@ -331,7 +333,7 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                         : comment.acceptReplysCount === 1 && "پنهان کردن پاسخ‌"}
                       <ChevronUp className="h-4 w-4 mt-[2px]" />
                     </button>
-                    <CommentResponds commentId={comment.id} />
+                    <CommentResponds commentId={comment.id} respond={comment} />
                   </>
                 ) : (
                   <button
