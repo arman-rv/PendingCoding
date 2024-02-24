@@ -76,11 +76,11 @@ const Navbar = () => {
   return (
     <nav
       className={cn(
-        "max-w-[1900px] w-full fixed top-0 bg-[#EEEEEE] dark:bg-gray-800 flex items-center justify-between px-5 md:px-4 lg:px-16 xl:px-28 2xl:px-32 2xl:pr-52 py-6 md:py-2",
+        "w-full fixed top-0 bg-[#EEEEEE] dark:bg-gray-800 flex items-center justify-between px-5 md:px-4 lg:px-16 xl:px-28 2xl:px-32 2xl:pr-52 py-6 md:py-2",
         scrolled && "border-b border-gray-200 dark:border-gray-600 shadow-md"
       )}
     >
-      <div className="flex w-full items-center justify-between mx-auto ">
+      <div className="max-w-[1500px] flex w-full items-center justify-between mx-auto ">
         <div className="flex justify-center items-center gap-x-2 lg:gap-x-6">
           {routes.map((route) => (
             <div key={route.id} className="hidden md:block">

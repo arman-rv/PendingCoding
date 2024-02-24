@@ -68,7 +68,7 @@ export const Slider = () => {
   if (isLoading) return <Loading />;
   return (
     <div className="flex flex-1 items-center justify-center">
-      <div className="w-[400px] sm:w-[500px] md:w-[450px] lg:w-[600px] xl:w-[1000px]">
+      <div className="w-[300px] sm:w-[500px] md:w-[450px] lg:w-[600px] xl:w-[1000px]">
         <Swiper
           modules={[Autoplay, FreeMode]}
           spaceBetween={30}

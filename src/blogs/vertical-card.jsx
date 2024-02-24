@@ -27,27 +27,23 @@ export const VerticalCard = ({ blog }) => {
   ];
 
   return (
-    <div className="max-w-[380px] flex flex-col items-center justify-center gap-y-5 bg-gray-100 dark:bg-gray-600 rounded-t-3xl rounded-b-lg mx-auto ">
-      <div className="w-[380px] rounded-lg overflow-hidden">
-        <img
-          loading="lazy"
-          src={blog.currentImageAddressTumb}
-          alt="blogImage"
-          className="w-full h-80"
-        />
-      </div>
+    <div className="w-11/12 max-w-[380px] flex flex-col items-center justify-center gap-y-5 bg-gray-100 dark:bg-gray-600 rounded-t-3xl rounded-b-lg mx-auto">
+      <img
+        loading="lazy"
+        src={blog.currentImageAddressTumb}
+        alt="blogImage"
+        className="w-full h-72 rounded-lg rounded-b-none"
+      />
       <div className="self-start">
-        <h1 className="text-lg text-gray-600 dark:text-gray-200 mr-5">
+        <h1 className="text-xl lg:text-lg text-gray-600 dark:text-gray-200 mr-5">
           {blog.title}
         </h1>
       </div>
-      <div className="w-full px-5 flex justify-between items-center">
-        <ToolTip name={blog.addUserFullName}>
-          <span className="text-gray-500 dark:text-gray-200/80 text-sm flex items-center justify-center gap-x-1">
-            <PenTool className="h-5 w-5 text-primary dark:text-gray-200/80" />
-            {`...${blog.addUserFullName.slice(0, 10)}`}
-          </span>
-        </ToolTip>
+      <div className="w-full px-[6px] flex flex-wrap justify-between items-center gap-5">
+        <span className="text-gray-500 dark:text-gray-200/80 text-sm flex items-center justify-center gap-x-1">
+          <PenTool className="h-5 w-5 text-primary dark:text-gray-200/80" />
+          {blog.addUserFullName}
+        </span>
         <ToolTip name="آخرین بروزرسانی">
           <span className="text-gray-500 dark:text-gray-200/80 text-sm flex items-center justify-center gap-x-1">
             <Calendar className="h-4 w-4 text-primary dark:text-gray-200/80" />

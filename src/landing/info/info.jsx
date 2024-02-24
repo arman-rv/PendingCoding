@@ -73,8 +73,8 @@ export const Info = () => {
 
   if (isLoading) return <Loading />;
   return (
-    <div className="flex flex-col items-center justify-center gap-y-16">
-      <h1 className="text-gray-500 dark:text-gray-300 text-4xl xl:text-2xl">
+    <div className="flex flex-col items-center justify-center gap-16">
+      <h1 className="text-gray-500 dark:text-gray-300 text-4xl text-center xl:text-2xl">
         تجربه یادگیری مهارت در مسیری حرفه ای
       </h1>
       <div className="flex w-full flex-col xl:flex-row items-center justify-center xl:items-start xl:justify-start xl:gap-x-[268px] gap-y-20">
@@ -111,17 +111,17 @@ export const Info = () => {
         </div>
 
         {/* FunImage div */}
-        <img src={fun} alt="funPic" />
+        <img src={fun} alt="funPic" className="object-cover" />
       </div>
       {/* bottom div */}
-      <div className="w-full flex flex-col xl:flex-row items-center justify-between gap-y-10">
-        <div className="flex flex-col xl:flex-row gap-y-10 items-center justify-center gap-x-5">
+      <div className="w-full flex flex-col xl:flex-row items-center justify-between gap-10">
+        <div className="flex flex-col xl:flex-row gap-y-10 items-center justify-center gap-5">
           <img
             src={logo}
             alt="logo"
             className="w-24 h-24 dark:filter dark:invert dark:oapcity-[0.26] dark:brightness-0"
           />
-          <div className="flex flex-col items-center xl:items-start justify-center gap-y-1">
+          <div className="flex flex-col items-center xl:items-start justify-center gap-1">
             <h1 className="text-3xl text-gray-600 dark:text-gray-300/80">
               {getPersianNumbers(landingReport.studentCount)}
             </h1>
@@ -130,11 +130,11 @@ export const Info = () => {
             </h2>
           </div>
         </div>
-        <div className="w-96 flex flex-col justify-center items-center gap-y-5">
-          <div className="group w-full flex flex-col justify-center items-center gap-y-5">
+        <div className="w-72 sm:w-96 flex flex-col justify-center items-center gap-5">
+          <div className="group w-full flex flex-col justify-center items-center gap-5">
             <Link
               to="/about"
-              className="w-full flex justify-between items-center gap-x-10 text-gray-500 dark:text-gray-300/80 group-hover:text-primary/80 dark:group-hover:text-gray-200 transition"
+              className="w-full flex justify-between items-center gap-10 text-gray-500 dark:text-gray-300/80 group-hover:text-primary/80 dark:group-hover:text-gray-200 transition"
             >
               چرا باید مجموعه آموزشی سپهر را انتخاب کنیم ؟
               <ArrowUpLeft className="h-6 w-6" />

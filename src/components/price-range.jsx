@@ -29,7 +29,7 @@ export const PriceRange = ({ values, setValues }) => {
           step={100000}
         />
       </div>
-      <div className="flex items-center justify-center gap-x-2">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-x-2">
         {/* MIN */}
         <div className="flex flex-col items-start justify-center gap-y-1">
           <h1 className="text-sm text-gray-500 dark:text-gray-300/90 mb-2">

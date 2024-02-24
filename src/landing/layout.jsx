@@ -51,7 +51,7 @@ export const LayoutPage = () => {
       >
         <Outlet />
       </motion.main>
-      <div className="flex justify-center items-center px-6 py-2 bg-[#464646] dark:bg-gray-700">
+      <div className="flex justify-center items-center sm:px-6 py-2 bg-[#464646] dark:bg-gray-700">
         <Footer />
       </div>
     </div>

@@ -207,10 +207,10 @@ export const CommentCard = ({ comment, updateFn, user }) => {
 
   return (
     <>
-      <div className="flex flex-col lg:flex-row justify-center items-center py-2 gap-x-10">
+      <div className="flex flex-col lg:flex-row justify-center items-center py-2 gap-10">
         <div className="shadow-md dark:shadow-gray-600 bg-gray-300/20 dark:bg-gray-700 rounded-lg w-full flex flex-col justify-center items-start px-4 py-2">
           {/* Title and Author div */}
-          <div className="flex justify-between items-center gap-x-5 py-5 border-b-2 border-gray-400/50 dark:border-gray-400 rounded-xl w-full">
+          <div className="flex flex-wrap justify-center sm:justify-between items-center gap-5 py-5 border-b-2 border-gray-400/50 dark:border-gray-400 rounded-xl w-full">
             <span className="flex items-center justify-center gap-x-3">
               {comment?.pictureAddress ? (
                 <img
@@ -225,11 +225,11 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                 {comment?.author}
               </h2>
             </span>
-            <h4 className="text-gray-600 dark:text-gray-200 ml-5">{`عنوان : ${comment?.title}`}</h4>
+            <h4 className="text-gray-600 dark:text-gray-200 mr-5 sm:ml-5">{`عنوان : ${comment?.title}`}</h4>
           </div>
-          <div className="w-full my-2">
+          <div className="w-full my-2 space-y-6">
             {/* Comment,likes,dislikes */}
-            <div className="flex items-center justify-between py-2 pb-7 px-4">
+            <div className="py-2 pb-7 px-4 flex flex-wrap justify-end sm:justify-between items-center">
               {isEditing ? (
                 <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
                   <div className="flex items-center justify-start gap-x-5">
@@ -270,12 +270,12 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                   </p>
                 </form>
               ) : (
-                <p className="w-11/12 text-justify dark:text-gray-300 text-gray-500">
+                <p className="w-full sm:w-[80%] md:w-[83%] lg:w-[86%] xl:w-[90%] text-justify dark:text-gray-300 text-gray-500">
                   {comment?.describe}
                 </p>
               )}
               {!isEditing && !isAnswering && (
-                <div className="flex items-center justify-center gap-x-3">
+                <div className="flex items-center justify-center gap-3">
                   <button
                     onClick={handleLike}
                     disabled={isLoading}
@@ -283,11 +283,11 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                   >
                     <ThumbsUp
                       className={cn(
-                        "h-7 w-7 md:h-5 md:w-5 mt-2",
+                        "h-5 w-5 mt-2",
                         isUserLiked && "fill-primary dark:fill-dark-primary"
                       )}
                     />
-                    <p className="text-2xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
+                    <p className="text-xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
                       {getPersianNumbers(likeCount)}
                     </p>
                   </button>
@@ -298,12 +298,12 @@ export const CommentCard = ({ comment, updateFn, user }) => {
                   >
                     <ThumbsDown
                       className={cn(
-                        "h-7 w-7 md:h-5 md:w-5 mt-2",
+                        "h-5 w-5 mt-2",
                         isUserDisliked &&
                           "fill-destructive dark:fill-dark-destructive"
                       )}
                     />
-                    <p className="text-2xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
+                    <p className="text-xl md:text-lg mt-2 dark:text-gray-300 text-gray-500">
                       {getPersianNumbers(dissLikeCount)}
                     </p>
                   </button>
@@ -341,7 +341,7 @@ export const CommentCard = ({ comment, updateFn, user }) => {
               </div>
             )}
             {/* post_date */}
-            <div className="flex flex-row-reverse items-center justify-between mt-5">
+            <div className="flex flex-wrap items-center justify-center gap-5 sm:justify-between">
               <p className="dark:text-gray-300 text-gray-500">
                 {`${getPersianNumbers(postDate?.[2], true)} ${
                   months[postDate?.[1] - 1]

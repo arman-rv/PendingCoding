@@ -45,7 +45,7 @@ export const BlogCards = ({ courses, itemsPerPage, isVertical }) => {
       </div>
       <div
         className={cn(
-          "w-full  flex flex-col items-center gap-y-10 px-10",
+          "w-full  flex flex-col items-center gap-y-10 px-3",
           isVertical && "hidden"
         )}
       >

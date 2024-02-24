@@ -1,11 +1,8 @@
 import * as z from "zod";
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "react-query";
-import { ChevronDown, ChevronUp } from "lucide-react";
 import { toast } from "react-hot-toast";
 
 import { useModal } from "../../hooks/use-modal-store";
@@ -16,16 +13,10 @@ import { scrollToTop } from "../../../libs/scroll-to-top";
 
 import { SeasonsAccordion } from "./seasons-accordion";
 
-import {
-  addComment,
-  getCourseComments,
-} from "../../core/services/api/get-courses";
-import { getUserProfile } from "../../core/services/api/user";
+import { addComment } from "../../core/services/api/get-courses";
 
 import { CommentCard } from "./comment-card";
 import { Banner } from "../../components/banner";
-import { Loading } from "../../components/loading";
-import { Error } from "../../components/error";
 
 import defaultProfileImage from "../../assets/my-profile.jpg";
 import { useUser } from "../../hooks/use-user";
@@ -69,7 +60,6 @@ const formSchema = z.object({
 export const Description = ({ teacher, details, selected }) => {
   const { id: courseId } = useParams();
   const { onOpen } = useModal();
-  const [count, setCount] = useState(4);
   const { userData } = useUser();
 
   let Info;
@@ -93,7 +83,6 @@ export const Description = ({ teacher, details, selected }) => {
         Describe: values.message,
       };
       await addComment(Obj).then(() => {
-        refetch();
         form.reset();
         scrollToTop(900);
         toast.success("نظرتان ثبت شد");
@@ -102,34 +91,6 @@ export const Description = ({ teacher, details, selected }) => {
       console.log(error);
       toast.error("مشکلی پیش آمده دوباره امتحان کنید");
     }
-  };
-
-  //fetch Comments
-  const {
-    data: comments,
-    isLoading,
-    isError,
-    refetch,
-  } = useQuery({
-    queryKey: ["comments"],
-    queryFn: () => getCourseComments(courseId),
-    staleTime: 5000,
-  });
-
-  const filteredData = comments
-    ?.sort((a, b) => new Date(b.insertDate) - new Date(a.insertDate))
-    .filter((c) => c.accept);
-  //fetch User
-  const { data } = useQuery({
-    queryKey: ["user_info"],
-    queryFn: () => getUserProfile(),
-  });
-
-  const handleMore = () => {
-    if (count >= comments?.length) {
-      scrollToTop(900);
-      setCount(4);
-    } else setCount((c) => c + 4);
   };
 
   if (selected === details.label && details.label === "توضیحات") {
@@ -146,7 +107,7 @@ export const Description = ({ teacher, details, selected }) => {
     );
   } else if (selected === details.label && details.label === "سرفصل‌ ها") {
     Info = (
-      <motion.ul className="border-2 border-gray-300 dark:border-gray-500 px-12 py-4 rounded-xl flex flex-col items-start justify-center gap-y-5">
+      <motion.ul className="border-2 border-gray-300 dark:border-gray-500 p-4 rounded-xl flex flex-col items-start justify-center gap-5">
         {details?.seasons?.map((season) => (
           <motion.li
             key={season.name}
@@ -168,7 +129,7 @@ export const Description = ({ teacher, details, selected }) => {
         initial="hidden"
         animate="visible"
         exit="hidden"
-        className="border-2 border-gray-300 dark:border-gray-500 px-5 py-4 rounded-xl flex flex-col xl:flex-row justify-center items-center gap-x-10"
+        className="border-2 border-gray-300 dark:border-gray-500 p-4 rounded-xl flex flex-col xl:flex-row justify-center items-center gap-x-10"
       >
         <div className="w-full xl:max-w-xs flex flex-col justify-center items-center gap-y-3 pb-5 xl:pl-5 border-b xl:border-l xl:border-b-0 border-gray-300 dark:border-gray-400">
           <img
@@ -181,21 +142,21 @@ export const Description = ({ teacher, details, selected }) => {
           </h3>
           <Link
             to={`/teachers/${teacher?.teacherId}`}
-            className="w-1/3 xl:w-full py-2 text-center bg-primary dark:bg-dark-primary hover:bg-primary/80 dark:hover:bg-dark-primary/80 text-gray-100 hover:text-gray-100/90 disabled:text-white/90 disabled:bg-primary/80 disabled:cursor-not-allowed transition rounded-full "
+            className="w-full sm:w-1/3 xl:w-full py-2 text-center bg-primary dark:bg-dark-primary hover:bg-primary/80 dark:hover:bg-dark-primary/80 text-gray-100 hover:text-gray-100/90 disabled:text-white/90 disabled:bg-primary/80 disabled:cursor-not-allowed transition rounded-full "
           >
             نمایش پروفایل
           </Link>
           <button
             onClick={() => onOpen("sendRespond")}
-            className="w-1/3 xl:w-full py-2 border-2 border-primary dark:border-dark-primary bg-white/20 dark:bg-gray-300 dark:hover:bg-gray-300/90 hover:bg-[#EEEEEE] text-primary hover:text-primary/90 disabled:text-primary/90 disabled:bg-[#EEEEEE] disabled:cursor-not-allowed transition rounded-full "
+            className="w-full sm:w-1/3 xl:w-full py-2 border-2 border-primary dark:border-dark-primary bg-white/20 dark:bg-gray-300 dark:hover:bg-gray-300/90 hover:bg-[#EEEEEE] text-primary hover:text-primary/90 disabled:text-primary/90 disabled:bg-[#EEEEEE] disabled:cursor-not-allowed transition rounded-full "
           >
             ارسال پیام
           </button>
         </div>
-        <p className="self-start leading-9 text-gray-600 dark:text-gray-300 text-justify">
+        <p className="w-full self-start leading-9 text-gray-600 dark:text-gray-300 text-justify">
           {`👨‍💻 ${teacher?.fullName || "در اینجا"} استادی حرفه‌ای در حوزه ${
             teacher?.skills.length !== 0
-              ? teacher?.skills.join(",")
+              ? teacher?.skills.join(", ")
               : "مهندسی نرم‌افزار"
           } است! با اطلاعات کم، می‌توانم اینگونه توانایی‌های استاد را معرفی کنم:`}
           <br />
@@ -230,7 +191,7 @@ export const Description = ({ teacher, details, selected }) => {
         exit="hidden"
         className="flex flex-col items-center justify-center gap-y-10"
       >
-        <div className="w-full border-2 border-gray-300 dark:border-gray-500 px-5 py-4 rounded-xl">
+        <div className="w-full border-2 border-gray-300 dark:border-gray-500 px-3 py-2 sm:px-5 sm:py-4 rounded-xl">
           {/* {isLoading ? (
             <Loading />
           ) : (
@@ -278,8 +239,8 @@ export const Description = ({ teacher, details, selected }) => {
             <CommentCard
               key={comment.id}
               comment={comment}
-              user={data}
-              updateFn={refetch}
+              // user={data}
+              // updateFn={refetch}
             />
           ))}
         </div>
