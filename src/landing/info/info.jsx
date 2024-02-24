@@ -111,7 +111,7 @@ export const Info = () => {
         </div>
 
         {/* FunImage div */}
-        <img src={fun} alt="funPic" className="object-cover border border-black" />
+        <img src={fun} alt="funPic" className="object-cover" />
       </div>
       {/* bottom div */}
       <div className="w-full flex flex-col xl:flex-row items-center justify-between gap-10">
