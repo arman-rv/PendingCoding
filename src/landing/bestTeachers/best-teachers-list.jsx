@@ -48,7 +48,7 @@ export const BestTeachersList = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <>
+    <div className="text-center">
       <Heading
         title="برترین اساتید خبره"
         description="برترین دوره های آموزشی با بروز ترین و مدرن ترین روش آموزش"
@@ -57,6 +57,6 @@ export const BestTeachersList = () => {
       <BestTeachers teachers={teachers} />
 
       <BestTeachersMobile teachers={teachers} />
-    </>
+    </div>
   );
 };

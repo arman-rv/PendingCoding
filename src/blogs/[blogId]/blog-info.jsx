@@ -231,7 +231,7 @@ export const BlogInfo = () => {
             src={blog.currentImageAddress}
             alt="blogImage"
           />
-          <div className="flex justify-cneter items-center gap-x-20">
+          <div className="w-full flex flex-col sm:flex-row justify-cneter items-center gap-10">
             {details?.map((datail) => (
               <Header
                 key={datail.id}

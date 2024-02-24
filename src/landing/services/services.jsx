@@ -28,7 +28,7 @@ export const Services = () => {
             <span className="bg-primary dark:bg-dark-primary text-white dark:text-gray-100 w-9 h-9 md:w-12 md:h-12 rounded-full text-lg md:text-xl flex items-center justify-center ml-4">
               {getPersianNumbers(1)}
             </span>
-            <h2 className="text-2xl text-gray-600 dark:text-gray-300">
+            <h2 className="text-2xl text-gray-600 dark:text-gray-300 text-center">
               مشاوره تحصیلی
             </h2>
             <h4 className="text-md text-gray-400 dark:text-gray-300/80 text-justify">
@@ -40,13 +40,13 @@ export const Services = () => {
           <img
             src={circle}
             alt="Circle"
-            className="self-end sm:self-center w-36 h-36 md:w-52 md:h-52"
+            className="self-end sm:self-center w-32 h-32 md:w-52 md:h-52"
           />
           <div className="flex flex-col items-end justify-center gap-2 pr-24 sm:pr-0">
             <span className="bg-primary dark:bg-dark-primary text-white dark:text-gray-100 md:w-12 md:h-12 w-9 h-9 rounded-full text-lg md:text-xl flex items-center justify-center ml-4">
               {getPersianNumbers(3)}
             </span>
-            <h2 className="text-2xl text-gray-600 dark:text-gray-300">
+            <h2 className="text-2xl text-gray-600 dark:text-gray-300 text-center">
               پشتیبانی ۲۴ ساعته
             </h2>
             <h4 className="text-md text-gray-400 text-justify dark:text-gray-300/80">
@@ -69,7 +69,7 @@ export const Services = () => {
           <img
             src={circle}
             alt="Circle"
-            className="self-start sm:self-center w-36 h-36 md:w-52 md:h-52"
+            className="self-start sm:self-center w-32 h-32 md:w-52 md:h-52"
           />
           <div className="flex flex-col items-start justify-center gap-y-2 pl-24 sm:pl-0">
             <span className="bg-primary dark:bg-dark-primary text-white dark:text-gray-100 md:w-12 md:h-12 w-9 h-9 rounded-full text-lg md:text-xl flex items-center justify-center mr-2">
@@ -78,7 +78,7 @@ export const Services = () => {
             <h2 className="text-2xl text-gray-600 dark:text-gray-300 mr-2">
               ارائه مدرک معتبر
             </h2>
-            <h4 className=" text-md text-gray-400 dark:text-gray-300/80 text-justify">
+            <h4 className="text-base text-gray-400 dark:text-gray-300/80 text-justify">
               لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از .صنعت چاپ و با
               استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در
               ستون و سطر .آنچنان که لازم است
@@ -87,7 +87,7 @@ export const Services = () => {
           <img
             src={circle}
             alt="Circle"
-            className="self-start sm:self-center w-36 h-36 md:w-52 md:h-52"
+            className="self-start sm:self-center w-32 h-32 md:w-52 md:h-52"
           />
         </div>
       </div>

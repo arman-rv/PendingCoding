@@ -28,7 +28,7 @@ export const Courses = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div>
+    <div className="text-center">
       <Heading
         title="برترین دوره های مجموعه"
         description="برترین دوره های آموزشی با بروز ترین و مدرن ترین روش آموزش"
