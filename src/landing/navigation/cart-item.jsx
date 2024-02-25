@@ -9,9 +9,13 @@ export const CartItem = ({ course }) => {
   const { onOpen } = useModal();
 
   const startDate = (course) =>
-    new Date(course.startTime).toLocaleDateString("fa-IR-u-nu-latn").split("/");
+    new Date(course.lastUpdate)
+      .toLocaleDateString("fa-IR-u-nu-latn")
+      .split("/");
   const endDate = (course) =>
-    new Date(course.endTime).toLocaleDateString("fa-IR-u-nu-latn").split("/");
+    new Date(course.lastUpdate)
+      .toLocaleDateString("fa-IR-u-nu-latn")
+      .split("/");
   const months = [
     "فروردين",
     "ارديبهشت",
@@ -32,10 +36,10 @@ export const CartItem = ({ course }) => {
       key={course.id}
       className="flex flex-col justify-center items-center gap-y-10"
     >
-      <div className="flex flex-row-reverse items-start justify-start gap-x-10">
+      <div className="flex flex-col md:flex-row-reverse items-start justify-start gap-10">
         <img
-          className="max-w-[400px] rounded-xl object-contain"
-          src={course.imageAddress}
+          className="max-w-full md:max-w-[400px] rounded-xl object-contain"
+          src={course.tumbImageAddress}
           alt={course.title}
         />
         <div className="flex flex-col justify-center items-start gap-y-4">
@@ -94,7 +98,7 @@ export const CartItem = ({ course }) => {
       <div className="w-full flex justify-between items-center px-5">
         <div className="w-full flex items-center justify-end gap-x-5">
           <button
-            onClick={() => onOpen("confirmDeleteModal")}
+            onClick={() => onOpen("confirmDeleteModal", course.courseId)}
             className="px-5 py-2 text-lg bg-destructive hover:bg-destructive/80 text-white hover:text-white/90 disabled:text-white/90 disabled:bg-destructive/90 transition rounded-xl"
           >
             حذف

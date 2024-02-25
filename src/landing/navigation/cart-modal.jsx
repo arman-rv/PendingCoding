@@ -2,9 +2,12 @@ import { useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 
+import { Seperator } from "../../components/seperator";
+
+import { CartItem } from "./cart-item";
+
 import { useModal } from "../../hooks/use-modal-store";
 import { useUser } from "../../hooks/use-user";
-import { CartItem } from "./cart-item";
 import { cn } from "../../../libs/utils";
 
 const backdrop = {
@@ -48,7 +51,7 @@ export const CartModal = () => {
             exit="exit"
             onClick={(e) => e.stopPropagation()}
             className={cn(
-              "overflow-hidden fixed inset-0 w-fit h-[450px] m-auto bg-gray-50 dark:bg-gray-200 rounded-xl px-2 pb-10 pt-1 z-10",
+              "overflow-hidden fixed inset-0 w-11/12 max-w-xs md:w-fit md:max-w-full h-[450px] m-auto bg-gray-50 dark:bg-gray-200 rounded-xl px-2 pb-10 pt-1 z-10",
               cart.length === 0 && "h-fit"
             )}
           >
@@ -71,8 +74,17 @@ export const CartModal = () => {
                 )}
               >
                 {cart.length > 0 ? (
-                  cart.map((course) => (
-                    <CartItem key={course.id} course={course} />
+                  cart.map((course, index) => (
+                    <>
+                      {index !== cart.length - 1 ? (
+                        <>
+                          <CartItem key={course.id} course={course} />
+                          <Seperator />
+                        </>
+                      ) : (
+                        <CartItem key={course.id} course={course} />
+                      )}
+                    </>
                   ))
                 ) : (
                   <div className="flex items-center justify-center">

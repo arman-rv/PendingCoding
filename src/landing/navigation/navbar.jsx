@@ -167,12 +167,21 @@ const Navbar = () => {
           </div>
           <ThemeToggle />
         </div>
-        <div className="md:hidden">
+        <div className="md:hidden flex justify-between w-full items-center">
+          <div
+            onClick={() => onOpen("cartModal")}
+            className="group relative cursor-pointer"
+          >
+            <ShoppingCart className="h-6 w-6 group-hover:text-black/60 dark:text-gray-400 dark:group-hover:text-gray-300 transition" />
+            {count > 0 && (
+              <Dot className="h-14 w-14 absolute -inset-6 z-10 text-primary group-hover:text-primary/60 dark:text-dark-primary dark:group-hover:text-dark-primary/60 transition" />
+            )}
+          </div>
           <Menu
             onClick={() => onOpen("navDialog")}
             className="h-8 w-8 cursor-pointer hover:text-black/60 dark:text-gray-300 dark:hover:text-gray-200 transition"
           />
-          <NavbarMobile count={count} />
+          <NavbarMobile />
         </div>
       </div>
     </nav>
