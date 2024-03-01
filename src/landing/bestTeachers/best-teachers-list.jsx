@@ -11,11 +11,12 @@ import { Loading } from "../../components/loading";
 
 import Amir from "../../assets/amir.jpg";
 import Arman from "../../assets/arman.jpg";
+import hania from "../../assets/hania.jpg";
 
 const teachers = [
   { id: 1, fullName: "امیرعباس بابائی", image: Amir },
   { id: 2, fullName: "آرمان رضوانی", image: Arman },
-  { id: 3, fullName: "امیرعباس بابائی", image: Amir },
+  { id: 3, fullName: "هانیا حبیبی", image: hania },
   { id: 4, fullName: "آرمان رضوانی", image: Arman },
 ];
 
@@ -50,7 +51,7 @@ export const BestTeachersList = () => {
   return (
     <div className="text-center">
       <Heading
-        title="برترین اساتید خبره"
+        title="برترین اساتید "
         description="برترین دوره های آموزشی با بروز ترین و مدرن ترین روش آموزش"
         to="/teachers"
       />

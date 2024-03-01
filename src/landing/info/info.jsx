@@ -18,13 +18,12 @@ import defaultImage from "../../assets/my-profile.jpg";
 import logo from "../../assets/logo.svg";
 import Amir from "../../assets/amir.jpg";
 import Arman from "../../assets/arman.jpg";
+import hania from "../../assets/hania.jpg";
 
 const teachers = [
-  { id: 1, name: "امیرعباس بابائی", pictureAddress: Amir },
+  { id: 0, name: "امیرعباس بابائی", pictureAddress: Amir },
+  { id: 1, name: "هانیا حبیبی", pictureAddress: hania },
   { id: 2, name: "آرمان رضوانی", pictureAddress: Arman },
-  { id: 3, name: "امیرعباس بابائی", pictureAddress: Amir },
-  { id: 4, name: "آرمان رضوانی", pictureAddress: Arman },
-  { id: 5, name: "امیرعباس بابائی", pictureAddress: Amir },
 ];
 const landingReport = {
   courseCount: 434,

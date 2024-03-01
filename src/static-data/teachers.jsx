@@ -1,5 +1,6 @@
 import Amir from "../assets/amir.jpg";
 import Arman from "../assets/arman.jpg";
+import Hania from "../assets/hania.jpg";
 
 import { courses } from "./courses";
 import { blogs } from "./blogs";
@@ -35,8 +36,8 @@ export const teachers = [
   },
   {
     teacherId: 2,
-    fullName: "آرمان رضوانی",
-    pictureAddress: Arman,
+    fullName: "هانیا حبیبی",
+    pictureAddress: Hania,
     newsCount: teacherCountFind("آرمان رضوانی", blogs),
     courseCounts: teacherCountFind("آرمان رضوانی", courses),
     skills: ["ReactJS", "HTML5", "CSS3", "JavaScript"],
@@ -51,6 +52,14 @@ export const teachers = [
   },
   {
     teacherId: 4,
+    fullName: "هانیا حبیبی",
+    pictureAddress: Hania,
+    newsCount: teacherCountFind("آرمان رضوانی", blogs),
+    courseCounts: teacherCountFind("آرمان رضوانی", courses),
+    skills: ["ReactJS", "HTML5", "CSS3", "JavaScript"],
+  },
+  {
+    teacherId: 5,
     fullName: "آرمان رضوانی",
     pictureAddress: Arman,
     newsCount: teacherCountFind("آرمان رضوانی", blogs),
@@ -58,17 +67,9 @@ export const teachers = [
     skills: ["ReactJS", "HTML5", "CSS3", "JavaScript"],
   },
   {
-    teacherId: 5,
-    fullName: "امیرعباس بابائی",
-    pictureAddress: Amir,
-    newsCount: teacherCountFind("امیرعباس بابائی", blogs),
-    courseCounts: teacherCountFind("امیرعباس بابائی", courses),
-    skills: ["ReactJS", "HTML5", "CSS3", "JavaScript"],
-  },
-  {
     teacherId: 6,
-    fullName: "آرمان رضوانی",
-    pictureAddress: Arman,
+    fullName: "هانیا حبیبی",
+    pictureAddress: Hania,
     newsCount: teacherCountFind("آرمان رضوانی", blogs),
     courseCounts: teacherCountFind("آرمان رضوانی", courses),
     skills: ["ReactJS", "HTML5", "CSS3", "JavaScript"],
@@ -107,10 +108,10 @@ export const teachers = [
   },
   {
     teacherId: 11,
-    fullName: "امیرعباس بابائی",
-    pictureAddress: Amir,
-    newsCount: teacherCountFind("امیرعباس بابائی", blogs),
-    courseCounts: teacherCountFind("امیرعباس بابائی", courses),
+    fullName: "هانیا حبیبی",
+    pictureAddress: Hania,
+    newsCount: teacherCountFind("آرمان رضوانی", blogs),
+    courseCounts: teacherCountFind("آرمان رضوانی", courses),
     skills: ["ReactJS", "HTML5", "CSS3", "JavaScript"],
   },
   {
@@ -123,10 +124,10 @@ export const teachers = [
   },
   {
     teacherId: 13,
-    fullName: "امیرعباس بابائی",
-    pictureAddress: Amir,
-    newsCount: teacherCountFind("امیرعباس بابائی", blogs),
-    courseCounts: teacherCountFind("امیرعباس بابائی", courses),
+    fullName: "هانیا حبیبی",
+    pictureAddress: Hania,
+    newsCount: teacherCountFind("آرمان رضوانی", blogs),
+    courseCounts: teacherCountFind("آرمان رضوانی", courses),
     skills: ["ReactJS", "HTML5", "CSS3", "JavaScript"],
   },
   {
@@ -155,10 +156,10 @@ export const teachers = [
   },
   {
     teacherId: 17,
-    fullName: "امیرعباس بابائی",
-    pictureAddress: Amir,
-    newsCount: teacherCountFind("امیرعباس بابائی", blogs),
-    courseCounts: teacherCountFind("امیرعباس بابائی", courses),
+    fullName: "هانیا حبیبی",
+    pictureAddress: Hania,
+    newsCount: teacherCountFind("آرمان رضوانی", blogs),
+    courseCounts: teacherCountFind("آرمان رضوانی", courses),
     skills: ["ReactJS", "HTML5", "CSS3", "JavaScript"],
   },
 ];
