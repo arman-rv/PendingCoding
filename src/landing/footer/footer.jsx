@@ -4,6 +4,9 @@ import * as z from "zod";
 import { Link } from "react-router-dom";
 import { Instagram, Linkedin, Twitter } from "lucide-react";
 
+import { useTheme } from "../../components/providers/theme-provider";
+
+
 import map from "../../assets/map.svg";
 import mail from "../../assets/mail.svg";
 import check from "../../assets/check.svg";
@@ -17,6 +20,9 @@ const formSchema = z.object({
 });
 
 export const Footer = () => {
+
+  const { isDarkTheme } = useTheme();
+
   const form = useForm({
     defaultValues: {
       email: "",
@@ -41,7 +47,7 @@ export const Footer = () => {
       <div className="flex items-center justify-center p-10">
         <div className="flex items-center justify-center">
           <div className="relative flex items-center justify-center">
-            <img style={{filter: "sepia(100%) hue-rotate(170deg) saturate(40%) brightness(0.88)"}} src={map} alt="MapPic" className="hidden xl:block dark:filter dark:" />
+            <img style={isDarkTheme? {filter: "sepia(100%) hue-rotate(170deg) saturate(40%) brightness(0.88)"}:{}} src={map} alt="MapPic" className="hidden xl:block dark:filter dark:" />
             <div className="xl:absolute xl:left-32 bg-white dark:bg-gray-300 flex flex-col justify-center items-center px-4 py-5 rounded-t-[250px] rounded-b-lg">
               <div className="relative bg-[#808BF2] dark:bg-dark-primary/80 w-16 h-16 sm:w-[96px] sm:h-[96px] rounded-full flex items-center justify-center">
                 <img src={mail} alt="MailPic" className="w-10 h-10 sm:w-16 sm:h-16" />

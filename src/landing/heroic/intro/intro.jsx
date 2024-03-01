@@ -57,13 +57,13 @@ export const Intro = () => {
           alt="Mirror"
           loading="lazy"
           className={cn(
-            `w-[70%] h-[70%] dark:filter dark:invert dark:opacity-[0.54] dark:brightness-0` ,
+            `opacity-[0.97] w-[70%] h-[70%] dark:filter dark:invert dark:opacity-[0.5] dark:brightness-0` ,
             style.rotate
           )}
         />
         <img
           className={cn(
-            `w-full h-full mt-[10px] dark:filter dark:invert dark:opacity-[0.54] dark:brightness-0`
+            `opacity-[0.97] w-full h-full mt-[10px] dark:filter dark:invert dark:opacity-[0.5] dark:brightness-0`
           )}
           src={pcTitle}
         />

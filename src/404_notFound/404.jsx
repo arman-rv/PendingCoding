@@ -10,7 +10,7 @@ const NotFound = () => {
       className="flex justify-center items-center flex-col p-[0_40px_150px] bg-[#EEEEEE]
     dark:bg-gray-800"
     >
-      <img src={logo} className={cn("m-[20px_0_30px] width-[20px] h-[280px]" , style.rotate)} />
+      <img src={logo} className={cn("m-[20px_0_30px] width-[20px] h-[280px] dark:filter dark:invert dark:opacity-[0.38] dark:brightness-0" , style.rotate)} />
 
       <h1
         className="text-[36px] text-[#505050]
