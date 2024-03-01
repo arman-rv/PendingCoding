@@ -54,7 +54,7 @@ export const ShareModal = () => {
             initial="hidden"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className="fixed inset-0 w-96 h-fit m-auto bg-gray-50 dark:bg-gray-200 rounded-xl px-2 py-1"
+            className="fixed inset-0 w-full max-w-xs h-fit m-auto bg-gray-50 dark:bg-gray-200 rounded-xl px-2 py-1"
           >
             <X
               className="self-start justify-self-start text-rose-700 cursor-pointer"

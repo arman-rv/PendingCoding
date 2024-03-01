@@ -116,8 +116,8 @@ function UserProvider({ children }) {
   const addToCart = (course) => {
     const newObj = {
       ...userData,
-      cart: userData.cart.find((c) => c.id === course.id)
-        ? [userData.cart]
+      cart: userData.cart.find((c) => c.courseId === course.courseId)
+        ? [...userData.cart]
         : [...userData.cart, course],
     };
     setItem("user", newObj);

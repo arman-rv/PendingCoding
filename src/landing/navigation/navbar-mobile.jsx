@@ -82,20 +82,12 @@ export const NavbarMobile = () => {
                 داشبورد
               </Link>
             ) : (
-              <>
-                <Link
-                  className="border-[3px] border-primary px-10 py-1 rounded-full bg-white-100 hover:bg-gray-100 text-primary hover:text-primary/90 transition font-semibold text-[16px]"
-                  to="/sign-in"
-                >
-                  ورود
-                </Link>
-                <Link
-                  className="border-[3px] border-primary px-8 py-1 rounded-full bg-primary hover:bg-primary/90 text-white hover:text-white/90 transition font-semibold text-[16px]"
-                  to="/sign-up"
-                >
-                  ثبت نام
-                </Link>
-              </>
+              <Link
+                className="border-[3px] border-primary dark:border-dark-primary px-5 py-1 rounded-full bg-primary dark:bg-dark-primary hover:bg-primary/90 dark:hover:bg-dark-primary/90 text-white/90 hover:text-white/80 transition font-semibold text-[16px]"
+                to="/auth"
+              >
+                ورود / ثبت نام
+              </Link>
             )}
           </motion.div>
         </motion.div>

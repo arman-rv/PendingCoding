@@ -73,7 +73,6 @@ export const CourseInfo = () => {
   const techCategory = handleCategory();
 
   const course = {
-    courseId: 0,
     createdAt: "2024-02-16T05:34:42.901Z",
     startTime: courseDetail.lastUpdate,
     endTime: "2025-03-20T05:34:42.901Z",
@@ -276,7 +275,7 @@ export const CourseInfo = () => {
     try {
       if (!userData.user) return onOpen("unauthorizedModal");
       setIsPending(true);
-      if (isBookmarked) await removeCourseBookmark(course.courseId);
+      if (isBookmarked) await removeCourseBookmark(courseDetail.courseId);
       else await courseBookmark(course);
     } catch (error) {
       console.log(error);
@@ -287,20 +286,22 @@ export const CourseInfo = () => {
   };
 
   const isBookmarked = useMemo(
-    () => userData.favoriteCourse.some((c) => c.courseId === course.courseId),
-    [userData.favoriteCourse, course.courseId]
+    () =>
+      userData.favoriteCourse.some((c) => c.courseId === courseDetail.courseId),
+    [userData.favoriteCourse, courseDetail.courseId]
   );
 
   const isInCart = useMemo(
-    () => userData.cart.some((c) => c.courseId === course.courseId),
-    [userData.cart, course.courseId]
+    () => userData.cart.some((c) => c.courseId === courseDetail.courseId),
+    [userData.cart, courseDetail.courseId]
   );
   const isPurchased = useMemo(
-    () => userData.myCourses.some((c) => c.courseId === course.courseId),
-    [userData.myCourses, course.courseId]
+    () => userData.myCourses.some((c) => c.courseId === courseDetail.courseId),
+    [userData.myCourses, courseDetail.courseId]
   );
   const handleLike = async () => {
     try {
+      if (!userData.user) return onOpen("unauthorizedModal");
       setIsPending(true);
       if (isUserLiked) {
         setIsUserLiked(false);
@@ -325,6 +326,7 @@ export const CourseInfo = () => {
   };
   const handleDisslike = () => {
     try {
+      if (!userData.user) return onOpen("unauthorizedModal");
       setIsPending(true);
       if (isUserDisliked) {
         setIsUserDisliked(false);
@@ -468,7 +470,7 @@ export const CourseInfo = () => {
               onClick={() =>
                 onOpen(
                   userData.user ? "confirmDeleteModal" : "unauthorizedModal",
-                  course.courseId
+                  courseDetail.courseId
                 )
               }
               className="w-full sm:px-20 py-3 text-center bg-destructive dark:bg-dark-destructive hover:bg-destructive/80 dark:hover:bg-dark-destructive/80 text-white hover:text-white/90 disabled:text-white/90 disabled:bg-destructive/80 disabled:cursor-not-allowed transition rounded-full "
@@ -484,7 +486,7 @@ export const CourseInfo = () => {
               onClick={() =>
                 onOpen(
                   userData.user ? "confirmModal" : "unauthorizedModal",
-                  course
+                  courseDetail
                 )
               }
               className="w-full sm:px-20 py-3 text-center bg-primary dark:bg-dark-primary hover:bg-primary/80 dark:hover:bg-dark-primary/80 text-white hover:text-white/90 disabled:text-white/90 disabled:bg-primary/80 disabled:cursor-not-allowed transition rounded-full "

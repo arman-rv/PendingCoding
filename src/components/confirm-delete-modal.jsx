@@ -22,17 +22,16 @@ const backdrop = {
 };
 
 export const ConfirmDeleteModal = () => {
-  const { isOpen, onClose, type, data:id } = useModal();
+  const { isOpen, onClose, type, data: id } = useModal();
   const { removeFromCart } = useUser();
   const [isLoading, setIsLoading] = useState(false);
 
   const isModalOpen = isOpen && type === "confirmDeleteModal";
 
-
   const handleDelete = async () => {
     try {
       setIsLoading(true);
-      await removeFromCart(id)
+      await removeFromCart(id);
     } catch (error) {
       console.log(error);
     } finally {
@@ -58,7 +57,7 @@ export const ConfirmDeleteModal = () => {
             initial="hidden"
             exit="exit"
             onClick={(e) => e.stopPropagation()}
-            className="fixed inset-0 w-96 h-fit m-auto bg-gray-50 dark:bg-gray-200 rounded-xl p-3 z-50"
+            className="fixed inset-0 w-11/12 max-w-xs h-fit m-auto bg-gray-50 dark:bg-gray-200 rounded-xl p-3 z-50"
           >
             <X
               className="self-start justify-self-start text-rose-700 cursor-pointer"
