@@ -123,7 +123,8 @@ const ContactUs = () => {
         className="flex gap-[150px]
       
       max-[1100px]:gap-[10px]
-      max-[960px]:flex-col max-[960px]:gap-[30px] max-[960px]:items-center max-[960px]:px-[50px]"
+      max-[960px]:flex-col max-[960px]:gap-[30px] max-[960px]:items-center max-[960px]:px-[50px] 
+      max-[470px]:px-5"
       >
         <div
           className="w-[clamp(100px,90%,704px)] flex flex-col
