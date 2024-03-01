@@ -42,8 +42,8 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="w-[clamp(100px,100%,1596px)] m-[0_auto] flex flex-col p-[0_50px_150px] pt-20">
-      <Banner title="ارتباط با ما" />
+    <div className="w-[clamp(100px,100%,1596px)] m-[0_auto] flex flex-col p-[0_50px_150px] pt-20 max-[590px]:px-6 max-[470px]:px-4" >
+      <Banner title="ارتباط با ما"/>
 
       <div
         className="flex m-[70px_0] gap-[20px]
@@ -54,7 +54,7 @@ const ContactUs = () => {
           <div
             className="h-[44px] flex mb-[80px]
           
-          max-[1500px]:justify-center max-[1500px]:pl-[60px]"
+          max-[1500px]:justify-center max-[1500px]:pl-[60px] max-[590px]:justify-start max-[590px]:pl-0"
           >
             <img src={loc} />
             <div className="flex flex-col m-[0_10px_0_0]">
@@ -79,7 +79,7 @@ const ContactUs = () => {
           
           max-[1500px]:justify-center"
           >
-            <div className="w-[clamp(50px,100%,285px)]">
+            <div className="w-[clamp(50px,100%,285px)]  max-[470px]:w-[250px]">
               <ContactItems
                 src={phone}
                 title="شماره تلفن :"
@@ -100,7 +100,7 @@ const ContactUs = () => {
               <ContactItems
                 src={email}
                 title="پست الکترونیکی :"
-                desc="pendingcoding@gmail.com"
+                desc="pendingcoding@gmail"
               />
               <ContactItems src={telegram} title="تلگرام :" desc="arman_rv@" />
               <ContactItems src={x} title="توییتر" desc="نتیجه ای یافت نشد!" />
@@ -110,7 +110,7 @@ const ContactUs = () => {
 
         <div
           className="w-[clamp(100px,100%,1000px)] border-[13px] border-transparent rounded-[20px] overflow-hidden shadow-[0_0_0_4px_#5c55c9] h-[460px]
-        max-[1500px]:h-[360px] max-[1500px]:w-[clamp(100px,100%,940px)]"
+        max-[1500px]:h-[360px] max-[1500px]:w-[clamp(100px,100%,940px)] max-[590px]:h-[300px]"
         >
           {/* <img src={location} className="w-full" /> */}
           <div className="w-full h-full rounded-[13px] overflow-hidden">

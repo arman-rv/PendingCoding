@@ -59,3 +59,12 @@ body,
 .leaflet-control-attribution {
   display: none;
 }
+
+@media only screen and (max-width: 580px){
+  .leaflet-touch .leaflet-bar {
+    border-radius: 7px;
+    gap: 7px;
+    transform: scale(1.13);
+    margin: 13px 11px;
+  }
+}
