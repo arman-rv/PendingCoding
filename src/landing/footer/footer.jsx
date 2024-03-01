@@ -33,15 +33,15 @@ export const Footer = () => {
   return (
     <div className="w-full overflow-hidden relative flex flex-col items-center justify-center p-10 gap-10">
       {/* Circles divs */}
-      <div className="absolute top-16 xl:-right-9 xl:-top-9 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[#4D4D4D] to-[#676767] opacity-80">
-        <div className="absolute right-28 top-32 w-[250px] h-[250px] rounded-full bg-[#5F5F5F]" />
+      <div className="absolute top-16 xl:-right-9 xl:-top-9 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-[#4D4D4D] to-[#676767] opacity-80 dark:from-slate-600 dark:to-slate-500">
+        <div className="absolute right-28 top-32 w-[250px] h-[250px] rounded-full bg-[#5F5F5F] dark:bg-slate-500" />
       </div>
 
       {/* map and comment div */}
       <div className="flex items-center justify-center p-10">
         <div className="flex items-center justify-center">
           <div className="relative flex items-center justify-center">
-            <img src={map} alt="MapPic" className="hidden xl:block" />
+            <img style={{filter: "sepia(100%) hue-rotate(170deg) saturate(40%) brightness(0.88)"}} src={map} alt="MapPic" className="hidden xl:block dark:filter dark:" />
             <div className="xl:absolute xl:left-32 bg-white dark:bg-gray-300 flex flex-col justify-center items-center px-4 py-5 rounded-t-[250px] rounded-b-lg">
               <div className="relative bg-[#808BF2] dark:bg-dark-primary/80 w-16 h-16 sm:w-[96px] sm:h-[96px] rounded-full flex items-center justify-center">
                 <img src={mail} alt="MailPic" className="w-10 h-10 sm:w-16 sm:h-16" />
