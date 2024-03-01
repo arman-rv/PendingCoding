@@ -51,19 +51,19 @@ export const Intro = () => {
           className="w-3/4 h-3/4 dark:filter dark:invert dark:oapcity-[0.26] dark:brightness-0"
         />
       </div> */}
-      <div className="flex flex-col items-center justify-center min-w-[30px] max-w-[400px] md:w-[50%] sm:w-[90%] lg:w-[45%] xl:w-[37%] 2xl::w-[27%]">
+      <div className="flex flex-col items-center justify-center min-w-[30px] max-w-[400px] md:w-[50%] sm:w-[90%] lg:w-[45%] xl:w-[37%] 2xl::w-[27%] ">
         <img
           src={logo}
           alt="Mirror"
           loading="lazy"
           className={cn(
-            `w-[70%] h-[70%] dark:filter dark:invert dark:opacity-[0.26] dark:brightness-0`,
+            `w-[70%] h-[70%] dark:filter dark:invert dark:opacity-[0.34] dark:brightness-0` ,
             style.rotate
           )}
         />
         <img
           className={cn(
-            `w-full h-full mt-[10px] dark:filter dark:invert dark:opacity-[0.26] dark:brightness-0`
+            `w-full h-full mt-[10px] dark:filter dark:invert dark:opacity-[0.34] dark:brightness-0`
           )}
           src={pcTitle}
         />
