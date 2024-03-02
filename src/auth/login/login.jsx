@@ -8,9 +8,9 @@ import { useUser } from "../../hooks/use-user";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { loginAPI } from "../../core/services/api/auth";
+// import { loginAPI } from "../../core/services/api/auth";
 import { setItem } from "../../core/services/common/storage.services";
-import { getUserCourses, getUserProfile } from "../../core/services/api/user";
+// import { getUserCourses, getUserProfile } from "../../core/services/api/user";
 
 const Login = ({ login, dataLogin }) => {
   const formSchema = z.object({
@@ -132,19 +132,24 @@ const Login = ({ login, dataLogin }) => {
       className="bg-[#EEEEEE] w-[700px] h-[700px] rounded-[100%] border-[15px] border-solid border-[#505050] flex justify-center items-center relative transition
       dark:bg-gray-800 dark:border-gray-600
        
-      max-[700px]:w-[500px] max-[700px]:h-[500px]"
+      max-[700px]:w-[500px] max-[700px]:h-[500px]
+      max-[700px]:border-[10px] 
+      max-[700px]:pt-7 
+      max-[515px]:w-[390px] max-[515px]:h-[390px] max-[515px]:pt-5"
     >
       <motion.div
         animate={dataLogin}
         className="w-[350px] h-[460px] flex justify-center items-center flex-col      flex-nowrap
          
-         max-[700px]:w-[275px]"
+         max-[700px]:w-[275px] 
+         max-[515px]:w-[240px]"
       >
         <h1
           className="text-[#505050] text-[28px] mb-[40px]
           dark:text-gray-300
              
-          max-[700px]:mb-[20px] max-[700px]:text-[26px]"
+          max-[700px]:mb-[20px] max-[700px]:text-[26px]
+          max-[515px]:text-lg"
         >
           {" "}
           ورود به حساب کاربری{" "}
@@ -158,7 +163,9 @@ const Login = ({ login, dataLogin }) => {
               `focus:outline-none focus:border-[#989898] block pr-[14px] bg-transparent w-[100%] h-[55px] border-[1px] border-solid border-[#C8C8C8] text-[#666] rounded-[50px] text-[20px]
                   dark:border-[rgb(181,188,200)] dark:placeholder-[rgb(181,188,200)] dark:focus:border-gray-50 dark:text-white
                   
-                max-[700px]:max-[700px]:h-[50px] max-[700px]:text-[18px]`,
+                max-[700px]:max-[700px]:h-[50px] max-[700px]:text-[18px]
+                
+                max-[515px]:text-xs max-[515px]:h-10 `,
               errors.email &&
                 `border-[#ff3b3b] text-[#ff3b3b] placeholder-[#ff3434] focus:border-[#ff3b3b]
                 dark:border-red-500 dark:placeholder-red-500 dark:text-red-500 dark:focus:border-red-500`
@@ -170,9 +177,10 @@ const Login = ({ login, dataLogin }) => {
             className="text-[#ff1f1f] p-[2.5px_13px_0_0]
                   dark:text-red-500 h-[33px] 
                   
-              max-[700px]:text-[13px]"
+              max-[700px]:text-[13px]
+              max-[515px]:h-6 max-[515px]:text-xs max-[515px]:pr-6"
           >
-            {errors.email?.message}
+            {errors.email?.message} 
           </div>
 
           <input
@@ -182,7 +190,8 @@ const Login = ({ login, dataLogin }) => {
               `focus:outline-none focus:border-[#989898] block pr-[14px] bg-transparent w-[100%] h-[55px] border-[1px] border-solid border-[#C8C8C8] text-[#666] rounded-[50px] text-[20px]
                   dark:border-[rgb(181,188,200)] dark:placeholder-[rgb(181,188,200)] dark:focus:border-gray-50 dark:text-white
                   
-                max-[700px]:max-[700px]:h-[50px] max-[700px]:text-[18px]`,
+                max-[700px]:max-[700px]:h-[50px] max-[700px]:text-[18px]
+                max-[515px]:text-xs max-[515px]:h-10`,
               errors.password &&
                 `border-[#ff3b3b] text-[#ff3b3b] placeholder-[#ff3434] focus:border-[#ff3b3b]
                 dark:border-red-500 dark:placeholder-red-500 dark:text-red-500 dark:focus:border-red-500`
@@ -193,7 +202,8 @@ const Login = ({ login, dataLogin }) => {
             className="text-[#ff1f1f] p-[2.5px_13px_0_0]
                   dark:text-red-500 h-[33px] 
                   
-              max-[700px]:text-[13px]"
+              max-[700px]:text-[13px]
+              max-[515px]:h-6 max-[515px]:text-xs max-[515px]:pr-6"
           >
             {errors.password?.message}
           </div>
@@ -218,19 +228,22 @@ const Login = ({ login, dataLogin }) => {
                 htmlFor="remember"
                 className="w-[24px] h-[24px] bg-white shadow-[0_1px_10px_rgba(0,0,0,0.25)] rounded-[7px] peer-checked:shadow-[0_1px_10px_rgba(92,85,201,0.25)] peer-checked:bg-[url('../../public/img/check.svg')] bg-no-repeat bg-[length:75%] bg-[50%] cursor-pointer
               
-              max-[700px]:w-[20px] max-[700px]:h-[20px]"
+              max-[700px]:w-[20px] max-[700px]:h-[20px]
+              max-[515px]:w-4 max-[515px]:h-4 max-[515px]:rounded-md"
               >
                 {" "}
               </label>
 
-              <label htmlFor="remember" className="text-[12px] cursor-pointer">
+              <label htmlFor="remember" className="text-[12px] cursor-pointer dark:text-gray-300
+              max-[515px]:text-[9.7px]">
                 مرا به خاطر بسپار
               </label>
             </div>
 
             <Link
               to="/forgetPassword"
-              className="text-[12px] cursor-pointer text-center"
+              className="text-[12px] cursor-pointer text-center
+              max-[515px]:text-[10px]"
             >
               {" "}
               رمز عبور را فراموش کرده ام{" "}
@@ -245,7 +258,8 @@ const Login = ({ login, dataLogin }) => {
             dark:bg-gray-600 dark:hover:bg-[rgb(87,98,115)]
             dark:disabled:bg-[rgb(67,76,91)]
                  
-            max-[700px]:p-[7px_0]"
+            max-[700px]:p-[7px_0]
+            max-[515px]:text-sm"
             type="submit"
           >
             {" "}
@@ -255,7 +269,8 @@ const Login = ({ login, dataLogin }) => {
             className="cursor-pointer rounded-[50px] text-[18px] text-[#505050] p-[10px] m-[15px_auto] w-full flex justify-center items-center
                 dark:text-gray-300
               
-              max-[700px]:p-[7px_0]"
+              max-[700px]:p-[7px_0]
+              max-[515px]:text-sm max-[515px]:p-0"
             href="http://localhost:4173/login"
             target="blank"
           >

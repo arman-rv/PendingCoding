@@ -118,7 +118,7 @@ export const Info = () => {
           <img
             src={logo}
             alt="logo"
-            className="w-24 h-24 dark:filter dark:invert dark:oapcity-[0.26] dark:brightness-0"
+            className="w-24 h-24 dark:filter dark:invert dark:oapcity-[0.26] dark:brightness-100"
           />
           <div className="flex flex-col items-center xl:items-start justify-center gap-1">
             <h1 className="text-3xl text-gray-600 dark:text-gray-300/80">

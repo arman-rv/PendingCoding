@@ -71,7 +71,8 @@ const Auth = () => {
         className="w-[1110px] h-[700px] m-auto
        
        max-[1110px]:w-[clamp(100px,100%,700px)] max-[1110px]:h-[1200px] 
-       max-[700px]:w-[500px] max-[700px]:h-[850px]"
+       max-[700px]:w-[500px] max-[700px]:h-[850px]
+       max-[515px]:w-[390px] max-[515px]:h-[660px]"
       >
         {!show ? (
           <>
